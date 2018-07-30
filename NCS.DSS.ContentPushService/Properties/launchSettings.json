@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NCS.DSS.ContentPushService": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --nodeDebugPort 5860 -p 7073"
+    }
+  }
+}
