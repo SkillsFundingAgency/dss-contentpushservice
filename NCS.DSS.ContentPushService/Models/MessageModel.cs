@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NCS.DSS.ContentPushService.Models
+namespace NCS.DSS.ContentPushService.Listeners.Models
 {
     public class MessageModel
     {
