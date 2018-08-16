@@ -16,6 +16,15 @@
         },
         "sharedAppServicePlanResourceGroup": {
             "type": "string"
+        },
+        "cosmosDbEndpoint": {
+            "type": "string"
+        },
+        "cosmosDbKey": {
+            "type": "string"
+        },
+        "serviceBusConnectionString": {
+            "type": "string"
         }
     },
     "variables": {
@@ -42,6 +51,15 @@
                     },
                     "configEnvironmentName": {
                         "value": "[parameters('environmentName')]"
+                    },
+                    "cosmosDbEndpoint": {
+                        "value": "[parameters('cosmosDbEndpoint')]"
+                    },
+                    "cosmosDbKey": {
+                        "value": "[parameters('cosmosDbKey')]"
+                    },
+                    "serviceBusConnectionString": {
+                        "value": "[parameters('serviceBusConnectionString')]"
                     }
                 }
             },

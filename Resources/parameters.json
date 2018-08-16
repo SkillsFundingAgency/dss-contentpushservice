@@ -16,6 +16,15 @@
         },
         "sharedAppServicePlanResourceGroup": {
             "value": ""
+        },
+        "cosmosDbEndpoint": {
+            "value": ""
+        },
+        "cosmosDbKey": {
+            "value": ""
+        },
+        "serviceBusConnectionString": {
+            "value": ""
         }
     }
 }
