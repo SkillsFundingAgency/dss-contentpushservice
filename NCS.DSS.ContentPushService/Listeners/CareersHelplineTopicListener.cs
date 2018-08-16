@@ -12,7 +12,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             [ServiceBusTrigger("careershelpline", "careershelpline", AccessRights.Listen, Connection = "ServiceBusConnectionString")]string serviceBusMessage, 
             TraceWriter log)
         {
-            MessagePushService messagePushService = new MessagePushService();
+            var messagePushService = new MessagePushService();
             await messagePushService.PushToTouchpoint(serviceBusMessage);
         }
 

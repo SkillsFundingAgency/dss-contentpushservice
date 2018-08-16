@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
-using NCS.DSS.ContentPushService.Listeners.Models;
+using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
 
 namespace NCS.DSS.ContentPushService.PushService
@@ -13,13 +14,13 @@ namespace NCS.DSS.ContentPushService.PushService
         {
             var client = new HttpClient();
             var customer = JsonConvert.DeserializeObject<MessageModel>(message);
-            const string clientUrl = "https://test.cognisoft.com/callback/api/Notification";
+            var clientUrl = ConfigurationManager.AppSettings["ClientUrl"];
 
             var values = new Dictionary<string, string>
             {
                {    "CustomerId",       customer.CustomerGuid.ToString()    },
                {    "ResourceURL",     customer.URL                        },
-               { "LastModifiedDate", customer.LastmodifiedDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}
+               { "LastModifiedDate", customer.LastModifiedDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}
             };
 
             var content = new FormUrlEncodedContent(values);
