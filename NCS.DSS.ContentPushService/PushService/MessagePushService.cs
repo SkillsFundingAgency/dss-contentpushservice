@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.ServiceBus.Messaging;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Net.Http;
+using System.Threading.Tasks;
 using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
 
-namespace NCS.DSS.ContentPushService
+namespace NCS.DSS.ContentPushService.PushService
 {
-    class MessagePushService
+    public class MessagePushService
     {
-        public async Task PushToTouchpoint(string Message)
+        public async Task PushToTouchpoint(string message)
         {
-            HttpClient client = new HttpClient();
-            MessageModel customer = JsonConvert.DeserializeObject<MessageModel>(Message);
-            string ClientURL = "";
+            var client = new HttpClient();
+            var customer = JsonConvert.DeserializeObject<MessageModel>(message);
+            var clientUrl = ConfigurationManager.AppSettings["ClientUrl"];
 
             var values = new Dictionary<string, string>
             {
-               {    "Message",          "Customer modified notification"    },
                {    "CustomerId",       customer.CustomerGuid.ToString()    },
-               {    "Resource URL",     customer.URL                        }
+               {    "ResourceURL",     customer.URL                        },
+               { "LastModifiedDate", customer.LastModifiedDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}
             };
 
             var content = new FormUrlEncodedContent(values);
-            var response = await client.PostAsync(ClientURL, content);
+            var response = await client.PostAsync(clientUrl, content);
             var responseString = await response.Content.ReadAsStringAsync();
         }
 
