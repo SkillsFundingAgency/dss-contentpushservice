@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
@@ -10,11 +10,10 @@ namespace NCS.DSS.ContentPushService.PushService
 {
     public class MessagePushService
     {
-        public async Task PushToTouchpoint(string message)
+        public async Task PushToTouchpoint(string message, string clientUrl, string bearerToken)
         {
             var client = new HttpClient();
             var customer = JsonConvert.DeserializeObject<MessageModel>(message);
-            var clientUrl = ConfigurationManager.AppSettings["ClientUrl"];
 
             var values = new Dictionary<string, string>
             {
@@ -24,7 +23,11 @@ namespace NCS.DSS.ContentPushService.PushService
             };
 
             var content = new FormUrlEncodedContent(values);
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+
             var response = await client.PostAsync(clientUrl, content);
+
             var responseString = await response.Content.ReadAsStringAsync();
         }
 
