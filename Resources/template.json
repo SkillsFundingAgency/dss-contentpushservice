@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
   "parameters": {
+    "authentication.ResourceId": {
+      "type": "string"
+    },
+    "authentication.Tenant": {
+      "type": "string"
+    },
     "cosmosDbCollectionId": {
       "type": "string"
     },
@@ -14,7 +20,10 @@
     "cosmosDbKey": {
       "type": "string"
     },
-    "templateBaseUrl": {
+    "eastAndBucksUrl.EastAndBucksClientId": {
+      "type": "string"
+    },
+    "eastAndBucksUrl.EastAndBucksClientSecret": {
       "type": "string"
     },
     "environmentName": {
@@ -30,6 +39,9 @@
       "type": "string"
     },
     "sharedAppServicePlanResourceGroup": {
+      "type": "string"
+    },
+    "templateBaseUrl": {
       "type": "string"
     }
   },
@@ -55,6 +67,12 @@
                 "appServicePlanId": {
                   "value": "[variables('sharedAppServicePlanId')]"
                 },
+                "authentication.ResourceId": {
+                  "value": "[parameters('authentication.ResourceId')]"
+                },
+                "authentication.Tenant": {
+                  "value": "[parameters('authentication.Tenant')]"
+                },
                 "cosmosDbCollectionId": {
                   "value": "[parameters('cosmosDbCollectionId')]"
                 },
@@ -69,6 +87,12 @@
                 },
                 "configEnvironmentName": {
                   "value": "[parameters('environmentName')]"
+                },
+                "eastAndBucksUrl.EastAndBucksClientId": {
+                  "value": "[parameters('eastAndBucksUrl.EastAndBucksClientId')]"
+                },
+                "eastAndBucksUrl.EastAndBucksClientSecret": {
+                  "value": "[parameters('eastAndBucksUrl.EastAndBucksClientSecret')]"
                 },
                 "serviceBusConnectionString": {
                   "value": "[parameters('serviceBusConnectionString')]"
