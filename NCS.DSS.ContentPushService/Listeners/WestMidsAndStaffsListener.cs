@@ -19,13 +19,13 @@ namespace NCS.DSS.ContentPushService.Listeners
 
             var accessToken = await AuthenticationHelper.GetAccessToken(clientId , clientSecret);
 
-            if (accessToken == null)
+            if (string.IsNullOrWhiteSpace(accessToken))
                 return;
 
             var clientUrl = ConfigurationManager.AppSettings["WestMidsAndStaffsUrl"];
 
             var messagePushService = new MessagePushService();
-            await messagePushService.PushToTouchpoint(serviceBusMessage, clientUrl, accessToken.AccessToken);
+            await messagePushService.PushToTouchpoint(serviceBusMessage, clientUrl, accessToken);
         }
 
     }
