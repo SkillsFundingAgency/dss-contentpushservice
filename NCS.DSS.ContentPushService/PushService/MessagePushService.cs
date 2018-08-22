@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NCS.DSS.ContentPushService.Models;
@@ -15,20 +13,25 @@ namespace NCS.DSS.ContentPushService.PushService
             var client = new HttpClient();
             var customer = JsonConvert.DeserializeObject<MessageModel>(message);
 
-            var values = new Dictionary<string, string>
+            var notification = new Notification
             {
-               {    "CustomerId",       customer.CustomerGuid.ToString()    },
-               {    "ResourceURL",     customer.URL                        },
-               { "LastModifiedDate", customer.LastModifiedDate.GetValueOrDefault().ToString(CultureInfo.InvariantCulture)}
+                CustomerId = customer.CustomerGuid.GetValueOrDefault(),
+                ResourceURL = customer.URL,
+                LastModifiedDate = customer.LastModifiedDate.GetValueOrDefault()
             };
 
-            var content = new FormUrlEncodedContent(values);
+            var content = JsonConvert.SerializeObject(notification);
+
+            var buffer = System.Text.Encoding.UTF8.GetBytes(content);
+            var byteContent = new ByteArrayContent(buffer);
+
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
+            
+            var response = await client.PostAsync(clientUrl, byteContent);
 
-            var response = await client.PostAsync(clientUrl, content);
-
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseContent = response.Content;
         }
 
     }
