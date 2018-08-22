@@ -8,6 +8,12 @@
     "appServicePlanId": {
       "type": "string"
     },
+    "authentication.ResourceId": {
+      "type": "string"
+    },
+    "authentication.Tenant": {
+      "type": "string"
+    },
     "configEnvironmentName": {
       "type": "string"
     },
@@ -21,6 +27,12 @@
       "type": "string"
     },
     "cosmosDbKey": {
+      "type": "string"
+    },
+    "eastAndBucksUrl.EastAndBucksClientId": {
+      "type": "string"
+    },
+    "eastAndBucksUrl.EastAndBucksClientSecret": {
       "type": "string"
     },
     "serviceBusConnectionString": {
@@ -74,6 +86,22 @@
             {
               "name": "ServiceBusConnectionString",
               "value": "[parameters('serviceBusConnectionString')]"
+            },
+            {
+              "name": "Authentication.ResourceId",
+              "value": "[parameters('authentication.ResourceId')]"
+            },
+            {
+              "name": "Authentication.Tenant",
+              "value": "[parameters('authentication.Tenant')]"
+            },
+            {
+              "name": "EastAndBucksUrl.EastAndBucksClientId",
+              "value": "[parameters('eastAndBucksUrl.EastAndBucksClientId')]"
+            },
+            {
+              "name": "EastAndBucksUrl.EastAndBucksClientSecret",
+              "value": "[parameters('eastAndBucksUrl.EastAndBucksClientSecret')]"
             }
           ]
         }
