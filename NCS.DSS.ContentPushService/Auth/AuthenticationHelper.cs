@@ -13,13 +13,15 @@ namespace NCS.DSS.ContentPushService.Auth
         {
             var clientCredential = new ClientCredential(clientId, clientSecret);
            
-            var resource = ConfigurationManager.AppSettings["Authentication.ResourceId"];
+            var authorityUri = ConfigurationManager.AppSettings["Authentication.AuthorityUri"];
             var tenant = ConfigurationManager.AppSettings["Authentication.Tenant"];
-            var authority = string.Concat(resource, tenant);
+            var authority = string.Concat(authorityUri, tenant);
 
             var authContext = new AuthenticationContext(authority);
-            
-            var authenticationResult = await authContext.AcquireTokenAsync(resource, clientCredential);
+
+            var appIdUri = ConfigurationManager.AppSettings["Authentication.AppIdUri"];
+
+            var authenticationResult = await authContext.AcquireTokenAsync(appIdUri, clientCredential);
             if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
             {
                 return authenticationResult.AccessToken;
