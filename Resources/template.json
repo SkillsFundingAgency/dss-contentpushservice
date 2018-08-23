@@ -2,7 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
   "parameters": {
-    "authentication.ResourceId": {
+    "authentication.AppIdUri": {
+      "type": "string"
+    },
+    "authentication.AuthorityUri": {
       "type": "string"
     },
     "authentication.Tenant": {
@@ -70,8 +73,11 @@
                 "appServicePlanId": {
                   "value": "[variables('sharedAppServicePlanId')]"
                 },
-                "authentication.ResourceId": {
-                  "value": "[parameters('authentication.ResourceId')]"
+                "authentication.AppIdUri": {
+                  "value": "[parameters('authentication.AppIdUri')]"
+                },
+                "authentication.AuthorityUri": {
+                  "value": "[parameters('authentication.AuthorityUri')]"
                 },
                 "authentication.Tenant": {
                   "value": "[parameters('authentication.Tenant')]"

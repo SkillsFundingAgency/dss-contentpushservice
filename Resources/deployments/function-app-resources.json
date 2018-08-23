@@ -8,7 +8,10 @@
     "appServicePlanId": {
       "type": "string"
     },
-    "authentication.ResourceId": {
+    "authentication.AppIdUri": {
+      "type": "string"
+    },
+    "authentication.AuthorityUri": {
       "type": "string"
     },
     "authentication.Tenant": {
@@ -91,8 +94,12 @@
               "value": "[parameters('serviceBusConnectionString')]"
             },
             {
-              "name": "Authentication.ResourceId",
-              "value": "[parameters('authentication.ResourceId')]"
+              "name": "Authentication.AppIdUri",
+              "value": "[parameters('authentication.AppIdUri')]"
+            }
+            {
+              "name": "Authentication.AuthorityUri",
+              "value": "[parameters('authentication.AuthorityUri')]"
             },
             {
               "name": "Authentication.Tenant",
