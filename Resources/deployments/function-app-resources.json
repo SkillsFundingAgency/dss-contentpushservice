@@ -96,7 +96,7 @@
             {
               "name": "Authentication.AppIdUri",
               "value": "[parameters('authentication.AppIdUri')]"
-            }
+            },
             {
               "name": "Authentication.AuthorityUri",
               "value": "[parameters('authentication.AuthorityUri')]"
