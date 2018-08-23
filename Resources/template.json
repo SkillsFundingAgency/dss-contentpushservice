@@ -20,10 +20,13 @@
     "cosmosDbKey": {
       "type": "string"
     },
-    "eastAndBucksUrl.EastAndBucksClientId": {
+    "eastAndBucksClientId": {
       "type": "string"
     },
-    "eastAndBucksUrl.EastAndBucksClientSecret": {
+    "eastAndBucksClientSecret": {
+      "type": "string"
+    },
+    "eastAndBucksUrl": {
       "type": "string"
     },
     "environmentName": {
@@ -88,11 +91,14 @@
                 "configEnvironmentName": {
                   "value": "[parameters('environmentName')]"
                 },
-                "eastAndBucksUrl.EastAndBucksClientId": {
-                  "value": "[parameters('eastAndBucksUrl.EastAndBucksClientId')]"
+                "eastAndBucksClientId": {
+                  "value": "[parameters('eastAndBucksClientId')]"
                 },
-                "eastAndBucksUrl.EastAndBucksClientSecret": {
-                  "value": "[parameters('eastAndBucksUrl.EastAndBucksClientSecret')]"
+                "eastAndBucksClientSecret": {
+                  "value": "[parameters('eastAndBucksClientSecret')]"
+                },
+                "eastAndBucksUrl": {
+                  "value": "[parameters('eastAndBucksUrl')]"
                 },
                 "serviceBusConnectionString": {
                   "value": "[parameters('serviceBusConnectionString')]"
