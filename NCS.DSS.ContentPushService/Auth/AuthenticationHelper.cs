@@ -21,7 +21,7 @@ namespace NCS.DSS.ContentPushService.Auth
 
             var appIdUri = ConfigurationManager.AppSettings["Authentication.AppIdUri"];
 
-            var authenticationResult = await authContext.AcquireTokenAsync(appIdUri, clientCredential);
+            var authenticationResult = await authContext.AcquireTokenAsync(authorityUri, clientCredential);
             if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
             {
                 return authenticationResult.AccessToken;
