@@ -11,7 +11,7 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         [FunctionName("LondonTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger("london", "london", AccessRights.Listen, Connection = "ServiceBusConnectionString")]string serviceBusMessage, 
+            [ServiceBusTrigger("london", "london", AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage, 
             TraceWriter log)
         {
             var clientId = ConfigurationManager.AppSettings["LondonClientId"];

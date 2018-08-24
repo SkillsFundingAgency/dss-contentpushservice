@@ -11,7 +11,7 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         [FunctionName("NorthWestTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger("northwest", "northwest", AccessRights.Listen, Connection = "ServiceBusConnectionString")]string serviceBusMessage, 
+            [ServiceBusTrigger("northwest", "northwest", AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage, 
             TraceWriter log)
         {
             var clientId = ConfigurationManager.AppSettings["NorthWestClientId"];

@@ -11,7 +11,7 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         [FunctionName("SouthWestAndOxfordTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger("southwestandoxford", "southwestandoxford", AccessRights.Listen, Connection = "ServiceBusConnectionString")]string serviceBusMessage, 
+            [ServiceBusTrigger("southwestandoxford", "southwestandoxford", AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage, 
             TraceWriter log)
         {
             var clientId = ConfigurationManager.AppSettings["SouthWestAndOxfordClientId"];

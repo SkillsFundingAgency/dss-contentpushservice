@@ -11,7 +11,7 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         [FunctionName("EastAndNorthamptonTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger("eastandnorthampton", "eastandnorthampton", AccessRights.Manage, Connection = "ServiceBusConnectionString")]string serviceBusMessage,
+            [ServiceBusTrigger("eastandnorthampton", "eastandnorthampton", AccessRights.Manage, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
             TraceWriter log)
         {
             var clientId = ConfigurationManager.AppSettings["EastAndNorthamptonClientId"];
