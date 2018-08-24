@@ -14,13 +14,22 @@ namespace NCS.DSS.ContentPushService.Listeners
             [ServiceBusTrigger("eastandbucks", "eastandbucks", AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage, 
             TraceWriter log)
         {
+            if (serviceBusMessage == null)
+            {
+                log.Error("Brokered Message cannot be null");
+                return;
+            }
+
             var clientId = ConfigurationManager.AppSettings["EastAndBucksClientId"];
             var clientSecret = ConfigurationManager.AppSettings["EastAndBucksClientSecret"];
 
             var accessToken = await AuthenticationHelper.GetAccessToken(clientId, clientSecret);
 
             if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                log.Warning("Unable to Generate Token");
                 return;
+            }
 
             var clientUrl = ConfigurationManager.AppSettings["EastAndBucksUrl"];
 

@@ -13,6 +13,9 @@ namespace NCS.DSS.ContentPushService.PushService
     {
         public async Task PushToTouchpoint(BrokeredMessage message, string clientUrl, string bearerToken)
         {
+            if (message == null)
+                return;
+
             var client = new HttpClient();
             var body = new StreamReader(message.GetBody<Stream>(), Encoding.UTF8).ReadToEnd();
 
@@ -37,9 +40,7 @@ namespace NCS.DSS.ContentPushService.PushService
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
             
-            var response = await client.PostAsync(clientUrl, byteContent);
-
-            var responseContent = response.Content;
+            await client.PostAsync(clientUrl, byteContent);
         }
 
     }
