@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -41,8 +42,11 @@ namespace NCS.DSS.ContentPushService.PushService
             client.DefaultRequestHeaders.Add("OriginatingTouchpointId", customer.TouchpointId);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
             
-            await client.PostAsync(clientUrl, byteContent);
+            var response = await client.PostAsync(clientUrl, byteContent);
+            
+            if(response?.StatusCode == HttpStatusCode.OK)
+                message.Complete();
+            
         }
-
     }
 }
