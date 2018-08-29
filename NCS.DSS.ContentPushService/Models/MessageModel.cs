@@ -9,5 +9,6 @@ namespace NCS.DSS.ContentPushService.Models
         public DateTime? LastModifiedDate { get; set; }
         public Uri URL { get; set; }
         public bool IsNewCustomer { get; set; }
+        public string TouchpointId { get; set; }
     }
 }
