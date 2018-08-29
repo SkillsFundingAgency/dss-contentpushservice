@@ -23,21 +23,14 @@ namespace NCS.DSS.ContentPushService.Listeners
                 return;
             }
 
-            var clientId = ConfigurationManager.AppSettings["SouthWestAndOxfordClientId"];
-            if (string.IsNullOrWhiteSpace(clientId))
+            var appIdUri = ConfigurationManager.AppSettings["SouthWestAndOxford.AppIdUri"];
+            if (string.IsNullOrWhiteSpace(appIdUri))
             {
-                log.LogError("unable to find client Id for " + TopicName);
+                log.LogError("unable to find App Id Uri for " + TopicName);
                 return;
             }
 
-            var clientSecret = ConfigurationManager.AppSettings["SouthWestAndOxfordClientSecret"];
-            if (string.IsNullOrWhiteSpace(clientId))
-            {
-                log.LogError("unable to find client secret for " + TopicName);
-                return;
-            }
-
-            var accessToken = await AuthenticationHelper.GetAccessToken(clientId, clientSecret);
+            var accessToken = await AuthenticationHelper.GetAccessToken(appIdUri);
             if (string.IsNullOrWhiteSpace(accessToken))
             {
                 log.LogError("Unable to Generate Token for " + TopicName);
