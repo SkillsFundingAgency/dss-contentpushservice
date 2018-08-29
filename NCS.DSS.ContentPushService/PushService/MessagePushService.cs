@@ -37,7 +37,8 @@ namespace NCS.DSS.ContentPushService.PushService
             var byteContent = new ByteArrayContent(buffer);
 
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
+            
+            client.DefaultRequestHeaders.Add("OriginatingTouchpointId", customer.TouchpointId);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
             
             await client.PostAsync(clientUrl, byteContent);
