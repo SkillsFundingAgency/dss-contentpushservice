@@ -8,10 +8,10 @@
     "appServicePlanId": {
       "type": "string"
     },
-    "authentication.AppIdUri": {
+    "authentication.PushServiceClientId": {
       "type": "string"
     },
-    "authentication.AuthorityUri": {
+    "authentication.PushServiceClientSecret": {
       "type": "string"
     },
     "authentication.Tenant": {
@@ -32,13 +32,10 @@
     "cosmosDbKey": {
       "type": "string"
     },
-    "eastAndBucksClientId": {
+    "eastAndBucks.AppIdUri": {
       "type": "string"
     },
-    "eastAndBucksClientSecret": {
-      "type": "string"
-    },
-    "eastAndBucksUrl": {
+    "eastAndBucks.Url": {
       "type": "string"
     },
     "serviceBusConnectionString": {
@@ -94,28 +91,28 @@
               "value": "[parameters('serviceBusConnectionString')]"
             },
             {
-              "name": "Authentication.AppIdUri",
-              "value": "[parameters('authentication.AppIdUri')]"
+              "name": "Authentication.AuthorityUri",
+              "value": "https://login.microsoftonline.com/"
             },
             {
-              "name": "Authentication.AuthorityUri",
-              "value": "[parameters('authentication.AuthorityUri')]"
+              "name": "Authentication.PushServiceClientId",
+              "value": "[parameters('authentication.PushServiceClientId')]"
+            },
+            {
+              "name": "Authentication.PushServiceClientSecret",
+              "value": "[parameters('authentication.PushServiceClientSecret')]"
             },
             {
               "name": "Authentication.Tenant",
               "value": "[parameters('authentication.Tenant')]"
             },
             {
-              "name": "EastAndBucksClientId",
-              "value": "[parameters('eastAndBucksClientId')]"
+              "name": "EastAndBucks.AppIdUri",
+              "value": "[parameters('')]"
             },
             {
-              "name": "EastAndBucksClientSecret",
-              "value": "[parameters('eastAndBucksClientSecret')]"
-            },
-            {
-              "name": "EastAndBucksUrl",
-              "value": "[parameters('eastAndBucksUrl')]"
+              "name": "EastAndBucks.Url",
+              "value": "[parameters('eastAndBucks.Url')]"
             }
           ]
         }
