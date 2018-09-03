@@ -108,7 +108,7 @@
             },
             {
               "name": "EastAndBucks.AppIdUri",
-              "value": "[parameters('')]"
+              "value": "[parameters('eastAndBucks.AppIdUri')]"
             },
             {
               "name": "EastAndBucks.Url",
