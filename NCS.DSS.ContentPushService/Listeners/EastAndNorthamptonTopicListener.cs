@@ -1,3 +1,4 @@
+using System;
 using System.Configuration;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
@@ -11,10 +12,12 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         private const string TopicName = "eastandnorthampton";
         private const string SubscriptionName = "eastandnorthampton";
+        private const string AppIdUri = "EastAndNorthampton.AppIdUri";
+        private const string ClientUrl = "EastAndNorthampton.Url";
 
         [FunctionName("EastAndNorthamptonTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger(TopicName, SubscriptionName, AccessRights.Manage, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
+            [ServiceBusTrigger(TopicName, SubscriptionName, AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
              ILogger log)
         {
             if (serviceBusMessage == null)
@@ -23,29 +26,17 @@ namespace NCS.DSS.ContentPushService.Listeners
                 return;
             }
 
-            var appIdUri = ConfigurationManager.AppSettings["EastAndNorthampton.AppIdUri"];
-            if (string.IsNullOrWhiteSpace(appIdUri))
+            try
             {
-                log.LogError("unable to find App Id Uri for " + TopicName);
+                var messagePushService = new MessagePushService();
+                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage);
+            }
+            catch (Exception ex)
+            {
+                log.LogInformation(ex.ToString());
                 return;
             }
 
-            var accessToken = await AuthenticationHelper.GetAccessToken(appIdUri);
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-                log.LogError("Unable to Generate Token for " + TopicName);
-                return;
-            }
-
-            var clientUrl = ConfigurationManager.AppSettings["EastAndNorthamptonUrl"];
-            if (string.IsNullOrWhiteSpace(clientUrl))
-            {
-                log.LogError("Unable to find Client Url for " + TopicName);
-                return;
-            }
-
-            var messagePushService = new MessagePushService();
-            await messagePushService.PushToTouchpoint(serviceBusMessage, clientUrl, accessToken);
         }
     }
 }

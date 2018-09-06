@@ -12,6 +12,8 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         private const string TopicName = "eastandbucks";
         private const string SubscriptionName = "eastandbucks";
+        private const string AppIdUri = "EastAndBucks.AppIdUri";
+        private const string ClientUrl = "EastAndBucks.Url";
 
         [FunctionName("EastAndBucksTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
@@ -26,16 +28,8 @@ namespace NCS.DSS.ContentPushService.Listeners
 
             try
             {
-                string appIdUri = ConfigurationManager.AppSettings["EastAndBucks.AppIdUri"].ToString();
-
-                var accessToken = await AuthenticationHelper.GetAccessToken(appIdUri);
-
-                string clientUrl = ConfigurationManager.AppSettings["EastAndBucksUrl"].ToString();
-
                 var messagePushService = new MessagePushService();
-
-                await messagePushService.PushToTouchpoint(serviceBusMessage, clientUrl, accessToken);
-
+                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage);
             }
             catch(Exception ex)
             {
