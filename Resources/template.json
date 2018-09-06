@@ -23,12 +23,6 @@
     "cosmosDbKey": {
       "type": "string"
     },
-    "eastAndBucks.AppIdUri": {
-      "type": "string"
-    },
-    "eastAndBucks.Url": {
-      "type": "string"
-    },
     "environmentName": {
       "type": "string"
     },
@@ -45,6 +39,60 @@
       "type": "string"
     },
     "templateBaseUrl": {
+      "type": "string"
+    },
+    "eastAndBucks.AppIdUri": {
+      "type": "string"
+    },
+    "eastAndBucks.Url": {
+      "type": "string"
+    },
+    "eastAndNorthampton.AppIdUri": {
+      "type": "string"
+    },
+    "eastAndNorthampton.Url": {
+      "type": "string"
+    },
+    "london.AppIdUri": {
+      "type": "string"
+    },
+    "london.Url": {
+      "type": "string"
+    },
+    "northEastAndCumbria.AppIdUri": {
+      "type": "string"
+    },
+    "northEastAndCumbria.Url": {
+      "type": "string"
+    },
+    "northWest.AppIdUri": {
+      "type": "string"
+    },
+    "northWest.Url": {
+      "type": "string"
+    },
+    "southEast.AppIdUri": {
+      "type": "string"
+    },
+    "southEast.Url": {
+      "type": "string"
+    },
+    "southWestAndOxford.AppIdUri": {
+      "type": "string"
+    },
+    "southWestAndOxford.Url": {
+      "type": "string"
+    },
+    "westMidsAndStaffs.AppIdUri": {
+      "type": "string"
+    },
+    "westMidsAndStaffs.Url": {
+      "type": "string"
+    },
+    "yorkshireAndHumber.AppIdUri": {
+      "type": "string"
+    },
+    "yorkshireAndHumber.Url": {
       "type": "string"
     }
   },
@@ -94,14 +142,62 @@
                 "configEnvironmentName": {
                   "value": "[parameters('environmentName')]"
                 },
+                "serviceBusConnectionString": {
+                  "value": "[parameters('serviceBusConnectionString')]"
+                },
                 "eastAndBucks.AppIdUri": {
                   "value": "[parameters('eastAndBucks.AppIdUri')]"
                 },
                 "eastAndBucks.Url": {
                   "value": "[parameters('eastAndBucks.Url')]"
                 },
-                "serviceBusConnectionString": {
-                  "value": "[parameters('serviceBusConnectionString')]"
+                "eastAndNorthampton.AppIdUri": {
+                  "value": "[parameters('eastAndNorthampton.AppIdUri')]"
+                },
+                "eastAndNorthampton.Url": {
+                  "value": "[parameters('eastAndNorthampton.Url')]"
+                },
+                "london.AppIdUri": {
+                  "value": "[parameters('london.AppIdUri')]"
+                },
+                "london.Url": {
+                  "value": "[parameters('london.Url')]"
+                },
+                "northEastAndCumbria.AppIdUri": {
+                  "value": "[parameters('northEastAndCumbria.AppIdUri')]"
+                },
+                "northEastAndCumbria.Url": {
+                  "value": "[parameters('northEastAndCumbria.Url')]"
+                },
+                "northWest.AppIdUri": {
+                  "value": "[parameters('northWest.AppIdUri')]"
+                },
+                "northWest.Url": {
+                  "value": "[parameters('northWest.Url')]"
+                },
+                "southEast.AppIdUri": {
+                  "value": "[parameters('southEast.AppIdUri')]"
+                },
+                "southEast.Url": {
+                  "value": "[parameters('southEast.Url')]"
+                },
+                "southWestAndOxford.AppIdUri": {
+                  "value": "[parameters('southWestAndOxford.AppIdUri')]"
+                },
+                "southWestAndOxford.Url": {
+                  "value": "[parameters('southWestAndOxford.Url')]"
+                },
+                "westMidsAndStaffs.AppIdUri": {
+                  "value": "[parameters('westMidsAndStaffs.AppIdUri')]"
+                },
+                "westMidsAndStaffs.Url": {
+                  "value": "[parameters('westMidsAndStaffs.Url')]"
+                },
+                "yorkshireAndHumber.AppIdUri": {
+                  "value": "[parameters('yorkshireAndHumber.AppIdUri')]"
+                },
+                "yorkshireAndHumber.Url": {
+                  "value": "[parameters('yorkshireAndHumber.Url')]"
                 }
               }
             },
