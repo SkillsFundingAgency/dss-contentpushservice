@@ -15,7 +15,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         private const string AppIdUri = "dss-test-touchpoint-1.AppIdUri";
         private const string ClientUrl = "dss-test-touchpoint-1.Url";
 
-        [FunctionName("dss-test-touchpoint-1-TopicListener")]
+        [FunctionName("dsstesttouchpoint1TopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(
             [ServiceBusTrigger(TopicName, SubscriptionName, AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
              ILogger log)
