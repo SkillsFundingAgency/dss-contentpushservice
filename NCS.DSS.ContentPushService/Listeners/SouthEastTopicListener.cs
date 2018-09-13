@@ -12,8 +12,8 @@ namespace NCS.DSS.ContentPushService.Listeners
     {
         private const string TopicName = "southeast";
         private const string SubscriptionName = "southeast";
-        private const string AppIdUri = "Southeast.AppIdUri";
-        private const string ClientUrl = "Southeast.Url";
+        private const string AppIdUri = "SouthEast.AppIdUri";
+        private const string ClientUrl = "SouthEast.Url";
 
         [FunctionName("SouthEastTopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(

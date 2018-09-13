@@ -38,6 +38,54 @@
     "eastAndBucks.Url": {
       "type": "string"
     },
+    "eastAndNorthampton.AppIdUri": {
+      "type": "string"
+    },
+    "eastAndNorthampton.Url": {
+      "type": "string"
+    },
+    "london.AppIdUri": {
+      "type": "string"
+    },
+    "london.Url": {
+      "type": "string"
+    },
+    "northEastAndCumbria.AppIdUri": {
+      "type": "string"
+    },
+    "northEastAndCumbria.Url": {
+      "type": "string"
+    },
+    "northWest.AppIdUri": {
+      "type": "string"
+    },
+    "northWest.Url": {
+      "type": "string"
+    },
+    "southEast.AppIdUri": {
+      "type": "string"
+    },
+    "southEast.Url": {
+      "type": "string"
+    },
+    "southWestAndOxford.AppIdUri": {
+      "type": "string"
+    },
+    "southWestAndOxford.Url": {
+      "type": "string"
+    },
+    "westMidsAndStaffs.AppIdUri": {
+      "type": "string"
+    },
+    "westMidsAndStaffs.Url": {
+      "type": "string"
+    },
+    "yorkshireAndHumber.AppIdUri": {
+      "type": "string"
+    },
+    "yorkshireAndHumber.Url": {
+      "type": "string"
+    },
     "serviceBusConnectionString": {
       "type": "string"
     }
@@ -113,6 +161,70 @@
             {
               "name": "EastAndBucks.Url",
               "value": "[parameters('eastAndBucks.Url')]"
+            },
+            {
+              "name": "EastAndNorthampton.AppIdUri",
+              "value": "[parameters('eastAndNorthampton.AppIdUri')]"
+            },
+            {
+              "name": "EastAndNorthampton.Url",
+              "value": "[parameters('eastAndNorthampton.Url')]"
+            },
+            {
+              "name": "London.AppIdUri",
+              "value": "[parameters('london.AppIdUri')]"
+            },
+            {
+              "name": "London.Url",
+              "value": "[parameters('london.Url')]"
+            },
+            {
+              "name": "NorthEastAndCumbria.AppIdUri",
+              "value": "[parameters('northEastAndCumbria.AppIdUri')]"
+            },
+            {
+              "name": "NorthEastAndCumbria.Url",
+              "value": "[parameters('northEastAndCumbria.Url')]"
+            },
+            {
+              "name": "NorthWest.AppIdUri",
+              "value": "[parameters('northWest.AppIdUri')]"
+            },
+            {
+              "name": "NorthWest.Url",
+              "value": "[parameters('northWest.Url')]"
+            },
+            {
+              "name": "SouthEast.AppIdUri",
+              "value": "[parameters('southEast.AppIdUri')]"
+            },
+            {
+              "name": "SouthEast.Url",
+              "value": "[parameters('southEast.Url')]"
+            },
+            {
+              "name": "SouthWestAndOxford.AppIdUri",
+              "value": "[parameters('southWestAndOxford.AppIdUri')]"
+            },
+            {
+              "name": "SouthWestAndOxford.Url",
+              "value": "[parameters('southWestAndOxford.Url')]"
+            },
+            {
+              "name": "WestMidsAndStaffs.AppIdUri",
+              "value": "[parameters('westMidsAndStaffs.AppIdUri')]"
+            },
+            {
+              "name": "WestMidsAndStaffs.Url",
+              "value": "[parameters('westMidsAndStaffs.Url')]"
+            },
+            {
+              "name": "YorkshireAndHumber.AppIdUri",
+              "value": "[parameters('yorkshireAndHumber.AppIdUri')]"
+            },
+            {
+              "name": "YorkshireAndHumber.Url",
+              "value": "[parameters('yorkshireAndHumber.Url')]"
             }
           ]
         }
