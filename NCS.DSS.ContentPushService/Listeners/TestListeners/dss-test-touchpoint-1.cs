@@ -8,12 +8,12 @@ using NCS.DSS.ContentPushService.PushService;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public static class DSSTestTouchpoint2TopicListener
+    public static class DSSTestTouchpoint1TopicListener
     {
-        private const string TopicName = "dss-test-touchpoint-2";
-        private const string SubscriptionName = "dss-test-touchpoint-2";
-        private const string AppIdUri = "dss-test-touchpoint-2.AppIdUri";
-        private const string ClientUrl = "dss-test-touchpoint-2.Url";
+        private const string TopicName = "dss-test-touchpoint-1";
+        private const string SubscriptionName = "dss-test-touchpoint-1";
+        private const string AppIdUri = "dss-test-touchpoint-1.AppIdUri";
+        private const string ClientUrl = "dss-test-touchpoint-1.Url";
 
         [FunctionName("dss-test-touchpoint-1-TopicListener")]
         public static async System.Threading.Tasks.Task RunAsync(

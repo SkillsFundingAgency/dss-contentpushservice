@@ -83,6 +83,24 @@
     "southWestAndOxford.Url": {
       "type": "string"
     },
+    "dss-test-touchpoint-1.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-1.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-2.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-2.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-3.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-3.Url": {
+      "type": "string"
+    },
     "westMidsAndStaffs.AppIdUri": {
       "type": "string"
     },
@@ -186,6 +204,24 @@
                 },
                 "southWestAndOxford.Url": {
                   "value": "[parameters('southWestAndOxford.Url')]"
+                },
+                "dss-test-touchpoint-1.AppIdUri": {
+                  "value": "[parameters('dss-test-touchpoint-1.AppIdUri')]"
+                },
+                "dss-test-touchpoint-1.Url": {
+                  "value": "[parameters('dss-test-touchpoint-1.Url')]"
+                },
+                "dss-test-touchpoint-2.AppIdUri": {
+                  "value": "[parameters('dss-test-touchpoint-2.AppIdUri')]"
+                },
+                "dss-test-touchpoint-2.Url": {
+                  "value": "[parameters('dss-test-touchpoint-2.Url')]"
+                },
+                "dss-test-touchpoint-3.AppIdUri": {
+                  "value": "[parameters('dss-test-touchpoint-3.AppIdUri')]"
+                },
+                "dss-test-touchpoint-3.Url": {
+                  "value": "[parameters('dss-test-touchpoint-3.Url')]"
                 },
                 "westMidsAndStaffs.AppIdUri": {
                   "value": "[parameters('westMidsAndStaffs.AppIdUri')]"
