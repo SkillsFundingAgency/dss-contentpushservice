@@ -1,5 +1,7 @@
 using System;
 using System.Configuration;
+using System.IO;
+using System.Text;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.ServiceBus.Messaging;
@@ -30,6 +32,10 @@ namespace NCS.DSS.ContentPushService.Listeners
             {
                 var messagePushService = new MessagePushService();
                 await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage);
+
+                var body = new StreamReader(serviceBusMessage.GetBody<Stream>(), Encoding.UTF8).ReadToEnd();
+                log.LogInformation("The " + TopicName + " topic pushed a notification to " + ClientUrl + " at " + DateTime.Now + " with a payload of " + body);
+
             }
             catch (Exception ex)
             {
