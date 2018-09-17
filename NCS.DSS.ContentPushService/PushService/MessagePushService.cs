@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using NCS.DSS.ContentPushService.Auth;
+using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
 
@@ -56,7 +58,36 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 message.Complete();
             }
-            
+
+            await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
         }
+
+        public static async Task SaveNotificationToDBAsync(int rspHttpCode, 
+                                                string MessageId,
+                                                Notification rspNotification,
+                                                string AppIdUri, 
+                                                string ClientUrl, 
+                                                string BearerToken, 
+                                                bool Success)
+        {
+
+            var DBNotification = new DBNotification
+            {
+                MessageId = MessageId,
+                HttpCode = rspHttpCode,
+                AppIdUri = AppIdUri,
+                ClientUrl = ClientUrl,
+                BearerToken = BearerToken,
+                Success = Success,
+                Notification = rspNotification,
+                Timestamp = DateTime.Now
+            };
+
+            var documentDbProvider = new DocumentDBProvider();
+            await documentDbProvider.CreateNotificationAsync(DBNotification);
+        }
+
+
     }
+
 }
