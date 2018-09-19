@@ -57,9 +57,14 @@ namespace NCS.DSS.ContentPushService.PushService
             if (response?.StatusCode == HttpStatusCode.OK)
             {
                 message.Complete();
+                await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
+            }
+            else
+            {
+                await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
             }
 
-            await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
+            
         }
 
         public static async Task SaveNotificationToDBAsync(int rspHttpCode, 
@@ -86,7 +91,6 @@ namespace NCS.DSS.ContentPushService.PushService
             var documentDbProvider = new DocumentDBProvider();
             await documentDbProvider.CreateNotificationAsync(DBNotification);
         }
-
 
     }
 

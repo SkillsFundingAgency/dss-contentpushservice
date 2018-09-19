@@ -38,7 +38,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             }
             catch(Exception ex)
             {
-                log.LogInformation(ex.ToString());
+                log.LogError(ex.ToString());
                 return;
             }
            

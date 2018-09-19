@@ -13,8 +13,8 @@ namespace NCS.DSS.ContentPushService.Cosmos.Helper
         private readonly string _collectionId = ConfigurationManager.AppSettings["CollectionId"];
 
         private Uri _notificationsDocumentCollectionUri;
-        private readonly string _notificationsDatabaseId = ConfigurationManager.AppSettings["NotificationsDatabaseId"];
-        private readonly string _notificationsCollectionId = ConfigurationManager.AppSettings["NotificationsCollectionId"];
+        private readonly string _notificationsDatabaseId = ConfigurationManager.AppSettings["NotificationDatabaseId"];
+        private readonly string _notificationsCollectionId = ConfigurationManager.AppSettings["NotificationCollectionId"];
 
 
         public Uri CreateDocumentCollectionUri()
