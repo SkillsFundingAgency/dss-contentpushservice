@@ -137,6 +137,10 @@
               "value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName'))).InstrumentationKey]"
             },
             {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~1"
+            },
+            {
               "name": "CollectionId",
               "value": "[parameters('cosmosDbCollectionId')]"
             },
