@@ -157,11 +157,11 @@
               "value": "[parameters('cosmosDbKey')]"
             },
             {
-              "name": "NotificationsCollectionId",
+              "name": "NotificationCollectionId",
               "value": "notifications"
             },
             {
-              "name": "NotificationsDatabaseId",
+              "name": "NotificationDatabaseId",
               "value": "notifications"
             },
             {
