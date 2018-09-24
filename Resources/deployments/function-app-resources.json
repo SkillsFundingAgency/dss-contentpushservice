@@ -157,6 +157,14 @@
               "value": "[parameters('cosmosDbKey')]"
             },
             {
+              "name": "NotificationsCollectionId",
+              "value": "notifications"
+            },
+            {
+              "name": "NotificationsDatabaseId",
+              "value": "notifications"
+            },
+            {
               "name": "ServiceBusConnectionString",
               "value": "[parameters('serviceBusConnectionString')]"
             },
