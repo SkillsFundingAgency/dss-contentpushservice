@@ -68,7 +68,10 @@ namespace NCS.DSS.ContentPushService.PushService
             }
             else
             {
-                //Create resend client
+                //Save notification to db
+                await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
+
+                //Create Servicebus resend client
                 var resendClient = TopicClient.CreateFromConnectionString(_connectionString, GetTopic(customer.TouchpointId));
                 var resendMessage = message.Clone();
 
@@ -82,7 +85,10 @@ namespace NCS.DSS.ContentPushService.PushService
 
                 //Resend Message to the Topic with new properties
                 await resendClient.SendAsync(resendMessage);
-                await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
+                resendClient.Close();
+
+                //Set original message to complete
+                message.Complete();
             }
         }
 
