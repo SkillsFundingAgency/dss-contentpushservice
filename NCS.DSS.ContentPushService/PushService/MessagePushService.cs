@@ -19,7 +19,7 @@ namespace NCS.DSS.ContentPushService.PushService
 
         readonly string _connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];
 
-        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message)
+        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string originalListener)
         {
             if (message == null)
             {
@@ -72,7 +72,7 @@ namespace NCS.DSS.ContentPushService.PushService
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
 
                 //Create Servicebus resend client
-                var resendClient = TopicClient.CreateFromConnectionString(_connectionString, GetTopic(customer.TouchpointId));
+                var resendClient = TopicClient.CreateFromConnectionString(_connectionString, originalListener);
                 var resendMessage = message.Clone();
                 int retrySecs = GetRetrySeconds(message);
 
