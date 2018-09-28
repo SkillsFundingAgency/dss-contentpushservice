@@ -74,21 +74,31 @@ namespace NCS.DSS.ContentPushService.PushService
                 //Create Servicebus resend client
                 var resendClient = TopicClient.CreateFromConnectionString(_connectionString, GetTopic(customer.TouchpointId));
                 var resendMessage = message.Clone();
+                int retrySecs = GetRetrySeconds(message);
 
-                //Schedule time for re-delivery attempt - UTC time + required number of seconds
-                resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(GetRetrySeconds(message));
+                if (retrySecs == -99)
+                {
+                    //Deadletter as max retries exceeded
+                    resendMessage.DeadLetter();
+                    resendClient.Close();
+                }
+                else
+                {
+                    //Schedule time for re-delivery attempt - UTC time + required number of seconds
+                    resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
 
-                //Increment retry count by 1
-                message.Properties.TryGetValue("RetryNumber", out object rVal);
-                int incRetryNumber = (int)rVal + 1;
-                resendMessage.Properties["RetryNumber"] = incRetryNumber;
+                    //Increment retry count by 1
+                    message.Properties.TryGetValue("RetryNumber", out object rVal);
+                    int incRetryNumber = (int)rVal + 1;
+                    resendMessage.Properties["RetryNumber"] = incRetryNumber;
 
-                //Resend Message to the Topic with new properties
-                await resendClient.SendAsync(resendMessage);
-                resendClient.Close();
+                    //Resend Message to the Topic with new properties
+                    await resendClient.SendAsync(resendMessage);
+                    resendClient.Close();
 
-                //Set original message to complete
-                message.Complete();
+                    //Set original message to complete
+                    message.Complete();
+                }
             }
         }
 
@@ -97,37 +107,41 @@ namespace NCS.DSS.ContentPushService.PushService
             message.Properties.TryGetValue("RetryNumber", out object rVal);
             int retryNo = (int)rVal;
 
-            //message.Properties.TryGetValue("RetryHttpStatusCode", out rVal);
-            //string retryHttpStatusCode = (string)rVal;
-            
-            switch (retryNo)
+            if (retryNo >= 11)
             {
-                case (0):
-                    return 1;
-                case (1):
-                    return 2;
-                case (2):
-                    return 4;
-                case (3):
-                    return 8;
-                case (4):
-                    return 16;
-                case (5):
-                    return 32;
-                case (6):
-                    return 64;
-                case (7):
-                    return 128;
-                case (8):
-                    return 256;
-                case (9):
-                    return 512;
-                case (10):
-                    return 1024;
-                case (11):
-                    return 2048;
-                default:
-                    return 0;
+                return -99;
+            }
+            else
+            {
+                switch (retryNo)
+                {
+                    case (0):
+                        return 1;
+                    case (1):
+                        return 2;
+                    case (2):
+                        return 4;
+                    case (3):
+                        return 8;
+                    case (4):
+                        return 16;
+                    case (5):
+                        return 32;
+                    case (6):
+                        return 64;
+                    case (7):
+                        return 128;
+                    case (8):
+                        return 256;
+                    case (9):
+                        return 512;
+                    case (10):
+                        return 1024;
+                    case (11):
+                        return 2048;
+                    default:
+                        return 0;
+                }
             }
         }
 
