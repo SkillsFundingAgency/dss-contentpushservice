@@ -88,9 +88,9 @@ namespace NCS.DSS.ContentPushService.PushService
                     resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
 
                     //Increment retry count by 1
-                    message.Properties.TryGetValue("RetryNumber", out object rVal);
+                    message.Properties.TryGetValue("RetryCount", out object rVal);
                     int incRetryNumber = (int)rVal + 1;
-                    resendMessage.Properties["RetryNumber"] = incRetryNumber;
+                    resendMessage.Properties["RetryCount"] = incRetryNumber;
 
                     //Resend Message to the Topic with new properties
                     await resendClient.SendAsync(resendMessage);
@@ -104,7 +104,7 @@ namespace NCS.DSS.ContentPushService.PushService
 
         public static int GetRetrySeconds(BrokeredMessage message)
         {
-            message.Properties.TryGetValue("RetryNumber", out object rVal);
+            message.Properties.TryGetValue("RetryCount", out object rVal);
             int retryNo = (int)rVal;
 
             if (retryNo >= 11)
