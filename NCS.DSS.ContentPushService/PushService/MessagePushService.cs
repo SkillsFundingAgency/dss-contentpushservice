@@ -19,7 +19,7 @@ namespace NCS.DSS.ContentPushService.PushService
 
         readonly string _connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];
 
-        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string originalListener)
+        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string TopicName)
         {
             if (message == null)
             {
@@ -72,76 +72,69 @@ namespace NCS.DSS.ContentPushService.PushService
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
 
                 //Create Servicebus resend client
-                var resendClient = TopicClient.CreateFromConnectionString(_connectionString, originalListener);
+                var resendClient = TopicClient.CreateFromConnectionString(_connectionString, TopicName);
                 var resendMessage = message.Clone();
-                int retrySecs = GetRetrySeconds(message);
 
-                if (retrySecs == -99)
+                //Get number of retries attempted
+                message.Properties.TryGetValue("RetryCount", out object rVal);
+                int RetryCount = (int)rVal;
+                
+                if (RetryCount >= 12)
                 {
                     //Deadletter as max retries exceeded
-                    resendMessage.DeadLetter();
+                    await resendMessage.DeadLetterAsync();
                     resendClient.Close();
+                    await message.CompleteAsync();
                 }
                 else
                 {
                     //Schedule time for re-delivery attempt - UTC time + required number of seconds
+                    int retrySecs = GetRetrySeconds(RetryCount);
                     resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
 
                     //Increment retry count by 1
-                    message.Properties.TryGetValue("RetryCount", out object rVal);
-                    int incRetryNumber = (int)rVal + 1;
-                    resendMessage.Properties["RetryCount"] = incRetryNumber;
+                    resendMessage.Properties["RetryCount"] = RetryCount + 1;
 
-                    //Resend Message to the Topic with new properties
+                    //Resend Message to the Topic
                     await resendClient.SendAsync(resendMessage);
                     resendClient.Close();
 
-                    //Set original message to complete
-                    message.Complete();
+                    //Set original message to complete to remove from queue
+                    await message.CompleteAsync();
                 }
             }
         }
 
-        public static int GetRetrySeconds(BrokeredMessage message)
+        public static int GetRetrySeconds(int RetryCount)
         {
-            message.Properties.TryGetValue("RetryCount", out object rVal);
-            int retryNo = (int)rVal;
-
-            if (retryNo >= 11)
-            {
-                return -99;
-            }
-            else
-            {
-                switch (retryNo)
-                {
-                    case (0):
-                        return 1;
-                    case (1):
-                        return 2;
-                    case (2):
-                        return 4;
-                    case (3):
-                        return 8;
-                    case (4):
-                        return 16;
-                    case (5):
-                        return 32;
-                    case (6):
-                        return 64;
-                    case (7):
-                        return 128;
-                    case (8):
-                        return 256;
-                    case (9):
-                        return 512;
-                    case (10):
-                        return 1024;
-                    case (11):
-                        return 2048;
-                    default:
-                        return 0;
-                }
+            switch (RetryCount)
+            { 
+                case (0):
+                    return 1;
+                case (1):
+                    return 2;
+                case (2):
+                    return 4;
+                case (3):
+                    return 8;
+                case (4):
+                    return 16;
+                case (5):
+                    return 32;
+                case (6):
+                    return 64;
+                case (7):
+                    return 128;
+                case (8):
+                    return 256;
+                case (9):
+                    return 512;
+                case (10):
+                    return 1024;
+                case (11):
+                    return 2048;
+                default:
+                    return 0;
             }
         }
 
@@ -170,48 +163,6 @@ namespace NCS.DSS.ContentPushService.PushService
             await documentDbProvider.CreateNotificationAsync(DBNotification);
         }
 
-
-        private static string GetTopic(string touchPointId)
-        {
-            switch (touchPointId)
-            {
-                case "0000000101":
-                    return "eastandbucks";
-                case "0000000102":
-                    return "eastandnorthampton";
-                case "0000000103":
-                    return "london";
-                case "0000000104":
-                    return "westmidsandstaffs";
-                case "0000000105":
-                    return "northwest";
-                case "0000000106":
-                    return "northeastandcumbria";
-                case "0000000107":
-                    return "southeast";
-                case "0000000108":
-                    return "southwestandoxford";
-                case "0000000109":
-                    return "yorkshireandhumber";
-                case "0000000999":
-                    return "careershelpline";
-
-
-                ////////////////////////////////////
-                ///////For test team use only///////
-                case "9000000000":
-                    return "dss-test-touchpoint-1";
-                case "9111111111":
-                    return "dss-test-touchpoint-2";
-                case "9222222222":
-                    return "dss-test-touchpoint-3";
-                ////////////////////////////////////
-
-                default:
-                    return string.Empty;
-            }
-
-        }
     }
 
 }
