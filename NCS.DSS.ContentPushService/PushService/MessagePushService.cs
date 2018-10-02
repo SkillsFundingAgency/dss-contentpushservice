@@ -61,7 +61,7 @@ namespace NCS.DSS.ContentPushService.PushService
             //response.StatusCode = HttpStatusCode.BadRequest;
             //
 
-            if (response?.StatusCode == HttpStatusCode.OK)
+            if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted) 
             {
                 message.Complete();
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
