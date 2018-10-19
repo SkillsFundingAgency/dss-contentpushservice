@@ -99,8 +99,8 @@ namespace NCS.DSS.ContentPushService.PushService
                     await resendClient.SendAsync(resendMessage);
                     resendClient.Close();
 
-                    //Set original message to complete to remove from queue
-                    await message.CompleteAsync();
+                    //Set original message to Deadletter
+                    await message.DeadLetterAsync();
                 }
             }
         }
