@@ -82,7 +82,7 @@ namespace NCS.DSS.ContentPushService.PushService
                 if (RetryCount >= 12)
                 {
                     //Deadletter as max retries exceeded
-                    await resendMessage.DeadLetterAsync();
+                    await resendMessage.DeadLetterAsync("MaxTriesExceeded", "DSS Attempted to send notification to ABC Endpoint and reached retry limit!");
                     resendClient.Close();
                     await message.CompleteAsync();
                 }
@@ -100,7 +100,7 @@ namespace NCS.DSS.ContentPushService.PushService
                     resendClient.Close();
 
                     //Set original message to Deadletter
-                    await message.DeadLetterAsync();
+                    await message.DeadLetterAsync("RetryAttempt", "DSS Attempted to send notification to ABC Endpoint and encountered an error!"); ;
                 }
             }
         }
