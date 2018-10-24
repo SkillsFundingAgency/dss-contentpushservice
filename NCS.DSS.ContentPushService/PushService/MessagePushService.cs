@@ -153,7 +153,7 @@ namespace NCS.DSS.ContentPushService.PushService
                 HttpCode = rspHttpCode,
                 AppIdUri = AppIdUri,
                 ClientUrl = ClientUrl,
-                BearerToken = BearerToken,
+                BearerToken = "",
                 Success = Success,
                 Notification = rspNotification,
                 Timestamp = DateTime.Now
