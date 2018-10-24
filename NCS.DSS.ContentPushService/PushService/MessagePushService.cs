@@ -99,8 +99,8 @@ namespace NCS.DSS.ContentPushService.PushService
                     await resendClient.SendAsync(resendMessage);
                     resendClient.Close();
 
-                    //Set original message to Deadletter
-                    await message.DeadLetterAsync("RetryAttempt", "DSS Attempted to send notification to ABC Endpoint and encountered an error!"); ;
+                    //Complete original message
+                    await message.CompleteAsync();
                 }
             }
         }
