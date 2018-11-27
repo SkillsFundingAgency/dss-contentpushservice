@@ -39,7 +39,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             catch (Exception ex)
             {
                 log.LogError(ex.ToString());
-                throw new Exception("Error pushing notification message for ServiceBus Topic : " + TopicName + '\n' + ex.InnerException.ToString());
+                throw;
             }
         }
 
