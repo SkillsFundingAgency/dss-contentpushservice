@@ -17,6 +17,12 @@
     "authentication.Tenant": {
       "type": "string"
     },
+    "careersHelpline.AppIdUri": {
+      "type": "string"
+    },
+    "careersHelpline.Url": {
+      "type": "string"
+    },
     "configEnvironmentName": {
       "type": "string"
     },
@@ -183,6 +189,14 @@
             {
               "name": "Authentication.Tenant",
               "value": "[parameters('authentication.Tenant')]"
+            },
+            {
+              "name": "CareersHelpline.AppIdUri",
+              "value": "[parameters('careersHelpline.AppIdUri')]"
+            },
+            {
+              "name": "CareersHelpline.Url",
+              "value": "[parameters('careersHelpline.Url')]"
             },
             {
               "name": "EastAndBucks.AppIdUri",

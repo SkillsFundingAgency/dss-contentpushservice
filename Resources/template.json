@@ -11,6 +11,12 @@
     "authentication.Tenant": {
       "type": "string"
     },
+    "careersHelpline.AppIdUri": {
+      "type": "string"
+    },
+    "careersHelpline.Url": {
+      "type": "string"
+    },
     "cosmosDbCollectionId": {
       "type": "string"
     },
@@ -144,6 +150,12 @@
                 },
                 "authentication.Tenant": {
                   "value": "[parameters('authentication.Tenant')]"
+                },
+                "careersHelpline.AppIdUri": {
+                  "value": "[parameters('careersHelpline.AppIdUri')]"
+                },
+                "careersHelpline.Url": {
+                  "value": "[parameters('careersHelpline.Url')]"
                 },
                 "cosmosDbCollectionId": {
                   "value": "[parameters('cosmosDbCollectionId')]"
