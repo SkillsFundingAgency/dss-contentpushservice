@@ -16,7 +16,6 @@ namespace NCS.DSS.ContentPushService.PushService
 {
     public class MessagePushService
     {
-
         readonly string _connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];
 
         public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string TopicName)
@@ -27,9 +26,16 @@ namespace NCS.DSS.ContentPushService.PushService
             }
 
             string appIdUri = ConfigurationManager.AppSettings[AppIdUri].ToString();
-            var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
-            string clientUrl = ConfigurationManager.AppSettings[ClientUrl].ToString();
 
+            if (appIdUri == null)
+                throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
+                        
+            var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
+
+            string clientUrl = ConfigurationManager.AppSettings[ClientUrl].ToString();
+            if (clientUrl == null)
+                throw new Exception("ClientUrl: " + clientUrl + " does not exist!");
+            
             var client = new HttpClient();
             var body = new StreamReader(message.GetBody<Stream>(), Encoding.UTF8).ReadToEnd();
 

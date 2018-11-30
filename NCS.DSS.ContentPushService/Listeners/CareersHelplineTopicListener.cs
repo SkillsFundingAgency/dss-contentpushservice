@@ -40,7 +40,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             catch (Exception ex)
             {
                 log.LogError(ex.ToString());
-                return;
+                throw;
             }
 
         }
