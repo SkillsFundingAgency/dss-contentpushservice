@@ -29,7 +29,6 @@ namespace NCS.DSS.ContentPushService.PushService
             }
 
             string appIdUri = ConfigurationManager.AppSettings[AppIdUri].ToString();
-
             if ((appIdUri == null) || (AppIdUri == ""))
                 throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
                         
