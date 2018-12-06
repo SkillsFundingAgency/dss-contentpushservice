@@ -11,35 +11,41 @@ using NCS.DSS.ContentPushService.Auth;
 using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Logging;
 
 namespace NCS.DSS.ContentPushService.PushService
 {
     public class MessagePushService
     {
         readonly string _connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];
-
-        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string TopicName)
+        
+        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string TopicName, ILogger log)
         {
+            log.LogInformation("Entering PushToTouchpoint:-   Attempting to push to touchpoint appIdUri: " + AppIdUri);
+
             if (message == null)
             {
                 return;
             }
 
             string appIdUri = ConfigurationManager.AppSettings[AppIdUri].ToString();
-
-            if (appIdUri == null)
+            if ((appIdUri == null) || (AppIdUri == ""))
                 throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
                         
             var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
 
             string clientUrl = ConfigurationManager.AppSettings[ClientUrl].ToString();
-            if (clientUrl == null)
+            if ((clientUrl == null) || (ClientUrl == ""))
                 throw new Exception("ClientUrl: " + clientUrl + " does not exist!");
             
             var client = new HttpClient();
             var body = new StreamReader(message.GetBody<Stream>(), Encoding.UTF8).ReadToEnd();
 
+            log.LogInformation("got body from stream reader");
+
             var customer = JsonConvert.DeserializeObject<MessageModel>(body);
+
+            log.LogInformation("Deserialised MessageModel Body");
 
             if (customer == null)
             {
@@ -61,8 +67,18 @@ namespace NCS.DSS.ContentPushService.PushService
             client.DefaultRequestHeaders.Add("OriginatingTouchpointId", customer.TouchpointId);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
 
-            var response = await client.PostAsync(clientUrl, byteContent);
+            HttpResponseMessage response;
 
+            try
+            {
+                response = await client.PostAsync(clientUrl, byteContent);
+            }
+            catch (Exception)
+            {
+                log.LogError(string.Format("Error when attempting to post to clientUrl {0}", clientUrl));
+                throw;
+            }
+            
             //For testing purposes
             //response.StatusCode = HttpStatusCode.BadRequest;
             //
@@ -71,15 +87,19 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 message.Complete();
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
+                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", response?.StatusCode, notification.ResourceURL, message.MessageId));
             }
             else
             {
                 //Save notification to db
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
+                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", response?.StatusCode, notification.ResourceURL, message.MessageId));
 
                 //Create Servicebus resend client
                 var resendClient = TopicClient.CreateFromConnectionString(_connectionString, TopicName);
                 var resendMessage = message.Clone();
+
+                log.LogInformation("Cloning message for retry attempt");
 
                 //Get number of retries attempted
                 message.Properties.TryGetValue("RetryCount", out object rVal);
@@ -87,10 +107,22 @@ namespace NCS.DSS.ContentPushService.PushService
                 
                 if (RetryCount >= 12)
                 {
-                    //Deadletter as max retries exceeded
-                    await resendMessage.DeadLetterAsync("MaxTriesExceeded", "DSS Attempted to send notification to ABC Endpoint and reached retry limit!");
-                    resendClient.Close();
-                    await message.CompleteAsync();
+                    try
+                    {
+                        //Deadletter as max retries exceeded
+                        await resendMessage.DeadLetterAsync("MaxTriesExceeded", "DSS Attempted to send notification to ABC Endpoint and reached retry limit!");
+                        await message.CompleteAsync();
+                        log.LogInformation("Message retry max attempts reached");
+                    }
+                    catch (Exception)
+                    {
+                        log.LogError("Error when attempting to deadletter!");
+                        throw;
+                    }
+                    finally
+                    {
+                        resendClient.Close();
+                    }
                 }
                 else
                 {
@@ -100,15 +132,31 @@ namespace NCS.DSS.ContentPushService.PushService
 
                     //Increment retry count by 1
                     resendMessage.Properties["RetryCount"] = RetryCount + 1;
+                    log.LogInformation(string.Format("Retrying message delivery Count {0}", RetryCount));
 
-                    //Resend Message to the Topic
-                    await resendClient.SendAsync(resendMessage);
-                    resendClient.Close();
-
+                    try
+                    {
+                        //Resend Message to the Topic
+                        log.LogInformation("Attempting to resend message to the Topic");
+                        await resendClient.SendAsync(resendMessage);
+                    }
+                    catch (Exception)
+                    {
+                        log.LogError("Error when resending message!");
+                        throw;
+                    }
+                    finally
+                    {
+                        resendClient.Close();
+                    }
+                    
                     //Complete original message
                     await message.CompleteAsync();
+                    log.LogInformation("Message successfully resent");
                 }
             }
+
+            log.LogInformation("Exiting PushToTouchpoint");
         }
 
         public static int GetRetrySeconds(int RetryCount)
@@ -166,7 +214,16 @@ namespace NCS.DSS.ContentPushService.PushService
             };
 
             var documentDbProvider = new DocumentDBProvider();
-            await documentDbProvider.CreateNotificationAsync(DBNotification);
+
+            try
+            {
+                await documentDbProvider.CreateNotificationAsync(DBNotification);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
     }
