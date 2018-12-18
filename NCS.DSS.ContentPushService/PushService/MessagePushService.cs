@@ -87,13 +87,13 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 message.Complete();
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
-                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", response?.StatusCode, notification.ResourceURL, message.MessageId));
+                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response.StatusCode, notification.ResourceURL, message.MessageId));
             }
             else
             {
                 //Save notification to db
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
-                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", response?.StatusCode, notification.ResourceURL, message.MessageId));
+                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response.StatusCode, notification.ResourceURL, message.MessageId));
 
                 //Create Servicebus resend client
                 var resendClient = TopicClient.CreateFromConnectionString(_connectionString, TopicName);
@@ -110,7 +110,7 @@ namespace NCS.DSS.ContentPushService.PushService
                     try
                     {
                         //Deadletter as max retries exceeded
-                        await message.DeadLetterAsync("MaxTriesExceeded", "DSS Attempted to send notification to ABC Endpoint and reached retry limit!");
+                        await message.DeadLetterAsync("MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         log.LogInformation("Message retry max attempts reached");
                     }
                     catch (Exception)
