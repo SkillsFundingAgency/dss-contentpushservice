@@ -110,8 +110,7 @@ namespace NCS.DSS.ContentPushService.PushService
                     try
                     {
                         //Deadletter as max retries exceeded
-                        await resendMessage.DeadLetterAsync("MaxTriesExceeded", "DSS Attempted to send notification to ABC Endpoint and reached retry limit!");
-                        await message.CompleteAsync();
+                        await message.DeadLetterAsync("MaxTriesExceeded", "DSS Attempted to send notification to ABC Endpoint and reached retry limit!");
                         log.LogInformation("Message retry max attempts reached");
                     }
                     catch (Exception)
