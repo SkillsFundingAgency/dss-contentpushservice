@@ -87,13 +87,13 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 message.Complete();
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
-                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response.StatusCode, notification.ResourceURL, message.MessageId));
+                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
             }
             else
             {
                 //Save notification to db
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, false);
-                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response.StatusCode, notification.ResourceURL, message.MessageId));
+                log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
 
                 //Create Servicebus resend client
                 var resendClient = TopicClient.CreateFromConnectionString(_connectionString, TopicName);
