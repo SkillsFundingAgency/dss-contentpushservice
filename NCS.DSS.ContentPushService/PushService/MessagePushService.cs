@@ -52,6 +52,8 @@ namespace NCS.DSS.ContentPushService.PushService
                 return;
             }
 
+
+
             var notification = new Notification
             {
                 CustomerId = customer.CustomerGuid.GetValueOrDefault(),
@@ -59,7 +61,25 @@ namespace NCS.DSS.ContentPushService.PushService
                 LastModifiedDate = customer.LastModifiedDate.GetValueOrDefault()
             };
 
-            var content = JsonConvert.SerializeObject(notification);
+            var notificationDC = new NotificationDC
+            {
+                TouchpointId = customer.TouchpointId,
+                ResourceURL = customer.URL,
+                LastModifiedDate = customer.LastModifiedDate.GetValueOrDefault()
+            };
+
+            var content = "";
+            if (customer.DataCollections.HasValue)
+            {
+                content = JsonConvert.SerializeObject(notificationDC);
+            }
+            else
+            {
+                content = JsonConvert.SerializeObject(notification);
+            }
+
+
+
             var buffer = Encoding.UTF8.GetBytes(content);
             var byteContent = new ByteArrayContent(buffer);
 

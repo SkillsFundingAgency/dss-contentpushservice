@@ -10,5 +10,6 @@ namespace NCS.DSS.ContentPushService.Models
         public Uri URL { get; set; }
         public bool IsNewCustomer { get; set; }
         public string TouchpointId { get; set; }
+        public bool? DataCollections { get; set; }
     }
 }
