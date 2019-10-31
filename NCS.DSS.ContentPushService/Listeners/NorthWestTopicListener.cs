@@ -1,45 +1,38 @@
-using System;
-using System.Configuration;
-using System.IO;
-using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.ServiceBus.Messaging;
-using NCS.DSS.ContentPushService.Auth;
-using NCS.DSS.ContentPushService.PushService;
+using NCS.DSS.ContentPushService.Models;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public static class NorthWestTopicListener
+    public class NorthWestTopicListener
     {
         private const string TopicName = "northwest";
         private const string SubscriptionName = "northwest";
         private const string AppIdUri = "NorthWest.AppIdUri";
         private const string ClientUrl = "NorthWest.Url";
+        private const string FunctionName = "NorthWestTopicListener";
+        private const string ServiceBusConnectionString = "ServiceBusConnectionString";
+        private readonly IListenersHelper _listenersHelper;
 
-        [FunctionName("NorthWestTopicListener")]
-        public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger(TopicName, SubscriptionName, AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
-             ILogger log)
+        public NorthWestTopicListener(IListenersHelper listenersHelper)
         {
-            if (serviceBusMessage == null)
-            {
-                log.LogError("Brokered Message cannot be null");
-                return;
-            }
+            _listenersHelper = listenersHelper;
+        }
 
-            try
+        [FunctionName(FunctionName)]
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]BrokeredMessage serviceBusMessage, ILogger log)
+        {
+            var listinerSettings = new ListenerSettings
             {
-                var messagePushService = new MessagePushService();
-                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage, TopicName, log);
-                log.LogInformation("The " + TopicName + " topic successfully pushed a notification to " + ClientUrl + " at " + DateTime.Now);
-            }
-            catch (Exception ex)
-            {
-                log.LogError(ex.ToString());
-                throw;
-            }
+                AppIdUri = AppIdUri,
+                ClientUrl = ClientUrl,
+                SubscriptionName = SubscriptionName,
+                TopicName = TopicName
+            };
 
+            await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, log);
         }
     }
 }

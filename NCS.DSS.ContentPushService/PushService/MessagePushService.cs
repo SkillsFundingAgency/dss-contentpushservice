@@ -15,10 +15,10 @@ using Microsoft.Extensions.Logging;
 
 namespace NCS.DSS.ContentPushService.PushService
 {
-    public class MessagePushService
+    public class MessagePushService : IMessagePushService
     {
         readonly string _connectionString = ConfigurationManager.AppSettings["ServiceBusConnectionString"];
-        
+
         public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, BrokeredMessage message, string TopicName, ILogger log)
         {
             log.LogInformation("Entering PushToTouchpoint:-   Attempting to push to touchpoint appIdUri: " + AppIdUri);
@@ -31,14 +31,14 @@ namespace NCS.DSS.ContentPushService.PushService
             string appIdUri = ConfigurationManager.AppSettings[AppIdUri].ToString();
             if ((appIdUri == null) || (AppIdUri == ""))
                 throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
-                        
+
             var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
 
             string clientUrl = ConfigurationManager.AppSettings[ClientUrl].ToString();
             if ((clientUrl == null) || (ClientUrl == ""))
                 throw new Exception("ClientUrl: " + clientUrl + " does not exist!");
-            
-            var client = new HttpClient();
+
+            var client = HttpClientFactory.Create();
             var body = new StreamReader(message.GetBody<Stream>(), Encoding.UTF8).ReadToEnd();
 
             log.LogInformation("got body from stream reader");
@@ -51,8 +51,6 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 return;
             }
-
-
 
             var notification = new Notification
             {
@@ -78,8 +76,6 @@ namespace NCS.DSS.ContentPushService.PushService
                 content = JsonConvert.SerializeObject(notification);
             }
 
-
-
             var buffer = Encoding.UTF8.GetBytes(content);
             var byteContent = new ByteArrayContent(buffer);
 
@@ -98,12 +94,12 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogError(string.Format("Error when attempting to post to clientUrl {0}", clientUrl));
                 throw;
             }
-            
+
             //For testing purposes
             //response.StatusCode = HttpStatusCode.BadRequest;
             //
 
-            if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted) 
+            if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted)
             {
                 message.Complete();
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
@@ -124,7 +120,7 @@ namespace NCS.DSS.ContentPushService.PushService
                 //Get number of retries attempted
                 message.Properties.TryGetValue("RetryCount", out object rVal);
                 int RetryCount = (int)rVal;
-                
+
                 if (RetryCount >= 12)
                 {
                     try
@@ -168,7 +164,7 @@ namespace NCS.DSS.ContentPushService.PushService
                     {
                         resendClient.Close();
                     }
-                    
+
                     //Complete original message
                     await message.CompleteAsync();
                     log.LogInformation("Message successfully resent");
@@ -181,7 +177,7 @@ namespace NCS.DSS.ContentPushService.PushService
         public static int GetRetrySeconds(int RetryCount)
         {
             switch (RetryCount)
-            { 
+            {
                 case (0):
                     return 1;
                 case (1):
@@ -211,25 +207,18 @@ namespace NCS.DSS.ContentPushService.PushService
             }
         }
 
-        public static async Task SaveNotificationToDBAsync(int rspHttpCode,
-                                                string MessageId,
-                                                Notification rspNotification,
-                                                string AppIdUri,
-                                                string ClientUrl,
-                                                string BearerToken,
-                                                bool Success)
+        public static async Task SaveNotificationToDBAsync(int rspHttpCode, string MessageId, Notification rspNotification, string AppIdUri, string ClientUrl, string BearerToken, bool Success)
         {
-
             var DBNotification = new DBNotification
             {
                 MessageId = MessageId,
                 HttpCode = rspHttpCode,
                 AppIdUri = AppIdUri,
                 ClientUrl = ClientUrl,
-                BearerToken = "",
+                BearerToken = string.Empty,
                 Success = Success,
                 Notification = rspNotification,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.UtcNow
             };
 
             var documentDbProvider = new DocumentDBProvider();
@@ -242,9 +231,7 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 throw;
             }
-            
         }
-
     }
 
 }

@@ -1,16 +1,13 @@
 using System;
-using System.Configuration;
-using System.IO;
-using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.ServiceBus.Messaging;
-using NCS.DSS.ContentPushService.Auth;
 using NCS.DSS.ContentPushService.PushService;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public static class DSSTestTouchpoint2TopicListener
+    public class DSSTestTouchpoint2TopicListener
     {
         private const string TopicName = "dss-test-touchpoint-2";
         private const string SubscriptionName = "dss-test-touchpoint-2";
@@ -18,8 +15,8 @@ namespace NCS.DSS.ContentPushService.Listeners
         private const string ClientUrl = "dss-test-touchpoint-2.Url";
 
         [FunctionName("dsstesttouchpoint2TopicListener")]
-        public static async System.Threading.Tasks.Task RunAsync(
-            [ServiceBusTrigger(TopicName, SubscriptionName, AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
+        public async Task RunAsync(
+            [ServiceBusTrigger(TopicName, SubscriptionName, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
              ILogger log)
         {
             if (serviceBusMessage == null)
@@ -32,7 +29,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             {
                 var messagePushService = new MessagePushService();
                 await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage, TopicName, log);
-                log.LogInformation("The " + TopicName + " topic successfully pushed a notification to " + ClientUrl + " at " + DateTime.Now);
+                log.LogInformation("The " + TopicName + " topic successfully pushed a notification to " + ClientUrl + " at " + DateTime.UtcNow);
             }
             catch (Exception ex)
             {
