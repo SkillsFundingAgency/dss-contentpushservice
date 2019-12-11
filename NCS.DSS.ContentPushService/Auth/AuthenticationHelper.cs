@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
@@ -8,13 +8,13 @@ namespace NCS.DSS.ContentPushService.Auth
     {
         public static async Task<string> GetAccessToken(string appIdUri)
         {
-            var clientId = ConfigurationManager.AppSettings["Authentication.PushServiceClientId"];
-            var clientSecret = ConfigurationManager.AppSettings["Authentication.PushServiceClientSecret"];
+            var clientId = Environment.GetEnvironmentVariable("Authentication.PushServiceClientId");
+            var clientSecret = Environment.GetEnvironmentVariable("Authentication.PushServiceClientSecret");
 
             var clientCredential = new ClientCredential(clientId, clientSecret);
 
-            var authorityUri = ConfigurationManager.AppSettings["Authentication.AuthorityUri"];
-            var tenant = ConfigurationManager.AppSettings["Authentication.Tenant"];
+            var authorityUri = Environment.GetEnvironmentVariable("Authentication.AuthorityUri");
+            var tenant = Environment.GetEnvironmentVariable("Authentication.Tenant");
 
             var authority = string.Concat(authorityUri, tenant);
 

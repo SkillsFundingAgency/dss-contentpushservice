@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using Microsoft.ServiceBus.Messaging;
 using NCS.DSS.ContentPushService.Models;
 
 namespace NCS.DSS.ContentPushService.Listeners
@@ -22,7 +22,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         }
 
         [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]BrokeredMessage serviceBusMessage, ILogger log)
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]Message serviceBusMessage, ILogger log)
         {
             var listinerSettings = new ListenerSettings
             {
