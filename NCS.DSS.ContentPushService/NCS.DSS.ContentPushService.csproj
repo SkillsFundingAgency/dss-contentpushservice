@@ -4,7 +4,6 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
     <RuntimeFrameworkVersion>2.1.6</RuntimeFrameworkVersion>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DFC.Common.Standard" Version="0.1.4" />
