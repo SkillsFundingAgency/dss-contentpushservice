@@ -11,15 +11,16 @@ using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.ServiceBus;
 using System.Threading;
+using Microsoft.Azure.ServiceBus.Core;
 
 namespace NCS.DSS.ContentPushService.PushService
 {
     public class MessagePushService : IMessagePushService
     {
         readonly string _connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
-        static ISubscriptionClient subscriptionClient;
 
-        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, string SubscriptionName, ILogger log)
+        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, 
+            MessageReceiver messageReceiver, ILogger log)
         {
             log.LogInformation("Entering PushToTouchpoint:-   Attempting to push to touchpoint appIdUri: " + AppIdUri);
 
@@ -27,21 +28,6 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 return;
             }
-
-            // Configure the MessageHandler Options in terms of exception handling, number of concurrent messages to deliver etc.
-            var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
-            {
-                // Maximum number of Concurrent calls to the callback `ProcessMessagesAsync`, set to 1 for simplicity.
-                // Set it according to how many messages the application wants to process in parallel.
-                MaxConcurrentCalls = 1,
-
-                // Indicates whether MessagePump should automatically complete the messages after returning from User Callback.
-                // False below indicates the Complete will be handled by the User Callback as in `ProcessMessagesAsync` below.
-                AutoComplete = false
-            };
-
-            subscriptionClient = new SubscriptionClient(_connectionString, TopicName, SubscriptionName);
-            subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
 
             string appIdUri = Environment.GetEnvironmentVariable(AppIdUri).ToString();
             if ((appIdUri == null) || (AppIdUri == ""))
@@ -116,9 +102,8 @@ namespace NCS.DSS.ContentPushService.PushService
 
             if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted)
             {
-                //message.Complete(); it WindowsAzure.ServiceBus
-              
-                //await subscriptionClient.CompleteAsync(lockToken);
+                //Each messageReceiver must complete it's own message or we'll get a lockToken error
+                await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
 
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
                 log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
@@ -130,7 +115,6 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
 
                 //Create Servicebus resend client
-                //var resendClient = TopicClient.CreateFromConnectionString(_connectionString, TopicName);
                 var resendClient = new TopicClient(_connectionString, TopicName);
                 var resendMessage = message.Clone();
 
@@ -140,17 +124,12 @@ namespace NCS.DSS.ContentPushService.PushService
                 message.UserProperties.TryGetValue("RetryCount", out object rVal);
                 int RetryCount = (int)rVal;
 
-                foreach(var prop in message.UserProperties)
-                {
-                    log.LogInformation("User KEY: " + prop.Key + " VALUE: " + prop.Value);
-                }
-
                 if (RetryCount >= 12)
                 {
                     try
                     {
                         //Deadletter as max retries exceeded
-                        await subscriptionClient.DeadLetterAsync(message.SystemProperties.LockToken, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                        await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         //await message.DeadLetterAsync("MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         log.LogInformation("Message retry max attempts reached");
                     }
@@ -173,7 +152,6 @@ namespace NCS.DSS.ContentPushService.PushService
 
                     //Increment retry count by 1
                     resendMessage.UserProperties["RetryCount"] = RetryCount + 1;
-                    //RetryCount = message.SystemProperties.DeliveryCount;
                     log.LogInformation(string.Format("Retrying message delivery Count {0}", RetryCount));
 
                     try
@@ -194,38 +172,12 @@ namespace NCS.DSS.ContentPushService.PushService
                     }
 
                     //Complete original message
-                    //await message.CompleteAsync();
-                    await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+                    await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
                     log.LogInformation("Message successfully resent");
                 }
             }
 
             log.LogInformation("Exiting PushToTouchpoint");
-        }
-
-        static Task ExceptionReceivedHandler(ExceptionReceivedEventArgs exceptionReceivedEventArgs)
-        {
-            Console.WriteLine($"Message handler encountered an exception {exceptionReceivedEventArgs.Exception}.");
-            var context = exceptionReceivedEventArgs.ExceptionReceivedContext;
-            Console.WriteLine("Exception context for troubleshooting:");
-            Console.WriteLine($"- Endpoint: {context.Endpoint}");
-            Console.WriteLine($"- Entity Path: {context.EntityPath}");
-            Console.WriteLine($"- Executing Action: {context.Action}");
-            return Task.CompletedTask;
-        }
-
-        static async Task ProcessMessagesAsync(Message message, CancellationToken token)
-        {
-            // Process the message
-            //Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
-
-            // Complete the message so that it is not received again.
-            // This can be done only if the queueClient is created in ReceiveMode.PeekLock mode (which is default).
-            await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
-
-            // Note: Use the cancellationToken passed as necessary to determine if the queueClient has already been closed.
-            // If queueClient has already been Closed, you may chose to not call CompleteAsync() or AbandonAsync() etc. calls 
-            // to avoid unnecessary exceptions.
         }
 
         public static int GetRetrySeconds(int RetryCount)

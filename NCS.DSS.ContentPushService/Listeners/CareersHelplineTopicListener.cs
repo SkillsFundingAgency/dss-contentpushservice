@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Models;
@@ -23,7 +24,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         }
 
         [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]Message serviceBusMessage, ILogger log)
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             var listinerSettings = new ListenerSettings
             {
@@ -33,7 +34,7 @@ namespace NCS.DSS.ContentPushService.Listeners
                 TopicName = TopicName
             };
             
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, log);
+            await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, messageReceiver, log);
         }
     }
 }

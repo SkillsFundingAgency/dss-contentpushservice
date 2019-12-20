@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.PushService;
@@ -17,7 +18,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("dsstesttouchpoint2TopicListener")]
         public async Task RunAsync(
             [ServiceBusTrigger(TopicName, SubscriptionName, Connection = "ServiceBusConnectionString")]Message serviceBusMessage,
-             ILogger log)
+              MessageReceiver messageReceiver, ILogger log)
         {
             if (serviceBusMessage == null)
             {
@@ -28,7 +29,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             try
             {
                 var messagePushService = new MessagePushService();
-                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage, TopicName, SubscriptionName, log);
+                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage, TopicName, messageReceiver, log);
                 log.LogInformation("The " + TopicName + " topic successfully pushed a notification to " + ClientUrl + " at " + DateTime.UtcNow);
             }
             catch (Exception ex)
