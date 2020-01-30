@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Configuration;
 using Microsoft.Azure.Documents.Client;
 
 namespace NCS.DSS.ContentPushService.Cosmos.Helper
@@ -8,12 +9,12 @@ namespace NCS.DSS.ContentPushService.Cosmos.Helper
     {
         private Uri _documentCollectionUri;
         private Uri _documentUri;
-        private readonly string _databaseId = Environment.GetEnvironmentVariable("DatabaseId");
-        private readonly string _collectionId = Environment.GetEnvironmentVariable("CollectionId");
+        private readonly string _databaseId = ConfigurationManager.AppSettings["DatabaseId"];
+        private readonly string _collectionId = ConfigurationManager.AppSettings["CollectionId"];
 
         private Uri _notificationsDocumentCollectionUri;
-        private readonly string _notificationsDatabaseId = Environment.GetEnvironmentVariable("NotificationDatabaseId");
-        private readonly string _notificationsCollectionId = Environment.GetEnvironmentVariable("NotificationCollectionId");
+        private readonly string _notificationsDatabaseId = ConfigurationManager.AppSettings["NotificationDatabaseId"];
+        private readonly string _notificationsCollectionId = ConfigurationManager.AppSettings["NotificationCollectionId"];
 
 
         public Uri CreateDocumentCollectionUri()

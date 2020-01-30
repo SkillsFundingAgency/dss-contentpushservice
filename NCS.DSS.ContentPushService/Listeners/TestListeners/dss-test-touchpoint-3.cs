@@ -1,14 +1,16 @@
 using System;
-using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
+using System.Configuration;
+using System.IO;
+using System.Text;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Microsoft.ServiceBus.Messaging;
+using NCS.DSS.ContentPushService.Auth;
 using NCS.DSS.ContentPushService.PushService;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public class DSSTestTouchpoint3TopicListener
+    public static class DSSTestTouchpoint3TopicListener
     {
         private const string TopicName = "dss-test-touchpoint-3";
         private const string SubscriptionName = "dss-test-touchpoint-3";
@@ -16,9 +18,9 @@ namespace NCS.DSS.ContentPushService.Listeners
         private const string ClientUrl = "dss-test-touchpoint-3.Url";
 
         [FunctionName("dsstesttouchpoint3TopicListener")]
-        public async Task RunAsync(
-            [ServiceBusTrigger(TopicName, SubscriptionName, Connection = "ServiceBusConnectionString")]Message serviceBusMessage,
-              MessageReceiver messageReceiver, ILogger log)
+        public static async System.Threading.Tasks.Task RunAsync(
+            [ServiceBusTrigger(TopicName, SubscriptionName, AccessRights.Listen, Connection = "ServiceBusConnectionString")]BrokeredMessage serviceBusMessage,
+             ILogger log)
         {
             if (serviceBusMessage == null)
             {
@@ -29,8 +31,8 @@ namespace NCS.DSS.ContentPushService.Listeners
             try
             {
                 var messagePushService = new MessagePushService();
-                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage, TopicName, messageReceiver, log);
-                log.LogInformation("The " + TopicName + " topic successfully pushed a notification to " + ClientUrl + " at " + DateTime.UtcNow);
+                await messagePushService.PushToTouchpoint(AppIdUri, ClientUrl, serviceBusMessage, TopicName, log);
+                log.LogInformation("The " + TopicName + " topic successfully pushed a notification to " + ClientUrl + " at " + DateTime.Now);
             }
             catch (Exception ex)
             {
