@@ -41,10 +41,10 @@
             "value": "sb://dss-foo-shared-ns.servicebus.windows.net/"
         },
         "sharedAppServicePlanName": {
-            "value": "dss-foo-shared-asp"
+            "value": "dss-at-shared-asp"
         },
         "sharedAppServicePlanResourceGroup": {
-            "value": "dss-foo-shared-rg"
+            "value": "dss-at-shared-rg"
         },
         "templateBaseUrl": {
             "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/SDD-229-AddYamlPipeline/Resources/ArmTemplates"
