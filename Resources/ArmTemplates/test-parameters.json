@@ -47,7 +47,7 @@
             "value": "dss-at-shared-rg"
         },
         "templateBaseUrl": {
-            "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/SDD-229-AddYamlPipeline/Resources/ArmTemplates"
+            "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/master/Resources/ArmTemplates"
         },
         "eastAndBucks.AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
