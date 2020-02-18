@@ -37,7 +37,7 @@
                 "dss-at-cpush-fa"
             ]
         },
-        "serviceBusConnection": {
+        "serviceBusConnectionString": {
             "value": "sb://dss-foo-shared-ns.servicebus.windows.net/"
         },
         "sharedAppServicePlanName": {
