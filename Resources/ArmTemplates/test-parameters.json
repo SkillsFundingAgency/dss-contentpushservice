@@ -1,0 +1,125 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "authentication.PushServiceClientId": {
+            "value": "00000000-0000-0000-0000-000000000000"
+        },
+        "authentication.PushServiceClientSecret": {
+            "value": "not-a-real-secret"
+        },
+        "authentication.Tenant": {
+            "value": "00000000-0000-0000-0000-000000000000"
+        },
+        "careersHelpline.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "careersHelpline.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "cosmosDbCollectionId": {
+            "value": "customers"
+        },
+        "cosmosDbDatabaseId": {
+            "value": "customers"
+        },
+        "cosmosDbEndpoint": {
+            "value": "https://dss-foo-shared-cdb.documents.azure.com:443"
+        },
+        "cosmosDbKey": {
+            "value": "not-a-real-secret"
+        },
+        "environmentName": {
+            "value": "foo"
+        },
+        "functionAppNames": {
+            "value": [
+                "dss-at-cpush-fa"
+            ]
+        },
+        "serviceBusConnectionString": {
+            "value": "sb://dss-foo-shared-ns.servicebus.windows.net/"
+        },
+        "sharedAppServicePlanName": {
+            "value": "dss-at-shared-asp"
+        },
+        "sharedAppServicePlanResourceGroup": {
+            "value": "dss-at-shared-rg"
+        },
+        "templateBaseUrl": {
+            "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/SDD-229-AddYamlPipeline/Resources/ArmTemplates"
+        },
+        "eastAndBucks.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "eastAndBucks.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "eastAndNorthampton.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "eastAndNorthampton.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "london.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "london.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "northEastAndCumbria.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "northEastAndCumbria.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "northWest.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "northWest.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "southEast.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "southEast.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "southWestAndOxford.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "southWestAndOxford.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "dss-test-touchpoint-1.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "dss-test-touchpoint-1.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "dss-test-touchpoint-2.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "dss-test-touchpoint-2.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "dss-test-touchpoint-3.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "dss-test-touchpoint-3.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "westMidsAndStaffs.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "westMidsAndStaffs.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "yorkshireAndHumber.AppIdUri": {
+            "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
+        },
+        "yorkshireAndHumber.Url": {
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        }
+    }
+}
