@@ -11,5 +11,9 @@ namespace NCS.DSS.ContentPushService.Models
         public bool IsNewCustomer { get; set; }
         public string TouchpointId { get; set; }
         public bool? DataCollections { get; set; }
+        public string EmailAddress { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public bool? CreateDigitalIdentity { get; private set; }
     }
 }
