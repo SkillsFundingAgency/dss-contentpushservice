@@ -20,25 +20,24 @@ namespace NCS.DSS.ContentPushService.Tests
         private Mock<IRequeueService> RequeueService;
         private DigitalIdentityTopicListener DigitalIdentityTopicListener;
         private Mock<ILogger> _logger;
-        private Mock<MessageReceiver> MessageReceiver;
+        private Mock<IMessageReceiver> MessageReceiver;
 
         [SetUp]
         public void Setup()
         {
-            var s = new MessageReceiver(null);
             _logger = new Mock<ILogger>();
             RequeueService = new Mock<IRequeueService>();
             DigitalIdentityClient = new Mock<IDigitalIdentityClient>();
             DigitalIdentityService = new DigitialIdentityService(RequeueService.Object, _logger.Object, DigitalIdentityClient.Object);
             DigitalIdentityTopicListener = new DigitalIdentityTopicListener(DigitalIdentityService);
-            MessageReceiver = new Mock<MessageReceiver>(It.IsAny<string>());
+            MessageReceiver = new Mock<IMessageReceiver>();
         }
 
         private async Task RunFunction( Message request)
         {
             await DigitalIdentityTopicListener.RunAsync(
                 request,
-                MessageReceiver.Object,
+                null, //to change
                 _logger.Object
             );
         }
@@ -47,7 +46,7 @@ namespace NCS.DSS.ContentPushService.Tests
         public async Task GivenDigitalIdentity_Post_Succeeds()
         {
             // Arrange
-            var identity = new DigitalIdentity();
+            var identity = new DigitalIdentity() { CreateDigitalIdentity = true } ;
             DigitalIdentityClient.Setup(x => x.Post(It.IsAny<DigitalIdentity>(), It.IsAny<string>())).Returns(Task.FromResult(true));
             var msg = new Message(System.Text.Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
 
