@@ -6,6 +6,7 @@ using NCS.DSS.ContentPushService.Utils;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System;
 
 namespace NCS.DSS.ContentPushService.Services
 {
@@ -39,6 +40,13 @@ namespace NCS.DSS.ContentPushService.Services
                     await DeleteDigitalIdentity(topic, connectionString, message, listenerSettings, messageReceiver, digitalidentity);
                 else if (digitalidentity.CreateDigitalIdentity == true)
                     await CreateNewDigitalIdentity(topic, connectionString, message, listenerSettings, messageReceiver, digitalidentity);
+                else
+                {
+                    //cannot action digital identity, deadletter message in queue.
+                    var errMsg = $"Unable to determine if digital identity needs to be updated/created/deleted for customer: {digitalidentity.CustomerGuid}";
+                    await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", errMsg);
+                    throw new Exception(errMsg);
+                }
             }
             else
                 _logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
@@ -70,7 +78,6 @@ namespace NCS.DSS.ContentPushService.Services
         private async Task DeleteDigitalIdentity(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, DigitalIdentity digitalidentity)
         {
             //delete digital identity
-            var di = new DigitalIdentity() { FirstName = digitalidentity.FirstName, CustomerGuid = digitalidentity.CustomerGuid, LastName = digitalidentity.LastName, EmailAddress = digitalidentity.EmailAddress };
             var delete = await _digitalidentityClient.Delete(new { }, $"Delete?id={digitalidentity.CustomerGuid}");
             if (delete)
             {
