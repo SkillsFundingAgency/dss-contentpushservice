@@ -35,27 +35,58 @@ namespace NCS.DSS.ContentPushService.Services
 
             if (digitalidentity != null)
             {
-                //post digital identity to api
-                var di = new DigitalIdentity() { FirstName = digitalidentity.FirstName, CustomerId = digitalidentity.CustomerId, LastName = digitalidentity.LastName, EmailAddress=digitalidentity.EmailAddress };
-                var created = await _digitalidentityClient.Post(di, "endpoint");
-                if (created)
-                {
-                    await messageReceiver.CompleteAsync(GetLockToken(message));
-                    _logger.LogInformation($"{message.MessageId} has been successfully delivered to Digital Identity Api, message removed from topic");
-                }
-                else
-                {
-                    //requeue message on topic if message was not successfully posted
-                    var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
-                    if (retry)
-                    {
-                        await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
-                        _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
-                    }
-                }
+                if (digitalidentity.DeleteDigitalIdentity == true)
+                    await DeleteDigitalIdentity(topic, connectionString, message, listenerSettings, messageReceiver, digitalidentity);
+                else if (digitalidentity.CreateDigitalIdentity == true)
+                    await CreateNewDigitalIdentity(topic, connectionString, message, listenerSettings, messageReceiver, digitalidentity);
             }
             else
                 _logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
+
+        }
+
+        private async Task CreateNewDigitalIdentity(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, DigitalIdentity digitalidentity)
+        {
+            //post digital identity to api
+            var di = new DigitalIdentity() { FirstName = digitalidentity.FirstName, CustomerGuid = digitalidentity.CustomerGuid, LastName = digitalidentity.LastName, EmailAddress = digitalidentity.EmailAddress };
+            var created = await _digitalidentityClient.Post(di, "endpoint");
+            if (created)
+            {
+                await messageReceiver.CompleteAsync(GetLockToken(message));
+                _logger.LogInformation($"{message.MessageId} has been successfully delivered to Digital Identity Api, message removed from topic");
+            }
+            else
+            {
+                //requeue message on topic if message was not successfully posted
+                var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
+                if (retry)
+                {
+                    await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                    _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
+                }
+            }
+        }
+
+        private async Task DeleteDigitalIdentity(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, DigitalIdentity digitalidentity)
+        {
+            //delete digital identity
+            var di = new DigitalIdentity() { FirstName = digitalidentity.FirstName, CustomerGuid = digitalidentity.CustomerGuid, LastName = digitalidentity.LastName, EmailAddress = digitalidentity.EmailAddress };
+            var delete = await _digitalidentityClient.Delete(new { }, $"Delete?{digitalidentity.CustomerGuid}");
+            if (delete)
+            {
+                await messageReceiver.CompleteAsync(GetLockToken(message));
+                _logger.LogInformation($"{message.MessageId} has been successfully deleted Digital account");
+            }
+            else
+            {
+                //requeue message on topic if message was not successfully posted
+                var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
+                if (retry)
+                {
+                    await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                    _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
+                }
+            }
         }
 
         private string GetLockToken(Message msg)

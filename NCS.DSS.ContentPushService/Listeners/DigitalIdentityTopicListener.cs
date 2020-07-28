@@ -27,7 +27,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         }
 
         [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, IMessageReceiver messageReceiver, ILogger log)
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             var listinerSettings = new ListenerSettings
             {
@@ -36,7 +36,7 @@ namespace NCS.DSS.ContentPushService.Listeners
                 SubscriptionName = SubscriptionName,
                 TopicName = TopicName
             };
-
+           
             var connectionStr = Environment.GetEnvironmentVariable(ServiceBusConnectionString);
             
             log.LogInformation("DigitalIdentityTopicListener received received message");

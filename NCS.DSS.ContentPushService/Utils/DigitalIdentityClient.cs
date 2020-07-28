@@ -50,5 +50,22 @@ namespace NCS.DSS.ContentPushService.Utils
                 }
             }
         }
+
+        public async Task<bool> Delete<T>(T t, string endpoint)
+        {
+            using (var client = _httpclientFactory.CreateClient("AzureB2C"))
+            using (var request = new HttpRequestMessage(HttpMethod.Delete, endpoint))
+            {
+                var json = JsonConvert.SerializeObject(t);
+                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
+                {
+                    request.Content = stringContent;
+                    using (var response = await client.SendAsync(request))
+                    {
+                        return response.StatusCode == System.Net.HttpStatusCode.OK;
+                    }
+                }
+            }
+        }
     }
 }

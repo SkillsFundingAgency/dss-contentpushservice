@@ -6,5 +6,6 @@ namespace NCS.DSS.ContentPushService.Utils
     {
         Task<bool> Post<T>(T t, string endpoint);
         Task<bool> Patch<T>(T t, string endpoint);
+        Task<bool> Delete<T>(T t, string endpoint);
     }
 }

@@ -20,17 +20,18 @@ namespace NCS.DSS.ContentPushService.Tests
         private Mock<IRequeueService> RequeueService;
         private DigitalIdentityTopicListener DigitalIdentityTopicListener;
         private Mock<ILogger> _logger;
-        private Mock<IMessageReceiver> MessageReceiver;
+        private Mock<MessageReceiver> MessageReceiver;
 
         [SetUp]
         public void Setup()
         {
+            var s = new MessageReceiver(null);
             _logger = new Mock<ILogger>();
             RequeueService = new Mock<IRequeueService>();
             DigitalIdentityClient = new Mock<IDigitalIdentityClient>();
             DigitalIdentityService = new DigitialIdentityService(RequeueService.Object, _logger.Object, DigitalIdentityClient.Object);
             DigitalIdentityTopicListener = new DigitalIdentityTopicListener(DigitalIdentityService);
-            MessageReceiver = new Mock<IMessageReceiver>();
+            MessageReceiver = new Mock<MessageReceiver>(It.IsAny<string>());
         }
 
         private async Task RunFunction( Message request)
