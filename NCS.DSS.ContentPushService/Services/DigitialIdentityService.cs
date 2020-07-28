@@ -71,7 +71,7 @@ namespace NCS.DSS.ContentPushService.Services
         {
             //delete digital identity
             var di = new DigitalIdentity() { FirstName = digitalidentity.FirstName, CustomerGuid = digitalidentity.CustomerGuid, LastName = digitalidentity.LastName, EmailAddress = digitalidentity.EmailAddress };
-            var delete = await _digitalidentityClient.Delete(new { }, $"Delete?{digitalidentity.CustomerGuid}");
+            var delete = await _digitalidentityClient.Delete(new { }, $"Delete?id={digitalidentity.CustomerGuid}");
             if (delete)
             {
                 await messageReceiver.CompleteAsync(GetLockToken(message));
