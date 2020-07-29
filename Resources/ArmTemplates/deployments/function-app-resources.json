@@ -112,6 +112,12 @@
     },
     "serviceBusConnectionString": {
       "type": "string"
+    },
+    "AzureB2C.ApiUrl": {
+      "type": "string"
+    },
+    "AzureB2C.ApiKey": {
+      "type": "string"
     }
   },
   "variables": {
@@ -293,6 +299,14 @@
             {
               "name": "YorkshireAndHumber.Url",
               "value": "[parameters('yorkshireAndHumber.Url')]"
+            },
+            {
+              "name": "AzureB2C.ApiUrl",
+              "value": "[parameters('AzureB2C.ApiUrl')]"
+            },
+            {
+              "name": "AzureB2C.ApiKey",
+              "value": "[parameters('AzureB2C.ApiKey')]"
             }
           ]
         }
