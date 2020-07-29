@@ -48,11 +48,6 @@ jobs:
   dependsOn: TestBranchName
 
   steps:
-  - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
-    parameters:
-      ArmTemplateRoot: '$(Build.SourcesDirectory)\Resources\ArmTemplates'
-      SolutionBaseName: $(SolutionBaseName)
-      AzureSubscription: 'SFA-DSS-DevTest'
   - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-dotnetcore-build-notests.yml@dfc-devops
     parameters:
       SolutionBaseName: $(SolutionBaseName)
