@@ -119,10 +119,10 @@
     "yorkshireAndHumber.Url": {
       "type": "string"
     },
-    "AzureB2C.ApiUrl": {
+    "azureB2C.ApiUrl": {
       "type": "string"
     },
-    "AzureB2C.ApiKey": {
+    "azureB2C.ApiKey": {
       "type": "string"
     }
   },
@@ -253,10 +253,10 @@
                 "yorkshireAndHumber.Url": {
                   "value": "[parameters('yorkshireAndHumber.Url')]"
                 },
-                "AzureB2C.ApiUrl": {
+                "azureB2C.ApiUrl": {
                   "value": "[parameters('AzureB2C.ApiUrl')]"
                 },
-                "AzureB2C.ApiKey": {
+                "azureB2C.ApiKey": {
                   "value": "[parameters('AzureB2C.ApiKey')]"
                 }
               }

@@ -113,10 +113,10 @@
     "serviceBusConnectionString": {
       "type": "string"
     },
-    "AzureB2C.ApiUrl": {
+    "azureB2C.ApiUrl": {
       "type": "string"
     },
-    "AzureB2C.ApiKey": {
+    "azureB2C.ApiKey": {
       "type": "string"
     }
   },
@@ -302,11 +302,11 @@
             },
             {
               "name": "AzureB2C.ApiUrl",
-              "value": "[parameters('AzureB2C.ApiUrl')]"
+              "value": "[parameters('azureB2C.ApiUrl')]"
             },
             {
               "name": "AzureB2C.ApiKey",
-              "value": "[parameters('AzureB2C.ApiKey')]"
+              "value": "[parameters('azureB2C.ApiKey')]"
             }
           ]
         }
