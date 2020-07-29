@@ -112,6 +112,12 @@
     },
     "serviceBusConnectionString": {
       "type": "string"
+    },
+    "azureB2C.ApiUrl": {
+      "type": "string"
+    },
+    "azureB2C.ApiKey": {
+      "type": "string"
     }
   },
   "variables": {
@@ -144,7 +150,7 @@
             },
             {
               "name": "FUNCTIONS_EXTENSION_VERSION",
-              "value": "~1"
+              "value": "~2"
             },
             {
               "name": "CollectionId",
@@ -293,6 +299,14 @@
             {
               "name": "YorkshireAndHumber.Url",
               "value": "[parameters('yorkshireAndHumber.Url')]"
+            },
+            {
+              "name": "AzureB2C.ApiUrl",
+              "value": "[parameters('azureB2C.ApiUrl')]"
+            },
+            {
+              "name": "AzureB2C.ApiKey",
+              "value": "[parameters('azureB2C.ApiKey')]"
             }
           ]
         }
