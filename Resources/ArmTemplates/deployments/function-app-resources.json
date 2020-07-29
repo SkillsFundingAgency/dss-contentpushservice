@@ -1,0 +1,316 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "functionAppName": {
+      "type": "string"
+    },
+    "appServicePlanId": {
+      "type": "string"
+    },
+    "authentication.PushServiceClientId": {
+      "type": "string"
+    },
+    "authentication.PushServiceClientSecret": {
+      "type": "string"
+    },
+    "authentication.Tenant": {
+      "type": "string"
+    },
+    "careersHelpline.AppIdUri": {
+      "type": "string"
+    },
+    "careersHelpline.Url": {
+      "type": "string"
+    },
+    "configEnvironmentName": {
+      "type": "string"
+    },
+    "cosmosDbCollectionId": {
+      "type": "string"
+    },
+    "cosmosDbDatabaseId": {
+      "type": "string"
+    },
+    "cosmosDbEndpoint": {
+      "type": "string"
+    },
+    "cosmosDbKey": {
+      "type": "string"
+    },
+    "eastAndBucks.AppIdUri": {
+      "type": "string"
+    },
+    "eastAndBucks.Url": {
+      "type": "string"
+    },
+    "eastAndNorthampton.AppIdUri": {
+      "type": "string"
+    },
+    "eastAndNorthampton.Url": {
+      "type": "string"
+    },
+    "london.AppIdUri": {
+      "type": "string"
+    },
+    "london.Url": {
+      "type": "string"
+    },
+    "northEastAndCumbria.AppIdUri": {
+      "type": "string"
+    },
+    "northEastAndCumbria.Url": {
+      "type": "string"
+    },
+    "northWest.AppIdUri": {
+      "type": "string"
+    },
+    "northWest.Url": {
+      "type": "string"
+    },
+    "southEast.AppIdUri": {
+      "type": "string"
+    },
+    "southEast.Url": {
+      "type": "string"
+    },
+    "southWestAndOxford.AppIdUri": {
+      "type": "string"
+    },
+    "southWestAndOxford.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-1.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-1.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-2.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-2.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-3.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-3.Url": {
+      "type": "string"
+    },
+    "westMidsAndStaffs.AppIdUri": {
+      "type": "string"
+    },
+    "westMidsAndStaffs.Url": {
+      "type": "string"
+    },
+    "yorkshireAndHumber.AppIdUri": {
+      "type": "string"
+    },
+    "yorkshireAndHumber.Url": {
+      "type": "string"
+    },
+    "serviceBusConnectionString": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "appInsightsName": "[concat('dss-', toLower(parameters('configEnvironmentName')), '-', split(parameters('functionAppName'), '-')[2], '-ai')]"
+  },
+  "resources": [
+    {
+      "name": "[parameters('functionAppName')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2016-08-01",
+      "dependsOn": [ "[variables('appInsightsName')]" ],
+      "location": "[resourceGroup().location]",
+      "kind": "functionapp",
+      "properties": {
+        "serverFarmId": "[parameters('appServicePlanId')]",
+        "siteConfig": {
+          "alwaysOn": true,
+          "appSettings": [
+            {
+              "name": "EnvironmentName",
+              "value": "[toUpper(parameters('configEnvironmentName'))]"
+            },
+            {
+              "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+              "value": "1"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName'))).InstrumentationKey]"
+            },
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~2"
+            },
+            {
+              "name": "CollectionId",
+              "value": "[parameters('cosmosDbCollectionId')]"
+            },
+            {
+              "name": "DatabaseId",
+              "value": "[parameters('cosmosDbDatabaseId')]"
+            },
+            {
+              "name": "Endpoint",
+              "value": "[parameters('cosmosDbEndpoint')]"
+            },
+            {
+              "name": "Key",
+              "value": "[parameters('cosmosDbKey')]"
+            },
+            {
+              "name": "NotificationCollectionId",
+              "value": "notifications"
+            },
+            {
+              "name": "NotificationDatabaseId",
+              "value": "notifications"
+            },
+            {
+              "name": "ServiceBusConnectionString",
+              "value": "[parameters('serviceBusConnectionString')]"
+            },
+            {
+              "name": "Authentication.AuthorityUri",
+              "value": "https://login.microsoftonline.com/"
+            },
+            {
+              "name": "Authentication.PushServiceClientId",
+              "value": "[parameters('authentication.PushServiceClientId')]"
+            },
+            {
+              "name": "Authentication.PushServiceClientSecret",
+              "value": "[parameters('authentication.PushServiceClientSecret')]"
+            },
+            {
+              "name": "Authentication.Tenant",
+              "value": "[parameters('authentication.Tenant')]"
+            },
+            {
+              "name": "CareersHelpline.AppIdUri",
+              "value": "[parameters('careersHelpline.AppIdUri')]"
+            },
+            {
+              "name": "CareersHelpline.Url",
+              "value": "[parameters('careersHelpline.Url')]"
+            },
+            {
+              "name": "EastAndBucks.AppIdUri",
+              "value": "[parameters('eastAndBucks.AppIdUri')]"
+            },
+            {
+              "name": "EastAndBucks.Url",
+              "value": "[parameters('eastAndBucks.Url')]"
+            },
+            {
+              "name": "EastAndNorthampton.AppIdUri",
+              "value": "[parameters('eastAndNorthampton.AppIdUri')]"
+            },
+            {
+              "name": "EastAndNorthampton.Url",
+              "value": "[parameters('eastAndNorthampton.Url')]"
+            },
+            {
+              "name": "London.AppIdUri",
+              "value": "[parameters('london.AppIdUri')]"
+            },
+            {
+              "name": "London.Url",
+              "value": "[parameters('london.Url')]"
+            },
+            {
+              "name": "NorthEastAndCumbria.AppIdUri",
+              "value": "[parameters('northEastAndCumbria.AppIdUri')]"
+            },
+            {
+              "name": "NorthEastAndCumbria.Url",
+              "value": "[parameters('northEastAndCumbria.Url')]"
+            },
+            {
+              "name": "NorthWest.AppIdUri",
+              "value": "[parameters('northWest.AppIdUri')]"
+            },
+            {
+              "name": "NorthWest.Url",
+              "value": "[parameters('northWest.Url')]"
+            },
+            {
+              "name": "SouthEast.AppIdUri",
+              "value": "[parameters('southEast.AppIdUri')]"
+            },
+            {
+              "name": "SouthEast.Url",
+              "value": "[parameters('southEast.Url')]"
+            },
+            {
+              "name": "SouthWestAndOxford.AppIdUri",
+              "value": "[parameters('southWestAndOxford.AppIdUri')]"
+            },
+            {
+              "name": "SouthWestAndOxford.Url",
+              "value": "[parameters('southWestAndOxford.Url')]"
+            },
+            {
+              "name": "dss-test-touchpoint-1.AppIdUri",
+              "value": "[parameters('dss-test-touchpoint-1.AppIdUri')]"
+            },
+            {
+              "name": "dss-test-touchpoint-1.Url",
+              "value": "[parameters('dss-test-touchpoint-1.Url')]"
+            },
+            {
+              "name": "dss-test-touchpoint-2.AppIdUri",
+              "value": "[parameters('dss-test-touchpoint-2.AppIdUri')]"
+            },
+            {
+              "name": "dss-test-touchpoint-2.Url",
+              "value": "[parameters('dss-test-touchpoint-2.Url')]"
+            },
+            {
+              "name": "dss-test-touchpoint-3.AppIdUri",
+              "value": "[parameters('dss-test-touchpoint-3.AppIdUri')]"
+            },
+            {
+              "name": "dss-test-touchpoint-3.Url",
+              "value": "[parameters('dss-test-touchpoint-3.Url')]"
+            },
+            {
+              "name": "WestMidsAndStaffs.AppIdUri",
+              "value": "[parameters('westMidsAndStaffs.AppIdUri')]"
+            },
+            {
+              "name": "WestMidsAndStaffs.Url",
+              "value": "[parameters('westMidsAndStaffs.Url')]"
+            },
+            {
+              "name": "YorkshireAndHumber.AppIdUri",
+              "value": "[parameters('yorkshireAndHumber.AppIdUri')]"
+            },
+            {
+              "name": "YorkshireAndHumber.Url",
+              "value": "[parameters('yorkshireAndHumber.Url')]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-05-01",
+      "name": "[variables('appInsightsName')]",
+      "type": "Microsoft.Insights/components",
+      "location": "[resourceGroup().location]",
+      "kind": "web",
+      "tags": {
+        "[concat('hidden-link:', resourceId('Microsoft.Web/sites', parameters('functionAppName')))]": "Resource"
+      },
+      "properties": {
+        "Application_Type": "web"
+      }
+    }
+  ],
+    "outputs": {}
+}
