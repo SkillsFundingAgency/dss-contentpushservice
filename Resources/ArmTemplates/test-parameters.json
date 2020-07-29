@@ -118,8 +118,14 @@
         "yorkshireAndHumber.AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "yorkshireAndHumber.Url": {
+        "yorkshireAndHumber.Url": { 
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "AzureB2C.ApiUrl": { 
+            "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
+        },
+        "AzureB2C.ApiKey": { 
+            "value": "not-a-real-key"
         }
     }
 }
