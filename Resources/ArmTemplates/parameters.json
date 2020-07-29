@@ -16,12 +16,6 @@
         },
         "sharedAppServicePlanResourceGroup": {
             "value": ""
-        },
-        "AzureB2C.ApiUrl": { 
-            "value": "__AzureB2CApiUrl__"
-        },
-        "AzureB2C.ApiKey": { 
-            "value": "__AzureB2CApiKey__"
         }
     }
 }
