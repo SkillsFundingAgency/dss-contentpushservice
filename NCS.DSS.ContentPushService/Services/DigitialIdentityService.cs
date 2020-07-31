@@ -67,7 +67,7 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     //requeue message on topic if message was not successfully actioned
                     var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
-                    if (retry)
+                    if (!retry)
                     {
                         await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
