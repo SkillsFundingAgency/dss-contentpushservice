@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Azure.Documents.Client;
 
 namespace NCS.DSS.ContentPushService.Services
 {
@@ -33,13 +34,22 @@ namespace NCS.DSS.ContentPushService.Services
 
             var body = Encoding.UTF8.GetString(message.Body);
             var digitalidentity = JsonConvert.DeserializeObject<DigitalIdentity>(body);
+            var successfullyActioned = false;
 
             if (digitalidentity != null)
             {
                 if (digitalidentity.DeleteDigitalIdentity == true)
-                    await DeleteDigitalIdentity(topic, connectionString, message, listenerSettings, messageReceiver, digitalidentity);
+                {
+                    successfullyActioned = await DeleteDigitalIdentity(digitalidentity);
+                }
                 else if (digitalidentity.CreateDigitalIdentity == true)
-                    await CreateNewDigitalIdentity(topic, connectionString, message, listenerSettings, messageReceiver, digitalidentity);
+                {
+                    successfullyActioned = await CreateNewDigitalIdentity(digitalidentity);
+                }
+                else if (digitalidentity.ChangeEmailAddress == true)
+                {
+                    successfullyActioned = await ChangeEmail(digitalidentity);
+                }
                 else
                 {
                     //cannot action digital identity, deadletter message in queue.
@@ -47,53 +57,46 @@ namespace NCS.DSS.ContentPushService.Services
                     await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", errMsg);
                     throw new Exception(errMsg);
                 }
+
+                //if actioned message successfully, then remove message from queue
+                if(successfullyActioned)
+                {
+                    await messageReceiver.CompleteAsync(GetLockToken(message));
+                }
+                else
+                {
+                    //requeue message on topic if message was not successfully actioned
+                    var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
+                    if (retry)
+                    {
+                        await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                        _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
+                    }
+                }
             }
             else
                 _logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
 
         }
 
-        private async Task CreateNewDigitalIdentity(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, DigitalIdentity digitalidentity)
+        private async Task<bool> ChangeEmail(DigitalIdentity digitalidentity)
         {
-            //post digital identity to api
-            var di = new DigitalIdentity() { FirstName = digitalidentity.FirstName, CustomerGuid = digitalidentity.CustomerGuid, LastName = digitalidentity.LastName, EmailAddress = digitalidentity.EmailAddress };
-            var created = await _digitalidentityClient.Post(di, "endpoint");
-            if (created)
-            {
-                await messageReceiver.CompleteAsync(GetLockToken(message));
-                _logger.LogInformation($"{message.MessageId} has been successfully delivered to Digital Identity Api, message removed from topic");
-            }
-            else
-            {
-                //requeue message on topic if message was not successfully posted
-                var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
-                if (retry)
-                {
-                    await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
-                    _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
-                }
-            }
+            var di = new { digitalidentity.NewEmail, digitalidentity.CurrentEmail };
+            return await _digitalidentityClient.Post(di, "ChangeEmail");
         }
 
-        private async Task DeleteDigitalIdentity(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, DigitalIdentity digitalidentity)
+        private async Task<bool> CreateNewDigitalIdentity(DigitalIdentity digitalidentity)
         {
-            //delete digital identity
-            var delete = await _digitalidentityClient.Delete(new { }, $"Delete?id={digitalidentity.CustomerGuid}");
-            if (delete)
-            {
-                await messageReceiver.CompleteAsync(GetLockToken(message));
-                _logger.LogInformation($"{message.MessageId} has been successfully deleted Digital account");
-            }
-            else
-            {
-                //requeue message on topic if message was not successfully posted
-                var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
-                if (retry)
-                {
-                    await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
-                    _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
-                }
-            }
+            var day = digitalidentity.DoB?.Day;
+            var month = digitalidentity.DoB?.Month;
+            var year = digitalidentity.DoB?.Year;
+            var di = new { GivenName = digitalidentity.FirstName, Surname = digitalidentity.LastName, Email = digitalidentity.EmailAddress, Day = day, Month = month, Year = year, CustomerId = digitalidentity.CustomerGuid, IsAided = false, ObjectId = Guid.NewGuid() };
+            return await _digitalidentityClient.Post(di, "NCSDSSUserCreation");
+        }
+
+        private async Task<bool> DeleteDigitalIdentity(DigitalIdentity digitalidentity)
+        {
+            return await _digitalidentityClient.Delete(new { }, $"Delete?id={digitalidentity.IdentityStoreId}");
         }
 
         private string GetLockToken(Message msg)
