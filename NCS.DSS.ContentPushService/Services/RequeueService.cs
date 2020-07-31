@@ -32,7 +32,7 @@ namespace NCS.DSS.ContentPushService.Services
                 resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
                 resendMessage.UserProperties["RetryCount"] = retryCount + 1;
                 
-                _logger.LogInformation("Attempting to resend message to the Topic");
+                _logger.LogInformation($"Attempting to resend message, Attempt:{retryCount} to the Topic {message.MessageId}");
                 await resendClient.SendAsync(resendMessage);
                 return true;
             }
