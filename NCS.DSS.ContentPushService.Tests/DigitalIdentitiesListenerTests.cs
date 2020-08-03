@@ -7,7 +7,6 @@ using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Services;
 using NCS.DSS.ContentPushService.Utils;
 using NUnit.Framework;
-using System;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Tests
@@ -28,7 +27,7 @@ namespace NCS.DSS.ContentPushService.Tests
             _logger = new Mock<ILogger>();
             RequeueService = new Mock<IRequeueService>();
             DigitalIdentityClient = new Mock<IDigitalIdentityClient>();
-            DigitalIdentityService = new DigitialIdentityService(RequeueService.Object, _logger.Object, DigitalIdentityClient.Object);
+            DigitalIdentityService = new DigitialIdentityService(RequeueService.Object,  DigitalIdentityClient.Object);
             DigitalIdentityTopicListener = new DigitalIdentityTopicListener(DigitalIdentityService);
             MessageReceiver = new Mock<IMessageReceiver>();
         }

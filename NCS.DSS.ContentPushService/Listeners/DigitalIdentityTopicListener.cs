@@ -40,7 +40,7 @@ namespace NCS.DSS.ContentPushService.Listeners
             var connectionStr = Environment.GetEnvironmentVariable(ServiceBusConnectionString);
             
             log.LogInformation("DigitalIdentityTopicListener received received message");
-            await _digitalidentity.SendMessage(TopicName, connectionStr,  serviceBusMessage, listinerSettings, messageReceiver);
+            await _digitalidentity.SendMessage(TopicName, connectionStr,  serviceBusMessage, listinerSettings, messageReceiver,log);
         }
     }
 }

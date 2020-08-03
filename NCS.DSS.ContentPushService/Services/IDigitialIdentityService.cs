@@ -8,6 +8,6 @@ namespace NCS.DSS.ContentPushService.Services
 {
     public interface IDigitialIdentityService
     {
-        Task SendMessage(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver);
+        Task SendMessage(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, ILogger logger);
     }
 }

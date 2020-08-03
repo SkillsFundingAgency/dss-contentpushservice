@@ -14,21 +14,20 @@ namespace NCS.DSS.ContentPushService.Services
     public class DigitialIdentityService : IDigitialIdentityService
     {
         private readonly IRequeueService _requeueService;
-        private readonly ILogger _logger;
         private readonly IDigitalIdentityClient _digitalidentityClient;
 
-        public DigitialIdentityService(IRequeueService requeue, ILogger logger, IDigitalIdentityClient digitalidentityclient)
+        public DigitialIdentityService(IRequeueService requeue, IDigitalIdentityClient digitalidentityclient)
         {
             _requeueService = requeue;
-            _logger = logger;
             _digitalidentityClient = digitalidentityclient;
         }
 
-        public async Task SendMessage(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver)
+        public async Task SendMessage(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, ILogger logger)
         {
+            
             if (message == null)
             {
-                _logger.LogInformation("Digital Identity message is null, unable to post message");
+                logger.LogInformation("Digital Identity message is null, unable to post message");
                 return;
             }
 
@@ -70,12 +69,12 @@ namespace NCS.DSS.ContentPushService.Services
                     if (!retry)
                     {
                         await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
-                        _logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
+                        logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
                     }
                 }
             }
             else
-                _logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
+                logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
 
         }
 

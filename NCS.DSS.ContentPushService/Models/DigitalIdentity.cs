@@ -19,7 +19,7 @@ namespace NCS.DSS.ContentPushService.Models
         public DateTime? DoB { get; set; }
 
         //delete properties
-        public bool? IdentityStoreId { get; set; }
+        public Guid? IdentityStoreId { get; set; }
 
         //change email address
         public string NewEmail { get; set; }
