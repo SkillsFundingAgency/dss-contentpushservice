@@ -60,6 +60,7 @@ namespace NCS.DSS.ContentPushService.Services
                 //if actioned message successfully, then remove message from queue
                 if(successfullyActioned)
                 {
+                    logger.LogInformation($"Successfully actioned {digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
                     await messageReceiver.CompleteAsync(GetLockToken(message));
                 }
                 else

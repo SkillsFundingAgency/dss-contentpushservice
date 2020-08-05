@@ -28,7 +28,7 @@ namespace NCS.DSS.ContentPushService.Utils
                     request.Content = stringContent;
                     using (var response = await client.SendAsync(request))
                     {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.Created;
+                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
                         if (!isSuccess)
                             _logger.LogInformation($"Failed to post json {json} - response is code is: {response.StatusCode} ");
                         return isSuccess;
@@ -49,7 +49,7 @@ namespace NCS.DSS.ContentPushService.Utils
                     request.Content = stringContent;
                     using (var response = await client.SendAsync(request))
                     {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.Created;
+                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
                         if (!isSuccess)
                             _logger.LogInformation($"Failed to patch json {json} - response is code is: {response.StatusCode} ");
                         return isSuccess;
@@ -69,7 +69,7 @@ namespace NCS.DSS.ContentPushService.Utils
                     request.Content = stringContent;
                     using (var response = await client.SendAsync(request))
                     {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.Created;
+                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
                         if (!isSuccess)
                             _logger.LogInformation($"Failed to delete json {json} - response is code is: {response.StatusCode} ");
                         return isSuccess;
