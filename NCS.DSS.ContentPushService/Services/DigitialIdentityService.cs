@@ -34,6 +34,7 @@ namespace NCS.DSS.ContentPushService.Services
             var body = Encoding.UTF8.GetString(message.Body);
             var digitalidentity = JsonConvert.DeserializeObject<DigitalIdentity>(body);
             var successfullyActioned = false;
+            var msg = GetLockToken(message);
 
             if (digitalidentity != null)
             {
@@ -53,15 +54,15 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     //cannot action digital identity, deadletter message in queue.
                     var errMsg = $"Unable to determine if digital identity needs to be updated/created/deleted for customer: {digitalidentity.CustomerGuid}";
-                    await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", errMsg);
+                    await messageReceiver.DeadLetterAsync(msg, "MaxTriesExceeded", errMsg);
                     throw new Exception(errMsg);
                 }
 
                 //if actioned message successfully, then remove message from queue
                 if(successfullyActioned)
                 {
-                    logger.LogInformation($"Successfully actioned {digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
-                    await messageReceiver.CompleteAsync(GetLockToken(message));
+                    logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
+                    await messageReceiver.CompleteAsync(msg);
                 }
                 else
                 {
@@ -69,7 +70,7 @@ namespace NCS.DSS.ContentPushService.Services
                     var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message, logger);
                     if (!retry)
                     {
-                        await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                        await messageReceiver.DeadLetterAsync(msg, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
                     }
                 }
@@ -99,7 +100,7 @@ namespace NCS.DSS.ContentPushService.Services
         private string GetLockToken(Message msg)
         {
             // msg.SystemProperties.LockToken Get property throws exception if not set. Return null instead.
-            return msg.SystemProperties.IsLockTokenSet ? msg.SystemProperties.LockToken : null;
+            return msg.SystemProperties?.LockToken ?? null;
         }
     }
 }
