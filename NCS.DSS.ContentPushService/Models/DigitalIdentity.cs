@@ -16,7 +16,6 @@ namespace NCS.DSS.ContentPushService.Models
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public Guid? CustomerGuid { get; set; }
-        public DateTime? DoB { get; set; }
 
         //delete properties
         public Guid? IdentityStoreId { get; set; }

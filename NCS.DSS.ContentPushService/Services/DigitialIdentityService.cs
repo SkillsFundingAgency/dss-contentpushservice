@@ -65,7 +65,7 @@ namespace NCS.DSS.ContentPushService.Services
                 else
                 {
                     //requeue message on topic if message was not successfully actioned
-                    var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message);
+                    var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message, logger);
                     if (!retry)
                     {
                         await messageReceiver.DeadLetterAsync(GetLockToken(message), "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
@@ -86,11 +86,8 @@ namespace NCS.DSS.ContentPushService.Services
 
         private async Task<bool> CreateNewDigitalIdentity(DigitalIdentity digitalidentity)
         {
-            var day = digitalidentity.DoB?.Day;
-            var month = digitalidentity.DoB?.Month;
-            var year = digitalidentity.DoB?.Year;
-            var di = new { GivenName = digitalidentity.FirstName, Surname = digitalidentity.LastName, Email = digitalidentity.EmailAddress, Day = day, Month = month, Year = year, CustomerId = digitalidentity.CustomerGuid, IsAided = false, ObjectId = Guid.NewGuid() };
-            return await _digitalidentityClient.Post(di, "NCSDSSUserCreation");
+            var di = new { givenName = digitalidentity.FirstName, lastName = digitalidentity.LastName, email = digitalidentity.EmailAddress, CustomerId = digitalidentity.CustomerGuid };
+            return await _digitalidentityClient.Post(di, "SignUpInvitation");
         }
 
         private async Task<bool> DeleteDigitalIdentity(DigitalIdentity digitalidentity)

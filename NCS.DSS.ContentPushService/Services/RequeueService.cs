@@ -1,23 +1,13 @@
 ﻿using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
-using Microsoft.Build.Framework;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Services
 {
     public class RequeueService : IRequeueService
     {
-        private readonly ILogger<RequeueService> _logger;
-        public RequeueService(ILogger<RequeueService> logger)
-        {
-            _logger = logger;
-        }
-
-        public async Task<bool> RequeueItem(string topicName, string connectionString, int maxRetryCount, Message message)
+        public async Task<bool> RequeueItem(string topicName, string connectionString, int maxRetryCount, Message message, ILogger logger)
         {
             var resendClient = new TopicClient(connectionString, topicName);
             var resendMessage = message.Clone();
@@ -32,7 +22,7 @@ namespace NCS.DSS.ContentPushService.Services
                 resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
                 resendMessage.UserProperties["RetryCount"] = retryCount + 1;
                 
-                _logger.LogInformation($"Attempting to resend message, Attempt:{retryCount} to the Topic {message.MessageId}");
+                logger.LogInformation($"Attempting to resend message, Attempt:{retryCount} to the Topic {message.MessageId}");
                 await resendClient.SendAsync(resendMessage);
                 return true;
             }

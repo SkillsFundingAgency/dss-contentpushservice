@@ -53,7 +53,7 @@ namespace NCS.DSS.ContentPushService.Tests
             await RunFunction(msg);
 
             // Assert
-            Mock.Get(RequeueService.Object).Verify(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>()), Times.Never);
+            Mock.Get(RequeueService.Object).Verify(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), _logger.Object), Times.Never);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace NCS.DSS.ContentPushService.Tests
             await RunFunction(msg);
 
             // Assert
-            Mock.Get(RequeueService.Object).Verify(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>()), Times.Once);
+            Mock.Get(RequeueService.Object).Verify(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), _logger.Object), Times.Once);
         }
     }
 }
