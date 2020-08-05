@@ -71,7 +71,7 @@ namespace NCS.DSS.ContentPushService.Services
                     if (!retry)
                     {
                         await messageReceiver.DeadLetterAsync(msg, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
-                        logger.LogInformation($"{message.MessageId} has been deadlettered after 12 attempts");
+                        logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{message.MessageId} has been deadlettered after 12 attempts");
                     }
                 }
             }
