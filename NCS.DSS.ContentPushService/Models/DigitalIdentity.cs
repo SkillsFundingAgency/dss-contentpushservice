@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NCS.DSS.ContentPushService.Models
 {
@@ -10,6 +8,7 @@ namespace NCS.DSS.ContentPushService.Models
         public bool? CreateDigitalIdentity { get; set; }
         public bool? DeleteDigitalIdentity { get; set; }
         public bool? ChangeEmailAddress { get; set; }
+        public bool? UpdateDigitalIdentity { get; set; }
 
         //Create account properties
         public string FirstName { get; set; }

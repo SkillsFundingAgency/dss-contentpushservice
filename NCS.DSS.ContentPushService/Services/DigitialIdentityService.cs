@@ -4,10 +4,9 @@ using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Utils;
 using Newtonsoft.Json;
+using System;
 using System.Text;
 using System.Threading.Tasks;
-using System;
-using Microsoft.Azure.Documents.Client;
 
 namespace NCS.DSS.ContentPushService.Services
 {
@@ -24,7 +23,7 @@ namespace NCS.DSS.ContentPushService.Services
 
         public async Task SendMessage(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, ILogger logger)
         {
-            
+
             if (message == null)
             {
                 logger.LogInformation("Digital Identity message is null, unable to post message");
@@ -50,6 +49,10 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     successfullyActioned = await ChangeEmail(digitalidentity);
                 }
+                else if (digitalidentity.UpdateDigitalIdentity == true)
+                {
+                    successfullyActioned = await UpdateUser(digitalidentity);
+                }
                 else
                 {
                     //cannot action digital identity, deadletter message in queue.
@@ -59,7 +62,7 @@ namespace NCS.DSS.ContentPushService.Services
                 }
 
                 //if actioned message successfully, then remove message from queue
-                if(successfullyActioned)
+                if (successfullyActioned)
                 {
                     logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
                     await messageReceiver.CompleteAsync(msg);
@@ -84,6 +87,12 @@ namespace NCS.DSS.ContentPushService.Services
         {
             var di = new { digitalidentity.NewEmail, digitalidentity.CurrentEmail };
             return await _digitalidentityClient.Post(di, "ChangeEmail");
+        }
+
+        private async Task<bool> UpdateUser(DigitalIdentity digitalidentity)
+        {
+            var di = new { ObjectId = digitalidentity.IdentityStoreId, FirstName = digitalidentity.FirstName, LastName = digitalidentity.LastName };
+            return await _digitalidentityClient.Put(di, "UpdateUser");
         }
 
         private async Task<bool> CreateNewDigitalIdentity(DigitalIdentity digitalidentity)
