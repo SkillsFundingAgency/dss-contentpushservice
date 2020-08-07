@@ -103,7 +103,7 @@ namespace NCS.DSS.ContentPushService.Services
 
         private async Task<bool> DeleteDigitalIdentity(DigitalIdentity digitalidentity)
         {
-            return await _digitalidentityClient.Delete(new { }, $"Delete?id={digitalidentity.IdentityStoreId}");
+            return await _digitalidentityClient.Delete(new { }, $"DeleteUser?id={digitalidentity.IdentityStoreId}");
         }
 
         private string GetLockToken(Message msg)
