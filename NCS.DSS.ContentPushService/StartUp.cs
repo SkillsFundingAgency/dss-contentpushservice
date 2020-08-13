@@ -26,6 +26,7 @@ namespace NCS.DSS.ContentPushService
             services.AddTransient<IDigitialIdentityService, DigitialIdentityService>();
             services.AddTransient<IDigitalIdentityClient, DigitalIdentityClient>();
             services.AddTransient<IRequeueService, RequeueService>();
+            services.AddTransient<IMessageReceiverService, MessageReceiverService>();
             services.AddHttpClient("AzureB2C", client =>
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("AzureB2C.ApiKey"));

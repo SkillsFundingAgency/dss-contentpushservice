@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Services
 {
+
     public class RequeueService : IRequeueService
     {
-        public async Task<bool> RequeueItem(string topicName, string connectionString, int maxRetryCount, Message message, ILogger logger)
+        private const string ServiceBusConnectionString = "ServiceBusConnectionString";
+        public async Task<bool> RequeueItem(string topicName, int maxRetryCount, Message message, ILogger logger)
         {
+            var connectionString = Environment.GetEnvironmentVariable(ServiceBusConnectionString);
             var resendClient = new TopicClient(connectionString, topicName);
             var resendMessage = message.Clone();
             message.UserProperties.TryGetValue("RetryCount", out object rVal);

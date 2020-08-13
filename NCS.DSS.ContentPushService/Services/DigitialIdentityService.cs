@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Extensions.Logging;
+using NCS.DSS.ContentPushService.Constants;
 using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Utils;
 using Newtonsoft.Json;
@@ -21,13 +22,13 @@ namespace NCS.DSS.ContentPushService.Services
             _digitalidentityClient = digitalidentityclient;
         }
 
-        public async Task SendMessage(string topic, string connectionString, Message message, ListenerSettings listenerSettings, IMessageReceiver messageReceiver, ILogger logger)
+        public async Task<DigitalIdentityServiceActions> SendMessage(string topic, Message message, IMessageReceiverService messageReceiver, ILogger logger)
         {
 
             if (message == null)
             {
                 logger.LogInformation("Digital Identity message is null, unable to post message");
-                return;
+                return DigitalIdentityServiceActions.CouldNotAction;
             }
 
             var body = Encoding.UTF8.GetString(message.Body);
@@ -66,21 +67,26 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
                     await messageReceiver.CompleteAsync(msg);
+                    return DigitalIdentityServiceActions.SuccessfullyActioned;
                 }
                 else
                 {
                     //requeue message on topic if message was not successfully actioned
-                    var retry = await _requeueService.RequeueItem(topic, connectionString, 12, message, logger);
+                    var retry = await _requeueService.RequeueItem(topic, 12, message, logger);
                     if (!retry)
                     {
                         await messageReceiver.DeadLetterAsync(msg, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{message.MessageId} has been deadlettered after 12 attempts");
+                        return DigitalIdentityServiceActions.DeadLettered;
                     }
+                    return DigitalIdentityServiceActions.Requeued;
                 }
             }
             else
+            {
                 logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
-
+                return DigitalIdentityServiceActions.CouldNotAction;
+            }
         }
 
         private async Task<bool> ChangeEmail(DigitalIdentity digitalidentity)
@@ -108,8 +114,7 @@ namespace NCS.DSS.ContentPushService.Services
 
         private string GetLockToken(Message msg)
         {
-            // msg.SystemProperties.LockToken Get property throws exception if not set. Return null instead.
-            return msg.SystemProperties?.LockToken ?? null;
+            return (msg.SystemProperties?.IsLockTokenSet == true) ? msg.SystemProperties?.LockToken : null;
         }
     }
 }

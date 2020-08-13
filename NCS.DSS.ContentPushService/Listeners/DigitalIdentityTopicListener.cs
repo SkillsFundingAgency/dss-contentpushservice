@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using NCS.DSS.ContentPushService.Constants;
 using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Services;
 
@@ -20,27 +25,19 @@ namespace NCS.DSS.ContentPushService.Listeners
         private const string FunctionName = "DigitalIdentityTopicListener";
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
         private readonly IDigitialIdentityService _digitalidentity;
+        private IMessageReceiverService _messageReceiver;
 
-        public DigitalIdentityTopicListener(IDigitialIdentityService digitalidentity)
+        public DigitalIdentityTopicListener(IDigitialIdentityService digitalidentity, IMessageReceiverService messageReceiver)
         {
             _digitalidentity = digitalidentity;
+            _messageReceiver = messageReceiver;
         }
 
         [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, ILogger log)
         {
-            var listinerSettings = new ListenerSettings
-            {
-                AppIdUri = AppIdUri,
-                ClientUrl = ClientUrl,
-                SubscriptionName = SubscriptionName,
-                TopicName = TopicName
-            };
-           
-            var connectionStr = Environment.GetEnvironmentVariable(ServiceBusConnectionString);
-            
             log.LogInformation("DigitalIdentityTopicListener received received message");
-            await _digitalidentity.SendMessage(TopicName, connectionStr,  serviceBusMessage, listinerSettings, messageReceiver,log);
+            await _digitalidentity.SendMessage(TopicName,  serviceBusMessage, _messageReceiver, log);
         }
     }
 }
