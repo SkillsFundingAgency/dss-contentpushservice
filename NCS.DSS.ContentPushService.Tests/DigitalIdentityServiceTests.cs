@@ -18,10 +18,8 @@ namespace NCS.DSS.ContentPushService.Tests
         private IDigitialIdentityService DigitalIdentityService;
         private Mock<IDigitalIdentityClient> DigitalIdentityClient;
         private Mock<IRequeueService> RequeueService;
-        private DigitalIdentityTopicListener DigitalIdentityTopicListener;
         private Mock<ILogger> _logger;
         private Mock<IMessageReceiverService> MessageReceiver;
-        private DigitialIdentityService _diService;
 
         [SetUp]
         public void Setup()
@@ -31,11 +29,9 @@ namespace NCS.DSS.ContentPushService.Tests
             DigitalIdentityClient = new Mock<IDigitalIdentityClient>();
             DigitalIdentityService = new DigitialIdentityService(RequeueService.Object,  DigitalIdentityClient.Object);
             MessageReceiver = new Mock<IMessageReceiverService>();
-            DigitalIdentityTopicListener = new DigitalIdentityTopicListener(DigitalIdentityService, MessageReceiver.Object);
             DigitalIdentityService = new DigitialIdentityService(RequeueService.Object, DigitalIdentityClient.Object);
 
         }
-
 
         #region Create Digital Identity
         private async Task<DigitalIdentityServiceActions> SendMessage( Message request)
@@ -79,7 +75,7 @@ namespace NCS.DSS.ContentPushService.Tests
         {
             // Arrange
             var identity = new DigitalIdentity() { CreateDigitalIdentity = true };
-            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<DigitalIdentity>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(false));
             RequeueService.Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), It.IsAny<ILogger>())).Returns(Task.FromResult(false));
             var msg = new Message(System.Text.Encoding.Default.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
 
@@ -89,16 +85,51 @@ namespace NCS.DSS.ContentPushService.Tests
             // Assert
             Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
         }
+        #endregion
 
+        #region DeleteUser
         [Test]
-        public void UnableToDetermineActionRequired_Throws_Exception()
+        public async Task Delete_DeleteUser_SucceedsAndReturnsSuccessfullyActioned()
         {
             // Arrange
-            var identity = new DigitalIdentity() {  };
-            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<DigitalIdentity>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            var identity = new DigitalIdentity() { DeleteDigitalIdentity = true };
+            DigitalIdentityClient.Setup(x => x.Delete(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(true));
+            var msg = new Message(System.Text.Encoding.Default.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        }
+
+        [Test]
+        public async Task Delete_DeleteUser_FailsAndDeadLettersMessage()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { DeleteDigitalIdentity = true };
+            DigitalIdentityClient.Setup(x => x.Delete(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(false));
             RequeueService.Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), It.IsAny<ILogger>())).Returns(Task.FromResult(false));
             var msg = new Message(System.Text.Encoding.Default.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
-            
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        }
+        #endregion
+
+        #region generic tests
+        [Test]
+        public void Generic_UnableToDetermineActionRequired_ThrowsException()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { };
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            RequeueService.Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), It.IsAny<ILogger>())).Returns(Task.FromResult(false));
+            var msg = new Message(System.Text.Encoding.Default.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
 
             // Act
             var ex = Assert.ThrowsAsync<Exception>(() => SendMessage(msg));
@@ -106,18 +137,117 @@ namespace NCS.DSS.ContentPushService.Tests
             // Assert
             Assert.That(ex.Message, Is.EqualTo("Unable to determine if digital identity needs to be updated/created/deleted for customer: "));
         }
-        #endregion
 
-        #region DeleteUser
-        //DeleteUser WIP
+        [Test]
+        public async Task Generic_MessageNull_ReturnsCouldNotAction()
+        {
+            // Arrange
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            RequeueService.Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), It.IsAny<ILogger>())).Returns(Task.FromResult(false));
+
+
+            // Act
+            var response = await SendMessage(null);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.CouldNotAction, response);
+        }
         #endregion
 
         #region UpdateUser
-        //UpdateUser WIP
+        [Test]
+        public async Task Put_UpdateUser_SucceedsAndReturnsSuccessfullyActioned()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { UpdateDigitalIdentity = true };
+            DigitalIdentityClient.Setup(x => x.Put(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(true));
+            var msg = new Message(System.Text.Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        }
+
+        [Test]
+        public async Task Put_UpdateUser_FailsAndDeadLettersMessage()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { UpdateDigitalIdentity = true };
+            DigitalIdentityClient.Setup(x => x.Put(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            var msg = new Message(System.Text.Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        }
+
+        [Test]
+        public async Task Put_UpdateUser_FailsAndReturnsRequeued()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { UpdateDigitalIdentity = true };
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<DigitalIdentity>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            RequeueService.Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), It.IsAny<ILogger>())).Returns(Task.FromResult(true));
+            var msg = new Message(System.Text.Encoding.Default.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.Requeued, response);
+        }
         #endregion
 
         #region ChangeEmail
-        //ChangeEmail WIP
+        [Test]
+        public async Task Post_ChangeEmail_SucceedsAndReturnsSuccessfullyActioned()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { ChangeEmailAddress = true };
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(true));
+            var msg = new Message(System.Text.Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        }
+
+        [Test]
+        public async Task Post_ChangeEmail_FailsAndDeadLettersMessage()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { ChangeEmailAddress = true };
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<object>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            var msg = new Message(System.Text.Encoding.UTF8.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        }
+
+        [Test]
+        public async Task Post_ChangeEmail_FailsAndReturnsRequeued()
+        {
+            // Arrange
+            var identity = new DigitalIdentity() { ChangeEmailAddress = true };
+            DigitalIdentityClient.Setup(x => x.Post(It.IsAny<DigitalIdentity>(), It.IsAny<string>())).Returns(Task.FromResult(false));
+            RequeueService.Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Message>(), It.IsAny<ILogger>())).Returns(Task.FromResult(true));
+            var msg = new Message(System.Text.Encoding.Default.GetBytes(Newtonsoft.Json.JsonConvert.SerializeObject(identity)));
+
+            // Act
+            var response = await SendMessage(msg);
+
+            // Assert
+            Assert.AreEqual(DigitalIdentityServiceActions.Requeued, response);
+        }
         #endregion
 
     }
