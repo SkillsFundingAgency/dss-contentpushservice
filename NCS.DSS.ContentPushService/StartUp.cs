@@ -29,7 +29,7 @@ namespace NCS.DSS.ContentPushService
             services.AddTransient<IMessageReceiverService, MessageReceiverService>();
             services.AddHttpClient("AzureB2C", client =>
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("AzureB2C.ApiKey"));
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("AzureB2C.ApiKey"));
                 client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("AzureB2C.ApiUrl"));
             });
         }
