@@ -91,7 +91,7 @@ namespace NCS.DSS.ContentPushService.Services
 
         private async Task<bool> ChangeEmail(DigitalIdentity digitalidentity)
         {
-            var di = new { digitalidentity.NewEmail, digitalidentity.CurrentEmail };
+            var di = new { ObjectID = digitalidentity.IdentityStoreId, digitalidentity.NewEmail, digitalidentity.CurrentEmail };
             return await _digitalidentityClient.Post(di, "ChangeEmail");
         }
 
