@@ -10,17 +10,25 @@ namespace NCS.DSS.ContentPushService.Services
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
         private const string topic = "digitalidentity";
         private const string subscription = "Digitalidentity";
+        private MessageReceiver _messageReciever;
 
-        public async Task CompleteAsync(string msg)
+        public MessageReceiverService(MessageReceiver receiver)
         {
-            var receiver = GetMessageReceiver(topic, subscription);
-            await receiver.CompleteAsync(msg);
+            _messageReciever = receiver;
         }
 
-        public async Task DeadLetterAsync(string msg, string error, string errorDesc)
+        public async Task CompleteAsync(string lockToken)
         {
-            var receiver = GetMessageReceiver(topic, subscription);
-            await receiver.DeadLetterAsync(msg);
+            if(_messageReciever == null)
+                _messageReciever = GetMessageReceiver(topic, subscription);
+            await _messageReciever.CompleteAsync(lockToken);
+        }
+
+        public async Task DeadLetterAsync(string lockToken, string error, string errorDesc)
+        {
+            if (_messageReciever == null)
+                _messageReciever = GetMessageReceiver(topic, subscription);
+            await _messageReciever.DeadLetterAsync(lockToken);
         }
 
         public MessageReceiver GetMessageReceiver(string topic, string subscription)
@@ -33,7 +41,7 @@ namespace NCS.DSS.ContentPushService.Services
 
     public interface IMessageReceiverService
     {
-        Task CompleteAsync(string msg);
-        Task DeadLetterAsync(string msg, string error, string errorDesc);
+        Task CompleteAsync(string lockToken);
+        Task DeadLetterAsync(string lockToken, string error, string errorDesc);
     }
 }

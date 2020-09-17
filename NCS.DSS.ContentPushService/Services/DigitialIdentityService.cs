@@ -34,7 +34,7 @@ namespace NCS.DSS.ContentPushService.Services
             var body = Encoding.UTF8.GetString(message.Body);
             var digitalidentity = JsonConvert.DeserializeObject<DigitalIdentity>(body);
             var successfullyActioned = false;
-            var msg = GetLockToken(message);
+            var token = GetLockToken(message);
 
             if (digitalidentity != null)
             {
@@ -58,7 +58,7 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     //cannot action digital identity, deadletter message in queue.
                     var errMsg = $"Unable to determine if digital identity needs to be updated/created/deleted for customer: {digitalidentity.CustomerGuid}";
-                    await messageReceiver.DeadLetterAsync(msg, "MaxTriesExceeded", errMsg);
+                    await messageReceiver.DeadLetterAsync(token, "MaxTriesExceeded", errMsg);
                     throw new Exception(errMsg);
                 }
 
@@ -66,7 +66,7 @@ namespace NCS.DSS.ContentPushService.Services
                 if (successfullyActioned)
                 {
                     logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
-                    await messageReceiver.CompleteAsync(msg);
+                    await messageReceiver.CompleteAsync(token);
                     return DigitalIdentityServiceActions.SuccessfullyActioned;
                 }
                 else
@@ -75,7 +75,7 @@ namespace NCS.DSS.ContentPushService.Services
                     var retry = await _requeueService.RequeueItem(topic, 12, message, logger);
                     if (!retry)
                     {
-                        await messageReceiver.DeadLetterAsync(msg, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                        await messageReceiver.DeadLetterAsync(token, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{message.MessageId} has been deadlettered after 12 attempts");
                         return DigitalIdentityServiceActions.DeadLettered;
                     }

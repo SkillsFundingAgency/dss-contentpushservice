@@ -25,19 +25,18 @@ namespace NCS.DSS.ContentPushService.Listeners
         private const string FunctionName = "DigitalIdentityTopicListener";
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
         private readonly IDigitialIdentityService _digitalidentity;
-        private IMessageReceiverService _messageReceiver;
 
-        public DigitalIdentityTopicListener(IDigitialIdentityService digitalidentity, IMessageReceiverService messageReceiver)
+        public DigitalIdentityTopicListener(IDigitialIdentityService digitalidentity)
         {
             _digitalidentity = digitalidentity;
-            _messageReceiver = messageReceiver;
         }
 
         [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, ILogger log)
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
+            var service = new MessageReceiverService(messageReceiver);
             log.LogInformation("DigitalIdentityTopicListener received received message");
-            await _digitalidentity.SendMessage(TopicName,  serviceBusMessage, _messageReceiver, log);
+            await _digitalidentity.SendMessage(TopicName,  serviceBusMessage, service, log);
         }
     }
 }
