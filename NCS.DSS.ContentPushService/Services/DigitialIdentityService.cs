@@ -79,6 +79,9 @@ namespace NCS.DSS.ContentPushService.Services
                         logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{message.MessageId} has been deadlettered after 12 attempts");
                         return DigitalIdentityServiceActions.DeadLettered;
                     }
+                    else
+                        await messageReceiver.CompleteAsync(token);
+
                     return DigitalIdentityServiceActions.Requeued;
                 }
             }
