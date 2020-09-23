@@ -11,6 +11,12 @@
     "authentication.Tenant": {
       "type": "string"
     },
+    "azureB2C.ApiUrl": {
+      "type": "string"
+    },
+    "azureB2C.ApiKey": {
+      "type": "string"
+    },
     "careersHelpline.AppIdUri": {
       "type": "string"
     },
@@ -29,22 +35,25 @@
     "cosmosDbKey": {
       "type": "string"
     },
+    "dss-test-touchpoint-1.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-1.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-2.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-2.Url": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-3.AppIdUri": {
+      "type": "string"
+    },
+    "dss-test-touchpoint-3.Url": {
+      "type": "string"
+    },
     "environmentName": {
-      "type": "string"
-    },
-    "functionAppNames": {
-      "type": "array"
-    },
-    "serviceBusConnectionString": {
-      "type": "string"
-    },
-    "sharedAppServicePlanName": {
-      "type": "string"
-    },
-    "sharedAppServicePlanResourceGroup": {
-      "type": "string"
-    },
-    "templateBaseUrl": {
       "type": "string"
     },
     "eastAndBucks.AppIdUri": {
@@ -58,6 +67,9 @@
     },
     "eastAndNorthampton.Url": {
       "type": "string"
+    },
+    "functionAppNames": {
+      "type": "array"
     },
     "london.AppIdUri": {
       "type": "string"
@@ -89,22 +101,16 @@
     "southWestAndOxford.Url": {
       "type": "string"
     },
-    "dss-test-touchpoint-1.AppIdUri": {
+    "serviceBusConnectionString": {
       "type": "string"
     },
-    "dss-test-touchpoint-1.Url": {
+    "sharedAppServicePlanName": {
       "type": "string"
     },
-    "dss-test-touchpoint-2.AppIdUri": {
+    "sharedAppServicePlanResourceGroup": {
       "type": "string"
     },
-    "dss-test-touchpoint-2.Url": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-3.AppIdUri": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-3.Url": {
+    "templateBaseUrl": {
       "type": "string"
     },
     "westMidsAndStaffs.AppIdUri": {
@@ -117,12 +123,6 @@
       "type": "string"
     },
     "yorkshireAndHumber.Url": {
-      "type": "string"
-    },
-    "azureB2C.ApiUrl": {
-      "type": "string"
-    },
-    "azureB2C.ApiKey": {
       "type": "string"
     }
   },

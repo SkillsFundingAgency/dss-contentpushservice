@@ -2,20 +2,128 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "templateBaseUrl": {
-            "value": "https://raw.githubusercontent.com/SkillsFundingAgency/cdh-central/master/Resources/"
+        "authentication.PushServiceClientId": {
+            "value": "__AuthenticationPushServiceClientId__"
+        },
+        "authentication.PushServiceClientSecret": {
+            "value": "__AuthenticationPushServiceClientSecret__"
+        },
+        "authentication.Tenant": {
+            "value": "__AuthenticationTenant__"
+        },
+        "azureB2C.ApiUrl": {
+            "value": "__AzureB2CApiUrl__"
+        },
+        "azureB2C.ApiKey": {
+            "value": "__AzureB2CApiKey__"
+        },
+        "careersHelpline.AppIdUri": {
+            "value": "__CareersHelplineAppIdUri__"
+        },
+        "careersHelpline.Url": {
+            "value": "__CareersHelplineUrl__"
+        },
+        "cosmosDbCollectionId": {
+            "value": "__CosmosDbCollectionId__"
+        },
+        "cosmosDbDatabaseId": {
+            "value": "__CosmosDbDatabaseId__"
+        },
+        "cosmosDbEndpoint": {
+            "value": "__CosmosDbEndpoint__"
+        },
+        "cosmosDbKey": {
+            "value": "__CosmosDbKey__"
+        },
+        "dss-test-touchpoint-1.AppIdUri": {
+            "value": "__dss-test-touchpoint-1AppIdUri__"
+        },
+        "dss-test-touchpoint-1.Url": {
+            "value": "__dss-test-touchpoint-1Url__"
+        },
+        "dss-test-touchpoint-2.AppIdUri": {
+            "value": "__dss-test-touchpoint-2AppIdUri__"
+        },
+        "dss-test-touchpoint-2.Url": {
+            "value": "__dss-test-touchpoint-2Url__"
+        },
+        "dss-test-touchpoint-3.AppIdUri": {
+            "value": "__dss-test-touchpoint-3AppIdUri__"
+        },
+        "dss-test-touchpoint-3.Url": {
+            "value": "__dss-test-touchpoint-3Url__"
         },
         "environmentName": {
-            "value": ""
+            "value": "__NotTokenised__"
+        },
+        "eastAndBucks.AppIdUri": {
+            "value": "__EastAndBucksAppIdUri__"
+        },
+        "eastAndBucks.Url": {
+            "value": "__EastAndBucksUrl__"
+        },
+        "eastAndNorthampton.AppIdUri": {
+            "value": "__EastAndNorthamptonAppIdUri__"
+        },
+        "eastAndNorthampton.Url": {
+            "value": "__EastAndNorthamptonUrl__"
         },
         "functionAppNames": {
-            "value": []
+            "value": "__NotTokenised__"
+        },
+        "london.AppIdUri": {
+            "value": "__LondonAppIdUri__"
+        },
+        "london.Url": {
+            "value": "__LondonUrl__"
+        },
+        "northEastAndCumbria.AppIdUri": {
+            "value": "__NorthEastAndCumbriaAppIdUri__"
+        },
+        "northEastAndCumbria.Url": {
+            "value": "__NorthEastAndCumbriaUrl__"
+        },
+        "northWest.AppIdUri": {
+            "value": "__NorthWestAppIdUri__"
+        },
+        "northWest.Url": {
+            "value": "__NorthWestUrl__"
+        },
+        "southEast.AppIdUri": {
+            "value": "__SouthEastAppIdUri__"
+        },
+        "southEast.Url": {
+            "value": "__SouthEastUrl__"
+        },
+        "southWestAndOxford.AppIdUri": {
+            "value": "__SouthWestAndOxfordAppIdUri__"
+        },
+        "southWestAndOxford.Url": {
+            "value": "__SouthWestAndOxfordUrl__"
+        },
+        "serviceBusConnectionString": {
+            "value": "__serviceBusConnectionString__"
         },
         "sharedAppServicePlanName": {
-            "value": ""
+            "value": "__SharedAppServicePlanName__"
         },
         "sharedAppServicePlanResourceGroup": {
-            "value": ""
+            "value": "__SharedAppServicePlanResourceGroup__"
+        },
+        "templateBaseUrl": {
+            "value": "__NestedArmTemplateBaseUrl__"
+        },
+        "westMidsAndStaffs.AppIdUri": {
+            "value": "__WestMidsAndStaffsAppIdUri__"
+        },
+        "westMidsAndStaffs.Url": {
+            "value": "__WestMidsAndStaffsUrl__"
+        },
+        "yorkshireAndHumber.AppIdUri": {
+            "value": "__YorkshireAndHumberAppIdUri__"
+        },
+        "yorkshireAndHumber.Url": {
+            "value": "__YorkshireAndHumberUrl__"
         }
     }
 }
