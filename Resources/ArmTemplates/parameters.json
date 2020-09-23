@@ -2,20 +2,137 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "templateBaseUrl": {
-            "value": "https://raw.githubusercontent.com/SkillsFundingAgency/cdh-central/master/Resources/"
+        "authentication.PushServiceClientId": {
+            "value": "__Authentication_PushServiceClientId__"
+        },
+        "authentication.PushServiceClientSecret": {
+            "value": "__Authentication_PushServiceClientSecret__"
+        },
+        "authentication.Tenant": {
+            "value": "__Authentication_Tenant__"
+        },
+        "azureB2C.ApiUrl": {
+            "value": "__AzureB2C_ApiUrl__"
+        },
+        "azureB2C.ApiKey": {
+            "value": "__AzureB2C_ApiKey__"
+        },
+        "careersHelpline.AppIdUri": {
+            "value": "__CareersHelpline_AppIdUri__"
+        },
+        "careersHelpline.Url": {
+            "value": "__CareersHelpline_Url__"
+        },
+        "cosmosDbCollectionId": {
+            "value": "__CosmosDbCollectionId__"
+        },
+        "cosmosDbDatabaseId": {
+            "value": "__CosmosDbDatabaseId__"
+        },
+        "cosmosDbEndpoint": {
+            "value": "__CosmosDbEndpoint__"
+        },
+        "cosmosDbKey": {
+            "value": "__CosmosDbKey__"
+        },
+        "dss-test-touchpoint-1.AppIdUri": {
+            "value": "__dss-test-touchpoint-1_AppIdUri__"
+        },
+        "dss-test-touchpoint-1.Url": {
+            "value": "__dss-test-touchpoint-1_Url__"
+        },
+        "dss-test-touchpoint-2.AppIdUri": {
+            "value": "__dss-test-touchpoint-2_AppIdUri__"
+        },
+        "dss-test-touchpoint-2.Url": {
+            "value": "__dss-test-touchpoint-2_Url__"
+        },
+        "dss-test-touchpoint-3.AppIdUri": {
+            "value": "__dss-test-touchpoint-3_AppIdUri__"
+        },
+        "dss-test-touchpoint-3.Url": {
+            "value": "__dss-test-touchpoint-3_Url__"
         },
         "environmentName": {
-            "value": ""
+            "value": "__NotTokenised__"
+        },
+        "eastAndBucks.AppIdUri": {
+            "value": "__EastAndBucks_AppIdUri__"
+        },
+        "eastAndBucks.Url": {
+            "value": "__EastAndBucks_Url__"
+        },
+        "eastAndNorthampton.AppIdUri": {
+            "value": "__EastAndNorthampton_AppIdUri__"
+        },
+        "eastAndNorthampton.Url": {
+            "value": "__EastAndNorthampton_Url__"
         },
         "functionAppNames": {
-            "value": []
+            "value": "__NotTokenised__"
+        },
+        "london.AppIdUri": {
+            "value": "__London_AppIdUri__"
+        },
+        "london.Url": {
+            "value": "__London_Url__"
+        },
+        "northEastAndCumbria.AppIdUri": {
+            "value": "__NorthEastAndCumbria_AppIdUri__"
+        },
+        "northEastAndCumbria.Url": {
+            "value": "__NorthEastAndCumbria_Url__"
+        },
+        "northWest.AppIdUri": {
+            "value": "__NorthWest_AppIdUri__"
+        },
+        "northWest.Url": {
+            "value": "__NorthWest_Url__"
+        },
+        "southEast.AppIdUri": {
+            "value": "__SouthEast_AppIdUri__"
+        },
+        "southEast.Url": {
+            "value": "__SouthEast_Url__"
+        },
+        "southWestAndOxford.AppIdUri": {
+            "value": "__SouthWestAndOxford_AppIdUri__"
+        },
+        "southWestAndOxford.Url": {
+            "value": "__SouthWestAndOxford_Url__"
+        },
+        "serviceBusConnectionString": {
+            "value": "__serviceBusConnectionString__"
+        },
+        "serviceBusQueueName": {
+            "value": "__serviceBusQueueName__"
         },
         "sharedAppServicePlanName": {
-            "value": ""
+            "value": "__SharedAppServicePlanName__"
         },
         "sharedAppServicePlanResourceGroup": {
-            "value": ""
+            "value": "__SharedAppServicePlanResourceGroup__"
+        },
+        "storageAccountName": {
+            "value": "__storageAccountName__"
+        },
+        "storageAccountKey": {
+            "value": "__storageAccountKey__"
+        },
+        "templateBaseUrl": {
+            "value": "__NestedArmTemplateBaseUrl__"
+        },
+        "westMidsAndStaffs.AppIdUri": {
+            "value": "__WestMidsAndStaffs_AppIdUri__"
+        },
+        "westMidsAndStaffs.Url": {
+            "value": "__WestMidsAndStaffs_Url__"
+        },
+        "yorkshireAndHumber.AppIdUri": {
+            "value": "__YorkshireAndHumber_AppIdUri__"
+        },
+        "yorkshireAndHumber.Url": {
+            "value": "__YorkshireAndHumber_Url__"
         }
     }
 }
