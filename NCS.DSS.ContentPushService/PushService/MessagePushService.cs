@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.ServiceBus.Core;
+using Microsoft.Extensions.Logging;
+using NCS.DSS.ContentPushService.Auth;
+using NCS.DSS.ContentPushService.Cosmos.Provider;
+using NCS.DSS.ContentPushService.Models;
+using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using NCS.DSS.ContentPushService.Auth;
-using NCS.DSS.ContentPushService.Cosmos.Provider;
-using NCS.DSS.ContentPushService.Models;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Logging;
-using Microsoft.Azure.ServiceBus;
-using System.Threading;
-using Microsoft.Azure.ServiceBus.Core;
 
 namespace NCS.DSS.ContentPushService.PushService
 {
@@ -19,6 +18,7 @@ namespace NCS.DSS.ContentPushService.PushService
     {
         readonly string _connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
 
+        
         public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, 
             MessageReceiver messageReceiver, ILogger log)
         {
@@ -28,6 +28,10 @@ namespace NCS.DSS.ContentPushService.PushService
             {
                 return;
             }
+
+            var body1 = Encoding.UTF8.GetString(message.Body);
+            var customer1 = JsonConvert.DeserializeObject<MessageModel>(body1);
+
 
             string appIdUri = Environment.GetEnvironmentVariable(AppIdUri).ToString();
             if ((appIdUri == null) || (AppIdUri == ""))
