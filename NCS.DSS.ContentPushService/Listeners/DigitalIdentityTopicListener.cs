@@ -20,8 +20,6 @@ namespace NCS.DSS.ContentPushService.Listeners
         private readonly IHttpClientFactory _httpClientFactory;
         private const string TopicName = "digitalidentity";
         private const string SubscriptionName = "DigitalIdentity";
-        private const string AppIdUri = "gg";
-        private const string ClientUrl = "gg";
         private const string FunctionName = "DigitalIdentityTopicListener";
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
         private readonly IDigitialIdentityService _digitalidentity;
