@@ -1,23 +1,14 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.ServiceBus;
+﻿using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using NCS.DSS.ContentPushService.Constants;
-using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Services;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
     public class DigitalIdentityTopicListener
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private const string TopicName = "digitalidentity";
         private const string SubscriptionName = "DigitalIdentity";
         private const string FunctionName = "DigitalIdentityTopicListener";
