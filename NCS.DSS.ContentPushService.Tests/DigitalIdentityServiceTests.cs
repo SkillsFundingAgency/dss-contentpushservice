@@ -2,7 +2,6 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NCS.DSS.ContentPushService.Constants;
-using NCS.DSS.ContentPushService.Listeners;
 using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Services;
 using NCS.DSS.ContentPushService.Utils;
@@ -29,8 +28,6 @@ namespace NCS.DSS.ContentPushService.Tests
             DigitalIdentityClient = new Mock<IDigitalIdentityClient>();
             DigitalIdentityService = new DigitialIdentityService(RequeueService.Object,  DigitalIdentityClient.Object);
             MessageReceiver = new Mock<IMessageReceiverService>();
-            DigitalIdentityService = new DigitialIdentityService(RequeueService.Object, DigitalIdentityClient.Object);
-
         }
 
         #region Create Digital Identity
