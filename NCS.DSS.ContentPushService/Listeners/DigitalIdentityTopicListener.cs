@@ -25,7 +25,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         {
             var service = new MessageReceiverService(messageReceiver);
             log.LogInformation("DigitalIdentityTopicListener received received message");
-            await _digitalidentity.SendMessage(TopicName,  serviceBusMessage, service, log);
+            await _digitalidentity.SendMessage(TopicName,  serviceBusMessage, service);
         }
     }
 }
