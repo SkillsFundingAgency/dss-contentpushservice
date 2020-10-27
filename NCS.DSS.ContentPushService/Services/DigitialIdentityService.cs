@@ -97,26 +97,26 @@ namespace NCS.DSS.ContentPushService.Services
         {
             var di = new { ObjectID = digitalidentity.IdentityStoreId, digitalidentity.NewEmail, digitalidentity.CurrentEmail };
             var jsonobj = JsonConvert.SerializeObject(di);
-            return await _digitalidentityClient.Post(jsonobj, "ChangeEmail");
+            return await _digitalidentityClient.Post(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(), jsonobj, "ChangeEmail");
         }
 
         private async Task<bool> UpdateUser(DigitalIdentity digitalidentity)
         {
             var di = new { ObjectId = digitalidentity.IdentityStoreId, FirstName = digitalidentity.FirstName, LastName = digitalidentity.LastName };
             var jsonobj = JsonConvert.SerializeObject(di);
-            return await _digitalidentityClient.Put(jsonobj, "UpdateUser");
+            return await _digitalidentityClient.Put(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(), jsonobj, "UpdateUser");
         }
 
         private async Task<bool> CreateNewDigitalIdentity(DigitalIdentity digitalidentity)
         {
             var di = new { givenName = digitalidentity.FirstName, lastName = digitalidentity.LastName, email = digitalidentity.EmailAddress, CustomerId = digitalidentity.CustomerGuid };
             var jsonobj = JsonConvert.SerializeObject(di);
-            return await _digitalidentityClient.Post(jsonobj, "SignUpInvitation");
+            return await _digitalidentityClient.Post(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(), jsonobj, "SignUpInvitation");
         }
 
         private async Task<bool> DeleteDigitalIdentity(DigitalIdentity digitalidentity)
         {
-            return await _digitalidentityClient.Delete("", $"DeleteUser?id={digitalidentity.IdentityStoreId}");
+            return await _digitalidentityClient.Delete(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(),"", $"DeleteUser?id={digitalidentity.IdentityStoreId}");
         }
 
         private string GetLockToken(Message msg)

@@ -16,17 +16,17 @@ namespace NCS.DSS.ContentPushService.Utils
             _logger = logger;
         }
 
-        public async Task<bool> Post(string body, string endpoint)
+        public async Task<bool> Post(string customerId, string objectId, string body, string endpoint)
         {
             var response = await Send(HttpMethod.Post, endpoint, body);
             var respstr = await response.Content.ReadAsStringAsync();
             var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
             if (!isSuccess)
-                _logger.LogInformation($"Failed to post json {body} - Status: {response.StatusCode} response is: {respstr} ");
+                _logger.LogInformation($"Failed to post customerId: {customerId}, ObjectId: {objectId} - Status: {response.StatusCode} response is: {respstr} ");
             return isSuccess;
         }
 
-        public async Task<bool> Patch(string body, string endpoint)
+        public async Task<bool> Patch(string customerId, string objectId, string body, string endpoint)
         {
             var response = await Send(HttpMethod.Patch, endpoint, body);
             var respstr = await response.Content.ReadAsStringAsync();
@@ -36,23 +36,23 @@ namespace NCS.DSS.ContentPushService.Utils
             return isSuccess;
         }
 
-        public async Task<bool> Delete(string body, string endpoint)
+        public async Task<bool> Delete(string customerId, string objectId, string body, string endpoint)
         {
             var response = await Send(HttpMethod.Delete, endpoint, body);
             var respstr = await response.Content.ReadAsStringAsync();
             var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
             if (!isSuccess)
-                _logger.LogInformation($"Failed to delete json {body} - Status: {response.StatusCode}  response is : {respstr} ");
+                _logger.LogInformation($"Failed to delete customerId: {customerId}, objectId: {objectId} - Status: {response.StatusCode}  response is : {respstr} ");
             return isSuccess;
         }
 
-        public async Task<bool> Put(string body, string endpoint)
+        public async Task<bool> Put(string customerId, string objectId, string body, string endpoint)
         {
             var response = await Send(HttpMethod.Put, endpoint, body);
             var respstr = await response.Content.ReadAsStringAsync();
             var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
             if (!isSuccess)
-                _logger.LogInformation($"Failed to put json {body} - Status: {response.StatusCode}  response is : {respstr} ");
+                _logger.LogInformation($"Failed to put customerId: {customerId}, objectId: {objectId} - Status: {response.StatusCode}  response is : {respstr} ");
             return isSuccess;
         }
 
