@@ -18,7 +18,7 @@ namespace NCS.DSS.ContentPushService.Utils
 
         public async Task<bool> Post(string body, string endpoint)
         {
-            var response = await Send(HttpMethod.Delete, endpoint, body);
+            var response = await Send(HttpMethod.Post, endpoint, body);
             var respstr = await response.Content.ReadAsStringAsync();
             var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
             if (!isSuccess)
@@ -28,7 +28,7 @@ namespace NCS.DSS.ContentPushService.Utils
 
         public async Task<bool> Patch(string body, string endpoint)
         {
-            var response = await Send(HttpMethod.Delete, endpoint, body);
+            var response = await Send(HttpMethod.Patch, endpoint, body);
             var respstr = await response.Content.ReadAsStringAsync();
             var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
             if (!isSuccess)
