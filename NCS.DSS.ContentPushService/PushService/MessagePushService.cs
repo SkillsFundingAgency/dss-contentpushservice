@@ -28,10 +28,6 @@ namespace NCS.DSS.ContentPushService.PushService
                 return;
             }
 
-            var body1 = Encoding.UTF8.GetString(message.Body);
-            var customer1 = JsonConvert.DeserializeObject<MessageModel>(body1);
-
-
             string appIdUri = Environment.GetEnvironmentVariable(AppIdUri).ToString();
             if ((appIdUri == null) || (AppIdUri == ""))
                 throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
