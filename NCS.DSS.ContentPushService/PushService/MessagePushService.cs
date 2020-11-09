@@ -37,7 +37,15 @@ namespace NCS.DSS.ContentPushService.PushService
             if ((appIdUri == null) || (AppIdUri == ""))
                 throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
 
-            var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
+            var bearerToken = "";
+            try
+            {
+                bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
+            } catch(Exception e)
+            {
+                log.LogInformation("Untable to get Access Token");
+                return;
+            }
 
             string clientUrl = Environment.GetEnvironmentVariable(ClientUrl).ToString();
             if ((clientUrl == null) || (ClientUrl == ""))
