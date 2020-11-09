@@ -18,7 +18,6 @@ namespace NCS.DSS.ContentPushService.PushService
     {
         readonly string _connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
 
-        
         public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, 
             MessageReceiver messageReceiver, ILogger log)
         {
@@ -41,10 +40,10 @@ namespace NCS.DSS.ContentPushService.PushService
             try
             {
                 bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
-                log.LogInformation("Untable to get Access Token");
-                return;
+                log.LogWarning("Unable to get Access Token");
             }
 
             string clientUrl = Environment.GetEnvironmentVariable(ClientUrl).ToString();
@@ -107,10 +106,6 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogError(string.Format("Error when attempting to post to clientUrl {0}", clientUrl));
                 throw;
             }
-
-            //For testing purposes
-            //response.StatusCode = HttpStatusCode.BadRequest;
-            //
 
             if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted)
             {
