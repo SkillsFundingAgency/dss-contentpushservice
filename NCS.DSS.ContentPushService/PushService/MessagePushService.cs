@@ -18,7 +18,6 @@ namespace NCS.DSS.ContentPushService.PushService
     {
         readonly string _connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
 
-        
         public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, 
             MessageReceiver messageReceiver, ILogger log)
         {
@@ -29,15 +28,19 @@ namespace NCS.DSS.ContentPushService.PushService
                 return;
             }
 
-            var body1 = Encoding.UTF8.GetString(message.Body);
-            var customer1 = JsonConvert.DeserializeObject<MessageModel>(body1);
-
-
             string appIdUri = Environment.GetEnvironmentVariable(AppIdUri).ToString();
             if ((appIdUri == null) || (AppIdUri == ""))
                 throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
 
-            var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
+            var bearerToken = "";
+            try
+            {
+                bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri);
+            }
+            catch (Exception e)
+            {
+                log.LogWarning("Unable to get Access Token");
+            }
 
             string clientUrl = Environment.GetEnvironmentVariable(ClientUrl).ToString();
             if ((clientUrl == null) || (ClientUrl == ""))
@@ -99,10 +102,6 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogError(string.Format("Error when attempting to post to clientUrl {0}", clientUrl));
                 throw;
             }
-
-            //For testing purposes
-            //response.StatusCode = HttpStatusCode.BadRequest;
-            //
 
             if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted)
             {

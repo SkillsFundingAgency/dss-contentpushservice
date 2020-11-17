@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,85 +18,76 @@ namespace NCS.DSS.ContentPushService.Utils
             _logger = logger;
         }
 
-        public async Task<bool> Post<T>(T t, string endpoint)
+        public async Task<bool> Post(string customerId, string objectId, string body, string endpoint)
         {
-            using (var client = _httpclientFactory.CreateClient("AzureB2C"))
-            using (var request = new HttpRequestMessage(HttpMethod.Post, endpoint))
-            {
-                var json = JsonConvert.SerializeObject(t);
-                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
-                {
-                    request.Content = stringContent;
-                    using (var response = await client.SendAsync(request))
-                    {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
-                        if (!isSuccess)
-                            _logger.LogInformation($"Failed to post json {json} - response is code is: {response.StatusCode} ");
-                        return isSuccess;
-
-                    }
-                }
-            }
+            var response = await Send(HttpMethod.Post, endpoint, body);
+            var respstr = await GetResponseContent(response);
+            var isSuccess = IsSuccessfulResponse(response, HttpStatusCode.OK);
+            if (!isSuccess)
+                _logger.LogInformation($"Failed to post customerId: {customerId}, ObjectId: {objectId} - Status: {response?.StatusCode} response is: {respstr} ");
+            return isSuccess;
         }
 
-        public async Task<bool> Patch<T>(T t, string endpoint)
+        public async Task<bool> Patch(string customerId, string objectId, string body, string endpoint)
         {
-            using (var client = _httpclientFactory.CreateClient("AzureB2C"))
-            using (var request = new HttpRequestMessage(HttpMethod.Patch, endpoint))
-            {
-                var json = JsonConvert.SerializeObject(t);
-                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
-                {
-                    request.Content = stringContent;
-                    using (var response = await client.SendAsync(request))
-                    {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
-                        if (!isSuccess)
-                            _logger.LogInformation($"Failed to patch json {json} - response is code is: {response.StatusCode} ");
-                        return isSuccess;
-                    }
-                }
-            }
+            var response = await Send(HttpMethod.Patch, endpoint, body);
+            var respstr = await GetResponseContent(response);
+            var isSuccess = IsSuccessfulResponse(response, HttpStatusCode.OK);
+            if (!isSuccess)
+                _logger.LogInformation($"Failed to Patch json {body} - Status: {response?.StatusCode}  response is: {respstr} ");
+            return isSuccess;
         }
 
-        public async Task<bool> Delete<T>(T t, string endpoint)
+        public async Task<bool> Delete(string customerId, string objectId, string body, string endpoint)
         {
-            using (var client = _httpclientFactory.CreateClient("AzureB2C"))
-            using (var request = new HttpRequestMessage(HttpMethod.Delete, endpoint))
-            {
-                var json = JsonConvert.SerializeObject(t);
-                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
-                {
-                    request.Content = stringContent;
-                    using (var response = await client.SendAsync(request))
-                    {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
-                        if (!isSuccess)
-                            _logger.LogInformation($"Failed to delete json {json} - response is code is: {response.StatusCode} ");
-                        return isSuccess;
-                    }
-                }
-            }
+            var response = await Send(HttpMethod.Delete, endpoint, body);
+            var respstr = await GetResponseContent(response);
+            var isSuccess = IsSuccessfulResponse(response, HttpStatusCode.OK);
+            if (!isSuccess)
+                _logger.LogInformation($"Failed to delete customerId: {customerId}, objectId: {objectId} - Status: {response?.StatusCode}  response is : {respstr} ");
+            return isSuccess;
         }
 
-        public async Task<bool> Put<T>(T t, string endpoint)
+        public async Task<bool> Put(string customerId, string objectId, string body, string endpoint)
         {
-            using (var client = _httpclientFactory.CreateClient("AzureB2C"))
-            using (var request = new HttpRequestMessage(HttpMethod.Put, endpoint))
+            var response = await Send(HttpMethod.Put, endpoint, body);
+            var respstr = await GetResponseContent(response);
+            var isSuccess = IsSuccessfulResponse(response, HttpStatusCode.OK);
+            if (!isSuccess)
+                _logger.LogInformation($"Failed to put customerId: {customerId}, objectId: {objectId} - Status: {response?.StatusCode}  response is : {respstr} ");
+            return isSuccess;
+        }
+
+        private async Task<HttpResponseMessage> Send(HttpMethod verb, string endpoint, string body)
+        {
+            try
             {
-                var json = JsonConvert.SerializeObject(t);
-                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
+                using (var client = _httpclientFactory.CreateClient("AzureB2C"))
+                using (var request = new HttpRequestMessage(verb, endpoint))
                 {
-                    request.Content = stringContent;
-                    using (var response = await client.SendAsync(request))
+                    using (var stringContent = new StringContent(body, Encoding.UTF8, "application/json"))
                     {
-                        var isSuccess = response.StatusCode == System.Net.HttpStatusCode.OK;
-                        if (!isSuccess)
-                            _logger.LogInformation($"Failed to delete json {json} - response is code is: {response.StatusCode} ");
-                        return isSuccess;
+                        request.Content = stringContent;
+                        return await client.SendAsync(request);
                     }
                 }
+            } catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
             }
+            return null;
+        }
+
+        private bool IsSuccessfulResponse(HttpResponseMessage resp, HttpStatusCode expectedResult)
+        {
+            return resp?.StatusCode == expectedResult;
+        }
+
+        private async Task<string> GetResponseContent(HttpResponseMessage resp)
+        {
+            if(resp != null)
+                return await resp.Content.ReadAsStringAsync();
+            return string.Empty;
         }
     }
 }

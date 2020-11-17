@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Utils
 {
     public interface IDigitalIdentityClient
     {
-        Task<bool> Post<T>(T t, string endpoint);
-        Task<bool> Patch<T>(T t, string endpoint);
-        Task<bool> Delete<T>(T t, string endpoint);
-        Task<bool> Put<T>(T t, string endpoint);
+        Task<bool> Post(string customerId, string objectId, string body, string endpoint);
+        Task<bool> Patch(string customerId, string objectId, string body, string endpoint);
+        Task<bool> Delete(string customerId, string objectId, string body, string endpoint);
+        Task<bool> Put(string customerId, string objectId, string body, string endpoint);
     }
 }
