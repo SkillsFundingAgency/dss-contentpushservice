@@ -1,5 +1,7 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Configuration;
 using NCS.DSS.ContentPushService;
 using NCS.DSS.ContentPushService.Listeners;
 using NCS.DSS.ContentPushService.PushService;
@@ -21,6 +23,10 @@ namespace NCS.DSS.ContentPushService
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(log =>
+            {
+                log.SetMinimumLevel(LogLevel.Trace);
+            });
             services.AddTransient<IListenersHelper, ListenersHelper>();
             services.AddTransient<IMessagePushService, MessagePushService>();
             services.AddTransient<IDigitialIdentityService, DigitialIdentityService>();

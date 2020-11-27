@@ -9,14 +9,20 @@ namespace NCS.DSS.ContentPushService.Services
     public class RequeueService : IRequeueService
     {
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
-        public async Task<bool> RequeueItem(string topicName, int maxRetryCount, Message message, ILogger logger)
+        private readonly ILogger<RequeueService> _logger;
+
+        public RequeueService( ILogger<RequeueService> logger)
+        {
+            _logger = logger;
+        }
+
+        public async Task<bool> RequeueItem(string topicName, int maxRetryCount, Message message)
         {
             var connectionString = Environment.GetEnvironmentVariable(ServiceBusConnectionString);
             var resendClient = new TopicClient(connectionString, topicName);
             var resendMessage = message.Clone();
             message.UserProperties.TryGetValue("RetryCount", out object rVal);
             var retryCount = (int)rVal;
-
 
             //Schedule time for re-delivery attempt - UTC time + required number of seconds
             if (retryCount < maxRetryCount)
@@ -25,7 +31,7 @@ namespace NCS.DSS.ContentPushService.Services
                 resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
                 resendMessage.UserProperties["RetryCount"] = retryCount + 1;
                 
-                logger.LogInformation($"Attempting to resend message, Attempt:{retryCount} to the Topic {message.MessageId}");
+                _logger.LogInformation($"Attempting to resend message, Attempt:{retryCount} to the Topic {message.MessageId}");
                 await resendClient.SendAsync(resendMessage);
                 return true;
             }
