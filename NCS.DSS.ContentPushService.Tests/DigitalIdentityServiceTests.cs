@@ -28,7 +28,6 @@ namespace NCS.DSS.ContentPushService.Tests
             DigitalIdentityClient = new Mock<IDigitalIdentityClient>();
             DigitalIdentityService = new DigitialIdentityService(RequeueService.Object,  DigitalIdentityClient.Object, _logger.Object);
             MessageReceiver = new Mock<IMessageReceiverService>();
-
         }
 
         #region Create Digital Identity
