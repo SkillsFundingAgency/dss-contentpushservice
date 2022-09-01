@@ -1,24 +1,23 @@
-using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Models;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public class CareersHelplineTopicListener
+    public class Touchpoint0000000209TopicListener
     {
-        private const string TopicName = "careershelpline";
-        private const string SubscriptionName = "careershelpline";
-        private const string AppIdUri = "CareersHelpline.AppIdUri";
-        private const string ClientUrl = "CareersHelpline.Url";
-        private const string FunctionName = "CareersHelplineTopicListener";
+        private const string SubscriptionName = "0000000209";
+        private const string TopicName = "0000000209";
+        private const string AppIdUri = "Touchpoint0000000209.AppIdUri";
+        private const string ClientUrl = "Touchpoint0000000209.Url";
+        private const string FunctionName = "Touchpoint0000000209";
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
-
         private readonly IListenersHelper _listenersHelper;
 
-        public CareersHelplineTopicListener(IListenersHelper listenersHelper)
+        public Touchpoint0000000209TopicListener(IListenersHelper listenersHelper)
         {
             _listenersHelper = listenersHelper;
         }
@@ -33,7 +32,7 @@ namespace NCS.DSS.ContentPushService.Listeners
                 SubscriptionName = SubscriptionName,
                 TopicName = TopicName
             };
-            
+
             await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, messageReceiver, log);
         }
     }

@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public class YorkshireAndHumberTopicListener
+    public class Touchpoint0000000105TopicListener
     {
-        private const string SubscriptionName = "yorkshireandhumber";
-        private const string TopicName = "yorkshireandhumber";
-        private const string AppIdUri = "YorkshireAndHumber.AppIdUri";
-        private const string ClientUrl = "YorkshireAndHumber.Url";
-        private const string FunctionName = "YorkshireAndHumberTopicListener";
+        private const string SubscriptionName = "0000000105";
+        private const string TopicName = "0000000105";
+        private const string AppIdUri = "Touchpoint0000000105.AppIdUri";
+        private const string ClientUrl = "Touchpoint0000000105.Url";
+        private const string FunctionName = "Touchpoint0000000105";
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
         private readonly IListenersHelper _listenersHelper;
 
-        public YorkshireAndHumberTopicListener(IListenersHelper listenersHelper)
+        public Touchpoint0000000105TopicListener(IListenersHelper listenersHelper)
         {
             _listenersHelper = listenersHelper;
         }

@@ -1,23 +1,23 @@
-using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Models;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public class LondonTopicListener
+    public class Touchpoint0000000208TopicListener
     {
-        private const string TopicName = "london";
-        private const string SubscriptionName = "london";
-        private const string AppIdUri = "London.AppIdUri";
-        private const string ClientUrl = "London.Url";
-        private const string FunctionName = "LondonTopicListener";
+        private const string SubscriptionName = "0000000208";
+        private const string TopicName = "0000000208";
+        private const string AppIdUri = "Touchpoint0000000208.AppIdUri";
+        private const string ClientUrl = "Touchpoint0000000208.Url";
+        private const string FunctionName = "Touchpoint0000000208";
         private const string ServiceBusConnectionString = "ServiceBusConnectionString";
         private readonly IListenersHelper _listenersHelper;
 
-        public LondonTopicListener(IListenersHelper listenersHelper)
+        public Touchpoint0000000208TopicListener(IListenersHelper listenersHelper)
         {
             _listenersHelper = listenersHelper;
         }
