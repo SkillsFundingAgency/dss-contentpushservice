@@ -2,12 +2,11 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
-using NCS.DSS.ContentPushService.Models;
 using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public class Touchpoint0000000101TopicListener
+    public class Touchpoint0000000101TopicListener : TopicListenerBase
     {
         private const string SubscriptionName = "0000000101";
         private const string TopicName = "0000000101";
@@ -23,16 +22,9 @@ namespace NCS.DSS.ContentPushService.Listeners
         }
 
         [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)] Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
-            var listinerSettings = new ListenerSettings
-            {
-                AppIdUri = AppIdUri,
-                ClientUrl = ClientUrl,
-                SubscriptionName = SubscriptionName,
-                TopicName = TopicName
-            };
-
+            var listinerSettings = GetListinerSettings(AppIdUri, ClientUrl, SubscriptionName, TopicName);
             await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, messageReceiver, log);
         }
     }

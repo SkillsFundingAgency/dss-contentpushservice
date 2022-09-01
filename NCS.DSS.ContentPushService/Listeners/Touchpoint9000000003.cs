@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Listeners
 {
-    public class Touchpoint9000000003TopicListener
+    public class Touchpoint9000000003TopicListener : TopicListenerBase
     {
         private const string SubscriptionName = "9000000003";
         private const string TopicName = "9000000003";
@@ -25,14 +25,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName(FunctionName)]
         public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
-            var listinerSettings = new ListenerSettings
-            {
-                AppIdUri = AppIdUri,
-                ClientUrl = ClientUrl,
-                SubscriptionName = SubscriptionName,
-                TopicName = TopicName
-            };
-
+            var listinerSettings = GetListinerSettings(AppIdUri, ClientUrl, SubscriptionName, TopicName);
             await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, messageReceiver, log);
         }
     }
