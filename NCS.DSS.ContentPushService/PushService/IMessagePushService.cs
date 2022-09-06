@@ -7,6 +7,6 @@ namespace NCS.DSS.ContentPushService.PushService
 {
     public interface IMessagePushService
     {
-        Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, MessageReceiver messageReceiver, ILogger log);
+        Task PushToTouchpoint(string touchpoint, Message message, MessageReceiver messageReceiver, ILogger log);
     }
 }

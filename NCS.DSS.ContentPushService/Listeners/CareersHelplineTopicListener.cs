@@ -9,32 +9,21 @@ namespace NCS.DSS.ContentPushService.Listeners
 {
     public class CareersHelplineTopicListener
     {
-        private const string TopicName = "careershelpline";
-        private const string SubscriptionName = "careershelpline";
-        private const string AppIdUri = "CareersHelpline.AppIdUri";
-        private const string ClientUrl = "CareersHelpline.Url";
-        private const string FunctionName = "CareersHelplineTopicListener";
-        private const string ServiceBusConnectionString = "ServiceBusConnectionString";
-
         private readonly IListenersHelper _listenersHelper;
+        private const string ServiceBusConnectionString = "ServiceBusConnectionString";
+        public const string TP_0000000999 = "0000000999";
 
         public CareersHelplineTopicListener(IListenersHelper listenersHelper)
         {
             _listenersHelper = listenersHelper;
         }
 
-        [FunctionName(FunctionName)]
-        public async Task RunAsync([ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+        [FunctionName("TOUCHPOINT_" + TP_0000000999)]
+        public async Task TouchPoint_0000000999(
+            [ServiceBusTrigger(TP_0000000999, TP_0000000999, Connection = ServiceBusConnectionString)]
+            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
-            var listinerSettings = new ListenerSettings
-            {
-                AppIdUri = AppIdUri,
-                ClientUrl = ClientUrl,
-                SubscriptionName = SubscriptionName,
-                TopicName = TopicName
-            };
-            
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, listinerSettings, messageReceiver, log);
+            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000999, messageReceiver, log);
         }
     }
 }

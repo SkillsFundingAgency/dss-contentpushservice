@@ -8,6 +8,6 @@ namespace NCS.DSS.ContentPushService.Listeners
 {
     public interface IListenersHelper
     {
-        Task SendMessageAsync(Message serviceBusMessage, ListenerSettings listenerSettings, MessageReceiver messageReceiver, ILogger log);
+        Task SendMessageAsync(Message serviceBusMessage, string touchPointId, MessageReceiver messageReceiver, ILogger log);
     }
 }
