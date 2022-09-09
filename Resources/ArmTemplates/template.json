@@ -17,12 +17,6 @@
     "azureB2C.ApiKey": {
       "type": "string"
     },
-    "careersHelpline.AppIdUri": {
-      "type": "string"
-    },
-    "careersHelpline.Url": {
-      "type": "string"
-    },
     "cosmosDbCollectionId": {
       "type": "string"
     },
@@ -35,71 +29,11 @@
     "cosmosDbKey": {
       "type": "string"
     },
-    "dss-test-touchpoint-1.AppIdUri": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-1.Url": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-2.AppIdUri": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-2.Url": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-3.AppIdUri": {
-      "type": "string"
-    },
-    "dss-test-touchpoint-3.Url": {
-      "type": "string"
-    },
     "environmentName": {
-      "type": "string"
-    },
-    "eastAndBucks.AppIdUri": {
-      "type": "string"
-    },
-    "eastAndBucks.Url": {
-      "type": "string"
-    },
-    "eastAndNorthampton.AppIdUri": {
-      "type": "string"
-    },
-    "eastAndNorthampton.Url": {
       "type": "string"
     },
     "functionAppNames": {
       "type": "array"
-    },
-    "london.AppIdUri": {
-      "type": "string"
-    },
-    "london.Url": {
-      "type": "string"
-    },
-    "northEastAndCumbria.AppIdUri": {
-      "type": "string"
-    },
-    "northEastAndCumbria.Url": {
-      "type": "string"
-    },
-    "northWest.AppIdUri": {
-      "type": "string"
-    },
-    "northWest.Url": {
-      "type": "string"
-    },
-    "southEast.AppIdUri": {
-      "type": "string"
-    },
-    "southEast.Url": {
-      "type": "string"
-    },
-    "southWestAndOxford.AppIdUri": {
-      "type": "string"
-    },
-    "southWestAndOxford.Url": {
-      "type": "string"
     },
     "serviceBusConnectionString": {
       "type": "string"
@@ -113,18 +47,138 @@
     "templateBaseUrl": {
       "type": "string"
     },
-    "westMidsAndStaffs.AppIdUri": {
+    "touchPoint.0000000101.AppIdUri": {
       "type": "string"
     },
-    "westMidsAndStaffs.Url": {
-      "type": "string"
+    "touchPoint.0000000101.Url": {
+        "type": "string"
     },
-    "yorkshireAndHumber.AppIdUri": {
-      "type": "string"
+    "touchPoint.0000000201.AppIdUri": {
+        "type": "string"
     },
-    "yorkshireAndHumber.Url": {
-      "type": "string"
-    }
+    "touchPoint.0000000201.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000102.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000102.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000202.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000202.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000103.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000103.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000203.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000203.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000104.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000104.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000204.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000204.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000105.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000105.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000205.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000205.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000106.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000106.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000206.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000206.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000107.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000107.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000207.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000207.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000108.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000108.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000208.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000208.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000109.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000109.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000209.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000209.Url": {
+        "type": "string"
+    },
+    "touchPoint.0000000999.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.0000000999.Url": {
+        "type": "string"
+    },
+    "touchPoint.9000000001.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.9000000001.Url": {
+        "type": "string"
+    },
+    "touchPoint.9000000002.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.9000000002.Url": {
+        "type": "string"
+    },
+    "touchPoint.9000000003.AppIdUri": {
+        "type": "string"
+    },
+    "touchPoint.9000000003.Url": {
+        "type": "string"
+    }  
   },
   "variables": {
     "functionAppTemplateUri": "[concat(parameters('templateBaseUrl'), '/deployments/function-app-resources.json')]",
@@ -157,12 +211,6 @@
           "authentication.Tenant": {
             "value": "[parameters('authentication.Tenant')]"
           },
-          "careersHelpline.AppIdUri": {
-            "value": "[parameters('careersHelpline.AppIdUri')]"
-          },
-          "careersHelpline.Url": {
-            "value": "[parameters('careersHelpline.Url')]"
-          },
           "cosmosDbCollectionId": {
             "value": "[parameters('cosmosDbCollectionId')]"
           },
@@ -181,83 +229,143 @@
           "serviceBusConnectionString": {
             "value": "[parameters('serviceBusConnectionString')]"
           },
-          "eastAndBucks.AppIdUri": {
-            "value": "[parameters('eastAndBucks.AppIdUri')]"
-          },
-          "eastAndBucks.Url": {
-            "value": "[parameters('eastAndBucks.Url')]"
-          },
-          "eastAndNorthampton.AppIdUri": {
-            "value": "[parameters('eastAndNorthampton.AppIdUri')]"
-          },
-          "eastAndNorthampton.Url": {
-            "value": "[parameters('eastAndNorthampton.Url')]"
-          },
-          "london.AppIdUri": {
-            "value": "[parameters('london.AppIdUri')]"
-          },
-          "london.Url": {
-            "value": "[parameters('london.Url')]"
-          },
-          "northEastAndCumbria.AppIdUri": {
-            "value": "[parameters('northEastAndCumbria.AppIdUri')]"
-          },
-          "northEastAndCumbria.Url": {
-            "value": "[parameters('northEastAndCumbria.Url')]"
-          },
-          "northWest.AppIdUri": {
-            "value": "[parameters('northWest.AppIdUri')]"
-          },
-          "northWest.Url": {
-            "value": "[parameters('northWest.Url')]"
-          },
-          "southEast.AppIdUri": {
-            "value": "[parameters('southEast.AppIdUri')]"
-          },
-          "southEast.Url": {
-            "value": "[parameters('southEast.Url')]"
-          },
-          "southWestAndOxford.AppIdUri": {
-            "value": "[parameters('southWestAndOxford.AppIdUri')]"
-          },
-          "southWestAndOxford.Url": {
-            "value": "[parameters('southWestAndOxford.Url')]"
-          },
-          "dss-test-touchpoint-1.AppIdUri": {
-            "value": "[parameters('dss-test-touchpoint-1.AppIdUri')]"
-          },
-          "dss-test-touchpoint-1.Url": {
-            "value": "[parameters('dss-test-touchpoint-1.Url')]"
-          },
-          "dss-test-touchpoint-2.AppIdUri": {
-            "value": "[parameters('dss-test-touchpoint-2.AppIdUri')]"
-          },
-          "dss-test-touchpoint-2.Url": {
-            "value": "[parameters('dss-test-touchpoint-2.Url')]"
-          },
-          "dss-test-touchpoint-3.AppIdUri": {
-            "value": "[parameters('dss-test-touchpoint-3.AppIdUri')]"
-          },
-          "dss-test-touchpoint-3.Url": {
-            "value": "[parameters('dss-test-touchpoint-3.Url')]"
-          },
-          "westMidsAndStaffs.AppIdUri": {
-            "value": "[parameters('westMidsAndStaffs.AppIdUri')]"
-          },
-          "westMidsAndStaffs.Url": {
-            "value": "[parameters('westMidsAndStaffs.Url')]"
-          },
-          "yorkshireAndHumber.AppIdUri": {
-            "value": "[parameters('yorkshireAndHumber.AppIdUri')]"
-          },
-          "yorkshireAndHumber.Url": {
-            "value": "[parameters('yorkshireAndHumber.Url')]"
-          },
           "azureB2C.ApiUrl": {
             "value": "[parameters('AzureB2C.ApiUrl')]"
           },
           "azureB2C.ApiKey": {
             "value": "[parameters('AzureB2C.ApiKey')]"
+          },
+          "touchPoint.0000000101.AppIdUri": {
+            "value": "[parameters('touchPoint.0000000101.AppIdUri')]"
+          },
+          "touchPoint.0000000101.Url": {
+              "value": "[parameters('touchPoint.0000000101.Url"
+          },
+          "touchPoint.0000000201.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000201.AppIdUri')]"
+          },
+          "touchPoint.0000000201.Url": {
+              "value": "[parameters('touchPoint.0000000201.Url"
+          },
+          "touchPoint.0000000102.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000102.AppIdUri')]"
+          },
+          "touchPoint.0000000102.Url": {
+              "value": "[parameters('touchPoint.0000000102.Url"
+          },
+          "touchPoint.0000000202.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000202.AppIdUri')]"
+          },
+          "touchPoint.0000000202.Url": {
+              "value": "[parameters('touchPoint.0000000202.Url"
+          },
+          "touchPoint.0000000103.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000103.AppIdUri')]"
+          },
+          "touchPoint.0000000103.Url": {
+              "value": "[parameters('touchPoint.0000000103.Url"
+          },
+          "touchPoint.0000000203.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000203.AppIdUri')]"
+          },
+          "touchPoint.0000000203.Url": {
+              "value": "[parameters('touchPoint.0000000203.Url"
+          },
+          "touchPoint.0000000104.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000104.AppIdUri')]"
+          },
+          "touchPoint.0000000104.Url": {
+              "value": "[parameters('touchPoint.0000000104.Url"
+          },
+          "touchPoint.0000000204.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000204.AppIdUri')]"
+          },
+          "touchPoint.0000000204.Url": {
+              "value": "[parameters('touchPoint.0000000204.Url"
+          },
+          "touchPoint.0000000105.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000105.AppIdUri')]"
+          },
+          "touchPoint.0000000105.Url": {
+              "value": "[parameters('touchPoint.0000000105.Url"
+          },
+          "touchPoint.0000000205.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000205.AppIdUri')]"
+          },
+          "touchPoint.0000000205.Url": {
+              "value": "[parameters('touchPoint.0000000205.Url"
+          },
+          "touchPoint.0000000106.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000106.AppIdUri')]"
+          },
+          "touchPoint.0000000106.Url": {
+              "value": "[parameters('touchPoint.0000000106.Url"
+          },
+          "touchPoint.0000000206.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000206.AppIdUri')]"
+          },
+          "touchPoint.0000000206.Url": {
+              "value": "[parameters('touchPoint.0000000206.Url"
+          },
+          "touchPoint.0000000107.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000107.AppIdUri')]"
+          },
+          "touchPoint.0000000107.Url": {
+              "value": "[parameters('touchPoint.0000000107.Url"
+          },
+          "touchPoint.0000000207.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000207.AppIdUri')]"
+          },
+          "touchPoint.0000000207.Url": {
+              "value": "[parameters('touchPoint.0000000207.Url"
+          },
+          "touchPoint.0000000108.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000108.AppIdUri')]"
+          },
+          "touchPoint.0000000108.Url": {
+              "value": "[parameters('touchPoint.0000000108.Url"
+          },
+          "touchPoint.0000000208.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000208.AppIdUri')]"
+          },
+          "touchPoint.0000000208.Url": {
+              "value": "[parameters('touchPoint.0000000208.Url"
+          },
+          "touchPoint.0000000109.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000109.AppIdUri')]"
+          },
+          "touchPoint.0000000109.Url": {
+              "value": "[parameters('touchPoint.0000000109.Url"
+          },
+          "touchPoint.0000000209.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000209.AppIdUri')]"
+          },
+          "touchPoint.0000000209.Url": {
+              "value": "[parameters('touchPoint.0000000209.Url"
+          },
+          "touchPoint.0000000999.AppIdUri": {
+              "value": "[parameters('touchPoint.0000000999.AppIdUri')]"
+          },
+          "touchPoint.0000000999.Url": {
+              "value": "[parameters('touchPoint.0000000999.Url"
+          },
+          "touchPoint.9000000001.AppIdUri": {
+              "value": "[parameters('touchPoint.9000000001.AppIdUri')]"
+          },
+          "touchPoint.9000000001.Url": {
+              "value": "[parameters('touchPoint.9000000001.Url"
+          },
+          "touchPoint.9000000002.AppIdUri": {
+              "value": "[parameters('touchPoint.9000000002.AppIdUri')]"
+          },
+          "touchPoint.9000000002.Url": {
+              "value": "[parameters('touchPoint.9000000002.Url"
+          },
+          "touchPoint.9000000003.AppIdUri": {
+              "value": "[parameters('touchPoint.9000000003.AppIdUri')]"
+          },
+          "touchPoint.9000000003.Url": {
+              "value": "[parameters('touchPoint.9000000003.Url"
           }
         }
       },
