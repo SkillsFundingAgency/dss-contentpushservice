@@ -17,12 +17,6 @@
         "azureB2C.ApiKey": {
             "value": "__AzureB2CApiKey__"
         },
-        "careersHelpline.AppIdUri": {
-            "value": "__CareersHelplineAppIdUri__"
-        },
-        "careersHelpline.Url": {
-            "value": "__CareersHelplineUrl__"
-        },
         "cosmosDbCollectionId": {
             "value": "__CosmosDbCollectionId__"
         },
@@ -35,71 +29,11 @@
         "cosmosDbKey": {
             "value": "__CosmosDbKey__"
         },
-        "dss-test-touchpoint-1.AppIdUri": {
-            "value": "__dss-test-touchpoint-1AppIdUri__"
-        },
-        "dss-test-touchpoint-1.Url": {
-            "value": "__dss-test-touchpoint-1Url__"
-        },
-        "dss-test-touchpoint-2.AppIdUri": {
-            "value": "__dss-test-touchpoint-2AppIdUri__"
-        },
-        "dss-test-touchpoint-2.Url": {
-            "value": "__dss-test-touchpoint-2Url__"
-        },
-        "dss-test-touchpoint-3.AppIdUri": {
-            "value": "__dss-test-touchpoint-3AppIdUri__"
-        },
-        "dss-test-touchpoint-3.Url": {
-            "value": "__dss-test-touchpoint-3Url__"
-        },
         "environmentName": {
             "value": "__NotTokenised__"
         },
-        "eastAndBucks.AppIdUri": {
-            "value": "__EastAndBucksAppIdUri__"
-        },
-        "eastAndBucks.Url": {
-            "value": "__EastAndBucksUrl__"
-        },
-        "eastAndNorthampton.AppIdUri": {
-            "value": "__EastAndNorthamptonAppIdUri__"
-        },
-        "eastAndNorthampton.Url": {
-            "value": "__EastAndNorthamptonUrl__"
-        },
         "functionAppNames": {
             "value": "__NotTokenised__"
-        },
-        "london.AppIdUri": {
-            "value": "__LondonAppIdUri__"
-        },
-        "london.Url": {
-            "value": "__LondonUrl__"
-        },
-        "northEastAndCumbria.AppIdUri": {
-            "value": "__NorthEastAndCumbriaAppIdUri__"
-        },
-        "northEastAndCumbria.Url": {
-            "value": "__NorthEastAndCumbriaUrl__"
-        },
-        "northWest.AppIdUri": {
-            "value": "__NorthWestAppIdUri__"
-        },
-        "northWest.Url": {
-            "value": "__NorthWestUrl__"
-        },
-        "southEast.AppIdUri": {
-            "value": "__SouthEastAppIdUri__"
-        },
-        "southEast.Url": {
-            "value": "__SouthEastUrl__"
-        },
-        "southWestAndOxford.AppIdUri": {
-            "value": "__SouthWestAndOxfordAppIdUri__"
-        },
-        "southWestAndOxford.Url": {
-            "value": "__SouthWestAndOxfordUrl__"
         },
         "serviceBusConnectionString": {
             "value": "__serviceBusConnectionString__"
@@ -113,17 +47,137 @@
         "templateBaseUrl": {
             "value": "__NestedArmTemplateBaseUrl__"
         },
-        "westMidsAndStaffs.AppIdUri": {
-            "value": "__WestMidsAndStaffsAppIdUri__"
+        "touchPoint.0000000101.AppIdUri": {
+            "value": "__TouchPoint0000000101AppIdUri__"
         },
-        "westMidsAndStaffs.Url": {
-            "value": "__WestMidsAndStaffsUrl__"
+        "touchPoint.0000000101.Url": {
+            "value": "__TouchPoint0000000101Url__"
         },
-        "yorkshireAndHumber.AppIdUri": {
-            "value": "__YorkshireAndHumberAppIdUri__"
+        "touchPoint.0000000201.AppIdUri": {
+            "value": "__TouchPoint0000000201AppIdUri__"
         },
-        "yorkshireAndHumber.Url": {
-            "value": "__YorkshireAndHumberUrl__"
-        }
+        "touchPoint.0000000201.Url": {
+            "value": "__TouchPoint0000000201Url__"
+        },
+        "touchPoint.0000000102.AppIdUri": {
+            "value": "__TouchPoint0000000102AppIdUri__"
+        },
+        "touchPoint.0000000102.Url": {
+            "value": "__TouchPoint0000000102Url__"
+        },
+        "touchPoint.0000000202.AppIdUri": {
+            "value": "__TouchPoint0000000202AppIdUri__"
+        },
+        "touchPoint.0000000202.Url": {
+            "value": "__TouchPoint0000000202Url__"
+        },
+        "touchPoint.0000000103.AppIdUri": {
+            "value": "__TouchPoint0000000103AppIdUri__"
+        },
+        "touchPoint.0000000103.Url": {
+            "value": "__TouchPoint0000000103Url__"
+        },
+        "touchPoint.0000000203.AppIdUri": {
+            "value": "__TouchPoint0000000203AppIdUri__"
+        },
+        "touchPoint.0000000203.Url": {
+            "value": "__TouchPoint0000000203Url__"
+        },
+        "touchPoint.0000000104.AppIdUri": {
+            "value": "__TouchPoint0000000104AppIdUri__"
+        },
+        "touchPoint.0000000104.Url": {
+            "value": "__TouchPoint0000000104Url__"
+        },
+        "touchPoint.0000000204.AppIdUri": {
+            "value": "__TouchPoint0000000204AppIdUri__"
+        },
+        "touchPoint.0000000204.Url": {
+            "value": "__TouchPoint0000000204Url__"
+        },
+        "touchPoint.0000000105.AppIdUri": {
+            "value": "__TouchPoint0000000105AppIdUri__"
+        },
+        "touchPoint.0000000105.Url": {
+            "value": "__TouchPoint0000000105Url__"
+        },
+        "touchPoint.0000000205.AppIdUri": {
+            "value": "__TouchPoint0000000205AppIdUri__"
+        },
+        "touchPoint.0000000205.Url": {
+            "value": "__TouchPoint0000000205Url__"
+        },
+        "touchPoint.0000000106.AppIdUri": {
+            "value": "__TouchPoint0000000106AppIdUri__"
+        },
+        "touchPoint.0000000106.Url": {
+            "value": "__TouchPoint0000000106Url__"
+        },
+        "touchPoint.0000000206.AppIdUri": {
+            "value": "__TouchPoint0000000206AppIdUri__"
+        },
+        "touchPoint.0000000206.Url": {
+            "value": "__TouchPoint0000000206Url__"
+        },
+        "touchPoint.0000000107.AppIdUri": {
+            "value": "__TouchPoint0000000107AppIdUri__"
+        },
+        "touchPoint.0000000107.Url": {
+            "value": "__TouchPoint0000000107Url__"
+        },
+        "touchPoint.0000000207.AppIdUri": {
+            "value": "__TouchPoint0000000207AppIdUri__"
+        },
+        "touchPoint.0000000207.Url": {
+            "value": "__TouchPoint0000000207Url__"
+        },
+        "touchPoint.0000000108.AppIdUri": {
+            "value": "__TouchPoint0000000108AppIdUri__"
+        },
+        "touchPoint.0000000108.Url": {
+            "value": "__TouchPoint0000000108Url__"
+        },
+        "touchPoint.0000000208.AppIdUri": {
+            "value": "__TouchPoint0000000208AppIdUri__"
+        },
+        "touchPoint.0000000208.Url": {
+            "value": "__TouchPoint0000000208Url__"
+        },
+        "touchPoint.0000000109.AppIdUri": {
+            "value": "__TouchPoint0000000109AppIdUri__"
+        },
+        "touchPoint.0000000109.Url": {
+            "value": "__TouchPoint0000000109Url__"
+        },
+        "touchPoint.0000000209.AppIdUri": {
+            "value": "__TouchPoint0000000209AppIdUri__"
+        },
+        "touchPoint.0000000209.Url": {
+            "value": "__TouchPoint0000000209Url__"
+        },
+        "touchPoint.0000000999.AppIdUri": {
+            "value": "__TouchPoint0000000999AppIdUri__"
+        },
+        "touchPoint.0000000999.Url": {
+            "value": "__TouchPoint0000000999Url__"
+        },
+        "touchPoint.9000000001.AppIdUri": {
+            "value": "__TouchPoint9000000001AppIdUri__"
+        },
+        "touchPoint.9000000001.Url": {
+            "value": "__TouchPoint9000000001Url__"
+        },
+        "touchPoint.9000000002.AppIdUri": {
+            "value": "__TouchPoint9000000002AppIdUri__"
+        },
+        "touchPoint.9000000002.Url": {
+            "value": "__TouchPoint9000000002Url__"
+        },
+        "touchPoint.9000000003.AppIdUri": {
+            "value": "__TouchPoint9000000003AppIdUri__"
+        },
+        "touchPoint.9000000003.Url": {
+            "value": "__TouchPoint9000000003Url__"
+        }        
     }
 }
