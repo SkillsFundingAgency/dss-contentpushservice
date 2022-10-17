@@ -19,18 +19,15 @@ namespace NCS.DSS.ContentPushService.Listeners
             _messagepushService = messagePushService;
         }
 
-        public async Task SendMessageAsync(Message serviceBusMessage, ListenerSettings listenerSettings, MessageReceiver messageReceiver, ILogger log)
+        public async Task SendMessageAsync(Message serviceBusMessage, string touchPointId, MessageReceiver messageReceiver, ILogger log)
         {
             try
             {
                 await _messagepushService.PushToTouchpoint(
-                    listenerSettings.AppIdUri, 
-                    listenerSettings.ClientUrl, 
-                    serviceBusMessage, 
-                    listenerSettings.TopicName, 
-                    messageReceiver, 
+                    touchPointId,
+                    serviceBusMessage,
+                    messageReceiver,
                     log);
-                log.LogInformation($"The { listenerSettings.TopicName} topic successfully pushed a notification to { listenerSettings.ClientUrl} at {DateTime.UtcNow}.");
             }
             catch (Exception ex)
             {

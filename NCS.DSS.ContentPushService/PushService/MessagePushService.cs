@@ -18,19 +18,27 @@ namespace NCS.DSS.ContentPushService.PushService
     {
         readonly string _connectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString");
 
-        public async Task PushToTouchpoint(string AppIdUri, string ClientUrl, Message message, string TopicName, 
+
+        private string GetEnvironmentVariable(string path, ILogger log)
+        {
+            log.LogInformation("Attempting to read environment variable {0}", path);
+            var value = Environment.GetEnvironmentVariable(path);
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(nameof(path));
+
+            log.LogInformation("Value returned {0}", value);
+            return value;
+        }
+
+
+        public async Task PushToTouchpoint(string touchpoint, Message message, 
             MessageReceiver messageReceiver, ILogger log)
         {
-            log.LogInformation("Entering PushToTouchpoint:-   Attempting to push to touchpoint appIdUri: " + AppIdUri);
+            if (message == null) throw new ArgumentNullException(nameof(message));
+            if (string.IsNullOrEmpty(touchpoint)) throw new ArgumentNullException(nameof(touchpoint));
 
-            if (message == null)
-            {
-                return;
-            }
-
-            string appIdUri = Environment.GetEnvironmentVariable(AppIdUri).ToString();
-            if ((appIdUri == null) || (AppIdUri == ""))
-                throw new Exception("AppIdUri: " + AppIdUri + " does not exist!");
+            var appIdUri = this.GetEnvironmentVariable($"touchpoint.{touchpoint}.AppIdUri", log);
+            var clientUrl = this.GetEnvironmentVariable($"touchpoint.{touchpoint}.Url", log);
 
             var bearerToken = "";
             try
@@ -42,9 +50,6 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogWarning("Unable to get Access Token");
             }
 
-            string clientUrl = Environment.GetEnvironmentVariable(ClientUrl).ToString();
-            if ((clientUrl == null) || (ClientUrl == ""))
-                throw new Exception("ClientUrl: " + clientUrl + " does not exist!");
 
             var client = HttpClientFactory.Create();
             var body = Encoding.UTF8.GetString(message.Body);
@@ -118,7 +123,7 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
 
                 //Create Servicebus resend client
-                var resendClient = new TopicClient(_connectionString, TopicName);
+                var resendClient = new TopicClient(_connectionString, touchpoint);
                 var resendMessage = message.Clone();
 
                 log.LogInformation("Cloning message for retry attempt");
