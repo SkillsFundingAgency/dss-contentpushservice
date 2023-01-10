@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Auth;
@@ -31,7 +32,7 @@ namespace NCS.DSS.ContentPushService.PushService
         }
 
 
-        public async Task PushToTouchpoint(string touchpoint, Message message, 
+        public async Task PushToTouchpoint(string touchpoint, ServiceBusReceivedMessage message, 
             MessageReceiver messageReceiver, ILogger log)
         {
             if (message == null) throw new ArgumentNullException(nameof(message));
@@ -111,7 +112,7 @@ namespace NCS.DSS.ContentPushService.PushService
             if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created || response?.StatusCode == HttpStatusCode.Accepted)
             {
                 //Each messageReceiver must complete it's own message or we'll get a lockToken error
-                await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                await messageReceiver.CompleteAsync(message.LockToken);
 
                 await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri, clientUrl, bearerToken, true);
                 log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
@@ -123,13 +124,13 @@ namespace NCS.DSS.ContentPushService.PushService
                 log.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}", (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
 
                 //Create Servicebus resend client
-                var resendClient = new TopicClient(_connectionString, touchpoint);
-                var resendMessage = message.Clone();
+                
+                await using var serviceBusClient = new ServiceBusClient(_connectionString);
+                var resendClient = serviceBusClient.CreateSender(touchpoint);
 
-                log.LogInformation("Cloning message for retry attempt");
 
                 //Get number of retries attempted
-                message.UserProperties.TryGetValue("RetryCount", out object rVal);
+                message.ApplicationProperties.TryGetValue("RetryCount", out object rVal);
                 int RetryCount = (int)rVal;
 
                 if (RetryCount >= 12)
@@ -137,7 +138,7 @@ namespace NCS.DSS.ContentPushService.PushService
                     try
                     {
                         //Deadletter as max retries exceeded
-                        await messageReceiver.DeadLetterAsync(message.SystemProperties.LockToken, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
+                        await messageReceiver.DeadLetterAsync(message.LockToken, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         //await message.DeadLetterAsync("MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                         log.LogInformation("Message retry max attempts reached");
                     }
@@ -154,19 +155,23 @@ namespace NCS.DSS.ContentPushService.PushService
                 }
                 else
                 {
+                    var resendMessage = new ServiceBusMessage(message.Body);
+
+                    log.LogInformation("Cloning message for retry attempt");
+
                     //Schedule time for re-delivery attempt - UTC time + required number of seconds
                     int retrySecs = GetRetrySeconds(RetryCount);
-                    resendMessage.ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddSeconds(retrySecs);
+                    resendMessage.ScheduledEnqueueTime = DateTime.UtcNow.AddSeconds(retrySecs);
 
                     //Increment retry count by 1
-                    resendMessage.UserProperties["RetryCount"] = RetryCount + 1;
+                    resendMessage.ApplicationProperties["RetryCount"] = RetryCount + 1;
                     log.LogInformation(string.Format("Retrying message delivery Count {0}", RetryCount));
 
                     try
                     {
                         //Resend Message to the Topic
                         log.LogInformation("Attempting to resend message to the Topic");
-                        await resendClient.SendAsync(resendMessage);
+                        await resendClient.SendMessageAsync(resendMessage);
                     }
                     catch (Exception)
                     {
@@ -180,7 +185,7 @@ namespace NCS.DSS.ContentPushService.PushService
                     }
 
                     //Complete original message
-                    await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await messageReceiver.CompleteAsync(message.LockToken);
                     log.LogInformation("Message successfully resent");
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,6 @@ namespace NCS.DSS.ContentPushService.Listeners
 {
     public interface IListenersHelper
     {
-        Task SendMessageAsync(Message serviceBusMessage, string touchPointId, MessageReceiver messageReceiver, ILogger log);
+        Task SendMessageAsync(ServiceBusReceivedMessage serviceBusMessage, string touchPointId, MessageReceiver messageReceiver, ILogger log);
     }
 }

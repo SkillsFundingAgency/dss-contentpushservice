@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
@@ -23,7 +24,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000999)]
         public async Task TouchPoint_0000000999(
             [ServiceBusTrigger(TP_0000000999, TP_0000000999, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000999, messageReceiver, log);
         }
