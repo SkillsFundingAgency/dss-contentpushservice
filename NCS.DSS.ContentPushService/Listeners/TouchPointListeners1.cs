@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
 using Microsoft.Azure.WebJobs;
@@ -31,7 +32,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000101)]
         public async Task TouchPoint_0000000101(
             [ServiceBusTrigger(TP_0000000101, TP_0000000101, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000101, messageReceiver, log);
         }
@@ -39,7 +40,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000102)]
         public async Task TouchPoint_0000000102(
             [ServiceBusTrigger(TP_0000000102, TP_0000000102, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000102, messageReceiver, log);
         }
@@ -47,7 +48,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000103)]
         public async Task TouchPoint_0000000103(
             [ServiceBusTrigger(TP_0000000103, TP_0000000103, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000103, messageReceiver, log);
         }
@@ -55,7 +56,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000104)]
         public async Task TouchPoint_0000000104(
             [ServiceBusTrigger(TP_0000000104, TP_0000000104, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000104, messageReceiver, log);
         }
@@ -63,7 +64,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000105)]
         public async Task TouchPoint_0000000105(
             [ServiceBusTrigger(TP_0000000105, TP_0000000105, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000105, messageReceiver, log);
         }
@@ -71,7 +72,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000106)]
         public async Task TouchPoint_0000000106(
             [ServiceBusTrigger(TP_0000000106, TP_0000000106, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000106, messageReceiver, log);
         }
@@ -79,7 +80,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000107)]
         public async Task TouchPoint_0000000107(
             [ServiceBusTrigger(TP_0000000107, TP_0000000107, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000107, messageReceiver, log);
         }
@@ -87,7 +88,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000108)]
         public async Task TouchPoint_0000000108(
             [ServiceBusTrigger(TP_0000000108, TP_0000000108, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000108, messageReceiver, log);
         }
@@ -95,7 +96,7 @@ namespace NCS.DSS.ContentPushService.Listeners
         [FunctionName("TOUCHPOINT_" + TP_0000000109)]
         public async Task TouchPoint_0000000109(
             [ServiceBusTrigger(TP_0000000109, TP_0000000109, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
+            ServiceBusReceivedMessage serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
         {
             await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000109, messageReceiver, log);
         }
