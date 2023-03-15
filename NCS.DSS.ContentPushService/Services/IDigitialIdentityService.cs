@@ -1,11 +1,12 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using NCS.DSS.ContentPushService.Constants;
-using System.Threading.Tasks;
 
-namespace NCS.DSS.ContentPushService.Services
+namespace NCS.DSS.ContentPushService.Services;
+
+public interface IDigitialIdentityService
 {
-    public interface IDigitialIdentityService
-    {
-        Task<DigitalIdentityServiceActions> SendMessage(string topic, Message message, IMessageReceiverService messageReceiver);
-    }
+    Task<DigitalIdentityServiceActions> SendMessage(string topic, ServiceBusReceivedMessage serviceBusMessage,
+        ServiceBusMessageActions messageActions);
 }

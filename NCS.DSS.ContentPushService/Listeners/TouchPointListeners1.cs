@@ -1,103 +1,104 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 
-namespace NCS.DSS.ContentPushService.Listeners
+namespace NCS.DSS.ContentPushService.Listeners;
+
+public class TouchPointListeners1
 {
-    public class TouchPointListeners1
+    private const string ServiceBusConnectionString = "ServiceBusConnectionString";
+
+
+    public const string TP_0000000101 = "0000000101";
+    public const string TP_0000000102 = "0000000102";
+    public const string TP_0000000103 = "0000000103";
+    public const string TP_0000000104 = "0000000104";
+    public const string TP_0000000105 = "0000000105";
+    public const string TP_0000000106 = "0000000106";
+    public const string TP_0000000107 = "0000000107";
+    public const string TP_0000000108 = "0000000108";
+    public const string TP_0000000109 = "0000000109";
+    private readonly IListenersHelper _listenersHelper;
+
+
+    public TouchPointListeners1(IListenersHelper listenersHelper)
     {
-        private const string ServiceBusConnectionString = "ServiceBusConnectionString";
+        _listenersHelper = listenersHelper;
+    }
 
+    [FunctionName("TOUCHPOINT_" + TP_0000000101)]
+    public async Task TouchPoint_0000000101(
+        [ServiceBusTrigger(TP_0000000101, TP_0000000101, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000101, messageActions, log);
+    }
 
-        public const string TP_0000000101 = "0000000101";
-        public const string TP_0000000102 = "0000000102";
-        public const string TP_0000000103 = "0000000103";
-        public const string TP_0000000104 = "0000000104";
-        public const string TP_0000000105 = "0000000105";
-        public const string TP_0000000106 = "0000000106";
-        public const string TP_0000000107 = "0000000107";
-        public const string TP_0000000108 = "0000000108";
-        public const string TP_0000000109 = "0000000109";
-        private readonly IListenersHelper _listenersHelper;
+    [FunctionName("TOUCHPOINT_" + TP_0000000102)]
+    public async Task TouchPoint_0000000102(
+        [ServiceBusTrigger(TP_0000000102, TP_0000000102, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000102, messageActions, log);
+    }
 
+    [FunctionName("TOUCHPOINT_" + TP_0000000103)]
+    public async Task TouchPoint_0000000103(
+        [ServiceBusTrigger(TP_0000000103, TP_0000000103, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000103, messageActions, log);
+    }
 
-        public TouchPointListeners1(IListenersHelper listenersHelper)
-        {
-            _listenersHelper = listenersHelper;
-        }
+    [FunctionName("TOUCHPOINT_" + TP_0000000104)]
+    public async Task TouchPoint_0000000104(
+        [ServiceBusTrigger(TP_0000000104, TP_0000000104, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000104, messageActions, log);
+    }
 
-        [FunctionName("TOUCHPOINT_" + TP_0000000101)]
-        public async Task TouchPoint_0000000101(
-            [ServiceBusTrigger(TP_0000000101, TP_0000000101, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000101, messageReceiver, log);
-        }
+    [FunctionName("TOUCHPOINT_" + TP_0000000105)]
+    public async Task TouchPoint_0000000105(
+        [ServiceBusTrigger(TP_0000000105, TP_0000000105, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000105, messageActions, log);
+    }
 
-        [FunctionName("TOUCHPOINT_" + TP_0000000102)]
-        public async Task TouchPoint_0000000102(
-            [ServiceBusTrigger(TP_0000000102, TP_0000000102, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000102, messageReceiver, log);
-        }
+    [FunctionName("TOUCHPOINT_" + TP_0000000106)]
+    public async Task TouchPoint_0000000106(
+        [ServiceBusTrigger(TP_0000000106, TP_0000000106, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000106, messageActions, log);
+    }
 
-        [FunctionName("TOUCHPOINT_" + TP_0000000103)]
-        public async Task TouchPoint_0000000103(
-            [ServiceBusTrigger(TP_0000000103, TP_0000000103, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000103, messageReceiver, log);
-        }
+    // messageReceiver 
 
-        [FunctionName("TOUCHPOINT_" + TP_0000000104)]
-        public async Task TouchPoint_0000000104(
-            [ServiceBusTrigger(TP_0000000104, TP_0000000104, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000104, messageReceiver, log);
-        }
+    [FunctionName("TOUCHPOINT_" + TP_0000000107)]
+    public async Task TouchPoint_0000000107(
+        [ServiceBusTrigger(TP_0000000107, TP_0000000107, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000107, messageActions, log);
+    }
 
-        [FunctionName("TOUCHPOINT_" + TP_0000000105)]
-        public async Task TouchPoint_0000000105(
-            [ServiceBusTrigger(TP_0000000105, TP_0000000105, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000105, messageReceiver, log);
-        }
+    [FunctionName("TOUCHPOINT_" + TP_0000000108)]
+    public async Task TouchPoint_0000000108(
+        [ServiceBusTrigger(TP_0000000108, TP_0000000108, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000108, messageActions, log);
+    }
 
-        [FunctionName("TOUCHPOINT_" + TP_0000000106)]
-        public async Task TouchPoint_0000000106(
-            [ServiceBusTrigger(TP_0000000106, TP_0000000106, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000106, messageReceiver, log);
-        }
-
-        [FunctionName("TOUCHPOINT_" + TP_0000000107)]
-        public async Task TouchPoint_0000000107(
-            [ServiceBusTrigger(TP_0000000107, TP_0000000107, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000107, messageReceiver, log);
-        }
-
-        [FunctionName("TOUCHPOINT_" + TP_0000000108)]
-        public async Task TouchPoint_0000000108(
-            [ServiceBusTrigger(TP_0000000108, TP_0000000108, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000108, messageReceiver, log);
-        }
-
-        [FunctionName("TOUCHPOINT_" + TP_0000000109)]
-        public async Task TouchPoint_0000000109(
-            [ServiceBusTrigger(TP_0000000109, TP_0000000109, Connection = ServiceBusConnectionString)]
-            Message serviceBusMessage, MessageReceiver messageReceiver, ILogger log)
-        {
-            await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000109, messageReceiver, log);
-        }
+    [FunctionName("TOUCHPOINT_" + TP_0000000109)]
+    public async Task TouchPoint_0000000109(
+        [ServiceBusTrigger(TP_0000000109, TP_0000000109, Connection = ServiceBusConnectionString)]
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+    {
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000109, messageActions, log);
     }
 }

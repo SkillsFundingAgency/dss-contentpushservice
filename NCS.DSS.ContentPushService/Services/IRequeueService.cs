@@ -1,10 +1,9 @@
-﻿using Microsoft.Azure.ServiceBus;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 
-namespace NCS.DSS.ContentPushService.Services
+namespace NCS.DSS.ContentPushService.Services;
+
+public interface IRequeueService
 {
-    public interface IRequeueService
-    {
-        Task<bool> RequeueItem(string topicName, int maxRetryCount, Message message);
-    }
+    Task<bool> RequeueItem(string topicName, int maxRetryCount, ServiceBusReceivedMessage serviceBusReceivedMessage);
 }

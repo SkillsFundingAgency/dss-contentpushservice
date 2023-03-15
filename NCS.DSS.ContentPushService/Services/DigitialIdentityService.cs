@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Constants;
 using NCS.DSS.ContentPushService.Models;
@@ -23,19 +25,18 @@ namespace NCS.DSS.ContentPushService.Services
             _logger = logger;
         }
 
-        public async Task<DigitalIdentityServiceActions> SendMessage(string topic, Message message, IMessageReceiverService messageReceiver)
+        public async Task<DigitalIdentityServiceActions> SendMessage(string topic, ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
         {
 
-            if (message == null)
+            if (serviceBusMessage == null)
             {
                 _logger.LogInformation("Digital Identity message is null, unable to post message");
                 return DigitalIdentityServiceActions.CouldNotAction;
             }
 
-            var body = Encoding.UTF8.GetString(message.Body);
+            var body = Encoding.UTF8.GetString(serviceBusMessage.Body);
             var digitalidentity = JsonConvert.DeserializeObject<DigitalIdentity>(body);
             var successfullyActioned = false;
-            var token = GetLockToken(message);
 
             if (digitalidentity != null)
             {
@@ -59,7 +60,8 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     //cannot action digital identity, deadletter message in queue.
                     var errMsg = $"Unable to determine if digital identity needs to be updated/created/deleted for customer: {digitalidentity.CustomerGuid}";
-                    await messageReceiver.DeadLetterAsync(token, "MaxTriesExceeded", errMsg);
+                    await messageActions.DeadLetterMessageAsync(serviceBusMessage, "MaxTriesExceeded",
+                        errMsg);
                     throw new Exception(errMsg);
                 }
 
@@ -67,28 +69,29 @@ namespace NCS.DSS.ContentPushService.Services
                 if (successfullyActioned)
                 {
                     _logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
-                    await messageReceiver.CompleteAsync(token);
+                    await messageActions.CompleteMessageAsync(serviceBusMessage);
                     return DigitalIdentityServiceActions.SuccessfullyActioned;
                 }
                 else
                 {
                     //requeue message on topic if message was not successfully actioned
-                    var retry = await _requeueService.RequeueItem(topic, 12, message);
+                    var retry = await _requeueService.RequeueItem(topic, 12, serviceBusMessage);
                     if (!retry)
                     {
-                        await messageReceiver.DeadLetterAsync(token, "MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
-                        _logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{message.MessageId} has been deadlettered after 12 attempts");
+                        await messageActions.DeadLetterMessageAsync(serviceBusMessage, "MaxTriesExceeded",
+                            "Attempted to send notification to Endpoint 12 times & failed!");
+                        _logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{serviceBusMessage.MessageId} has been deadlettered after 12 attempts");
                         return DigitalIdentityServiceActions.DeadLettered;
                     }
                     else
-                        await messageReceiver.CompleteAsync(token);
+                        await messageActions.CompleteMessageAsync(serviceBusMessage);
 
                     return DigitalIdentityServiceActions.Requeued;
                 }
             }
             else
             {
-                _logger.LogInformation($"{message.MessageId} could not deserialize DigitalIdentity from message");
+                _logger.LogInformation($"{serviceBusMessage.MessageId} could not deserialize DigitalIdentity from message");
                 return DigitalIdentityServiceActions.CouldNotAction;
             }
         }
