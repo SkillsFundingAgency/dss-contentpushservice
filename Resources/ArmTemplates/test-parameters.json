@@ -180,6 +180,9 @@
         },
         "touchPoint.9000000003.Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
-        }        
+        },
+        "appInsightsInstrumentationKey": {
+            "value": "app-Insights-Instrumentation-Key" 
+        }       
     }
 }
