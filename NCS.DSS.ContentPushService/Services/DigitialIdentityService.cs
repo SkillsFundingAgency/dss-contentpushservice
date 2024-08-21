@@ -1,14 +1,12 @@
 ﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Constants;
 using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.Utils;
 using Newtonsoft.Json;
-using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Services
 {
@@ -60,7 +58,7 @@ namespace NCS.DSS.ContentPushService.Services
                 {
                     //cannot action digital identity, deadletter message in queue.
                     var errMsg = $"Unable to determine if digital identity needs to be updated/created/deleted for customer: {digitalidentity.CustomerGuid}";
-                    await messageActions.DeadLetterMessageAsync(serviceBusMessage, "MaxTriesExceeded",
+                    await messageActions.DeadLetterMessageAsync(serviceBusMessage, null, "MaxTriesExceeded",
                         errMsg);
                     throw new Exception(errMsg);
                 }
@@ -68,7 +66,7 @@ namespace NCS.DSS.ContentPushService.Services
                 //if actioned message successfully, then remove message from queue
                 if (successfullyActioned)
                 {
-                    _logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: { digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
+                    _logger.LogInformation($"Successfully actioned CustomerId:{digitalidentity.CustomerGuid} - Create: {digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
                     await messageActions.CompleteMessageAsync(serviceBusMessage);
                     return DigitalIdentityServiceActions.SuccessfullyActioned;
                 }
@@ -78,7 +76,7 @@ namespace NCS.DSS.ContentPushService.Services
                     var retry = await _requeueService.RequeueItem(topic, 12, serviceBusMessage);
                     if (!retry)
                     {
-                        await messageActions.DeadLetterMessageAsync(serviceBusMessage, "MaxTriesExceeded",
+                        await messageActions.DeadLetterMessageAsync(serviceBusMessage, null, "MaxTriesExceeded",
                             "Attempted to send notification to Endpoint 12 times & failed!");
                         _logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{serviceBusMessage.MessageId} has been deadlettered after 12 attempts");
                         return DigitalIdentityServiceActions.DeadLettered;
@@ -119,7 +117,7 @@ namespace NCS.DSS.ContentPushService.Services
 
         private async Task<bool> DeleteDigitalIdentity(DigitalIdentity digitalidentity)
         {
-            return await _digitalidentityClient.Delete(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(),"", $"DeleteUser?id={digitalidentity.IdentityStoreId}");
+            return await _digitalidentityClient.Delete(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(), "", $"DeleteUser?id={digitalidentity.IdentityStoreId}");
         }
 
         private string GetLockToken(Message msg)

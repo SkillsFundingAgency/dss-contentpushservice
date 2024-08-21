@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace NCS.DSS.ContentPushService.Utils
+﻿namespace NCS.DSS.ContentPushService.Utils
 {
     public interface IDigitalIdentityClient
     {

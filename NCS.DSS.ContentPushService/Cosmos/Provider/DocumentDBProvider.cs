@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Azure.Documents;
+﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using NCS.DSS.ContentPushService.Cosmos.Client;
 using NCS.DSS.ContentPushService.Cosmos.Helper;
@@ -31,7 +28,7 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
             var qQry = client.CreateDocumentQuery<Document>(collectionUri, new FeedOptions() { MaxItemCount = 1 });
             return qQry.Where(x => x.Id == notificationId.ToString()).Select(x => x.Id).AsEnumerable().Any();
         }
-               
+
 
         public async Task<ResourceResponse<Document>> CreateNotificationAsync(Models.DBNotification dbNotification)
         {

@@ -1,7 +1,5 @@
-﻿using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Services;
 
@@ -14,18 +12,20 @@ public class DigitalIdentityTopicListener
     private const string FunctionName = "DigitalIdentityTopicListener";
     private const string ServiceBusConnectionString = "ServiceBusConnectionString";
     private readonly IDigitialIdentityService _digitalidentity;
+    private readonly ILogger _logger;
 
-    public DigitalIdentityTopicListener(IDigitialIdentityService digitalidentity)
+    public DigitalIdentityTopicListener(IDigitialIdentityService digitalidentity, ILogger<DigitalIdentityTopicListener> logger)
     {
         _digitalidentity = digitalidentity;
+        _logger = logger;
     }
 
-    [FunctionName(FunctionName)]
+    [Function(FunctionName)]
     public async Task RunAsync(
         [ServiceBusTrigger(TopicName, SubscriptionName, Connection = ServiceBusConnectionString)]
-        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions, ILogger log)
+        ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        log.LogInformation("DigitalIdentityTopicListener received received message");
+        _logger.LogInformation("DigitalIdentityTopicListener received received message");
         await _digitalidentity.SendMessage(TopicName, serviceBusMessage, messageActions);
     }
 }

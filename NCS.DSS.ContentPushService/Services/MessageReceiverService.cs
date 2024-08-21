@@ -1,7 +1,5 @@
 ﻿using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.ServiceBus.Core;
-using System;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Services
 {
@@ -19,7 +17,7 @@ namespace NCS.DSS.ContentPushService.Services
 
         public async Task CompleteAsync(string lockToken)
         {
-            if(_messageReciever == null)
+            if (_messageReciever == null)
                 _messageReciever = GetMessageReceiver(topic, subscription);
             await _messageReciever.CompleteAsync(lockToken);
         }
