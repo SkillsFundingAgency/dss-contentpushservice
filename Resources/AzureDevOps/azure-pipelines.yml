@@ -15,7 +15,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.10.4
+    ref: refs/tags/v1.16.2
     endpoint: 'GitHub (CDH)'
 
 jobs:
@@ -58,3 +58,5 @@ jobs:
       SolutionBaseName: $(SolutionBaseName)
       BuildPlatform: $(BuildPlatform)
       BuildConfiguration: $(BuildConfiguration)
+      GitVersionVersion: 5.12.x
+      DotNetCoreVersion: 8.x
