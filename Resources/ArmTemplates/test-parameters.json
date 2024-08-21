@@ -41,7 +41,7 @@
             "value": "dss-at-shared-rg"
         },
       "templateBaseUrl": {
-        "value": "https://github.com/SkillsFundingAgency/dss-contentpushservice/tree/AD-185409-v3/Resources/ArmTemplates"
+        "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/AD-185409-v3/Resources/ArmTemplates"
       },
         "azureB2C.ApiUrl": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
