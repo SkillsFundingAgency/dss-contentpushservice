@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NCS.DSS.ContentPushService.Constants
+﻿namespace NCS.DSS.ContentPushService.Constants
 {
     [Serializable()]
     public enum DigitalIdentityServiceActions

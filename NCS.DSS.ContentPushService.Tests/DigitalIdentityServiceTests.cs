@@ -1,9 +1,6 @@
-using System;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NCS.DSS.ContentPushService.Constants;
@@ -12,6 +9,9 @@ using NCS.DSS.ContentPushService.Services;
 using NCS.DSS.ContentPushService.Utils;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Tests;
 
@@ -57,7 +57,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        Assert.That(DigitalIdentityServiceActions.SuccessfullyActioned, Is.EqualTo(response));
     }
 
     [Test]
@@ -79,7 +79,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.Requeued, response);
+        Assert.That(DigitalIdentityServiceActions.Requeued, Is.EqualTo(response));
     }
 
     [Test]
@@ -100,7 +100,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        Assert.That(DigitalIdentityServiceActions.DeadLettered, Is.EqualTo(response));
     }
 
     [Test]
@@ -118,7 +118,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        Assert.That(DigitalIdentityServiceActions.SuccessfullyActioned, Is.EqualTo(response));
     }
 
     [Test]
@@ -139,7 +139,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        Assert.That(DigitalIdentityServiceActions.DeadLettered, Is.EqualTo(response));
     }
 
     [Test]
@@ -182,7 +182,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(null);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.CouldNotAction, response);
+        Assert.That(DigitalIdentityServiceActions.CouldNotAction, Is.EqualTo(response));
     }
 
     [Test]
@@ -200,7 +200,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        Assert.That(DigitalIdentityServiceActions.SuccessfullyActioned, Is.EqualTo(response));
     }
 
     [Test]
@@ -218,7 +218,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        Assert.That(DigitalIdentityServiceActions.DeadLettered, Is.EqualTo(response));
     }
 
     [Test]
@@ -240,7 +240,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.Requeued, response);
+        Assert.That(DigitalIdentityServiceActions.Requeued, Is.EqualTo(response));
     }
 
     [Test]
@@ -258,7 +258,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.SuccessfullyActioned, response);
+        Assert.That(DigitalIdentityServiceActions.SuccessfullyActioned, Is.EqualTo(response));
     }
 
     [Test]
@@ -276,7 +276,7 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.DeadLettered, response);
+        Assert.That(DigitalIdentityServiceActions.DeadLettered, Is.EqualTo(response));
     }
 
     [Test]
@@ -297,6 +297,6 @@ public class DigitalIdentityServiceTests
         var response = await SendMessage(message);
 
         // Assert
-        Assert.AreEqual(DigitalIdentityServiceActions.Requeued, response);
+        Assert.That(DigitalIdentityServiceActions.Requeued, Is.EqualTo(response));
     }
 }

@@ -1,6 +1,4 @@
-﻿
-using System;
-using Microsoft.Azure.Documents.Client;
+﻿using Microsoft.Azure.Documents.Client;
 
 namespace NCS.DSS.ContentPushService.Cosmos.Helper
 {
@@ -27,7 +25,7 @@ namespace NCS.DSS.ContentPushService.Cosmos.Helper
 
             return _documentCollectionUri;
         }
-        
+
         public Uri CreateDocumentUri(Guid actionPlanId)
         {
             if (_documentUri != null)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NCS.DSS.ContentPushService.Cosmos.Helper
+﻿namespace NCS.DSS.ContentPushService.Cosmos.Helper
 {
     public interface IResourceHelper
     {
