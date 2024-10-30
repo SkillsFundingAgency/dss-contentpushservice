@@ -1,16 +1,13 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.WebJobs.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Auth;
 using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace NCS.DSS.ContentPushService.PushService;
 
@@ -123,7 +120,7 @@ public class MessagePushService : IMessagePushService
                 try
                 {
                     //Deadletter as max retries exceeded
-                    await messageActions.DeadLetterMessageAsync(message, "MaxTriesExceeded",
+                    await messageActions.DeadLetterMessageAsync(message, null, "MaxTriesExceeded",
                         "Attempted to send notification to Endpoint 12 times & failed!");
                     //await message.DeadLetterAsync("MaxTriesExceeded", "Attempted to send notification to Endpoint 12 times & failed!");
                     log.LogInformation("Message retry max attempts reached");

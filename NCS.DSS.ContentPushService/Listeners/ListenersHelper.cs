@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using Microsoft.Azure.WebJobs.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.PushService;
 

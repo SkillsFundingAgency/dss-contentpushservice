@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 
 namespace NCS.DSS.ContentPushService.Services;
 

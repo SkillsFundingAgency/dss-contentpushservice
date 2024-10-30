@@ -1,5 +1,4 @@
-﻿using System;
-using NCS.DSS.ContentPushService.Cosmos.Provider;
+﻿using NCS.DSS.ContentPushService.Cosmos.Provider;
 
 namespace NCS.DSS.ContentPushService.Cosmos.Helper
 {

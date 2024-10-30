@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NCS.DSS.ContentPushService.Models
+﻿namespace NCS.DSS.ContentPushService.Models
 {
     public class Notification
     {

@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace NCS.DSS.ContentPushService.Utils
 {
@@ -71,7 +68,8 @@ namespace NCS.DSS.ContentPushService.Utils
                         return await client.SendAsync(request);
                     }
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
@@ -85,7 +83,7 @@ namespace NCS.DSS.ContentPushService.Utils
 
         private async Task<string> GetResponseContent(HttpResponseMessage resp)
         {
-            if(resp != null)
+            if (resp != null)
                 return await resp.Content.ReadAsStringAsync();
             return string.Empty;
         }
