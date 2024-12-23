@@ -47,7 +47,7 @@ public class MessagePushService : IMessagePushService
         try
         {
             _logger.LogInformation("Attempting to get Access Token");
-            bearerToken = await AuthenticationHelper.GetAccessToken(clientUrl, _logger);
+            bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger);
         }
         catch (Exception ex)
         {
