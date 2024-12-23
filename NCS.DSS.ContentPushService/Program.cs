@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Listeners;
 using NCS.DSS.ContentPushService.PushService;
 using NCS.DSS.ContentPushService.Services;
@@ -31,6 +32,7 @@ namespace NCS.DSS.ContentPushService
                 services.AddTransient<IDigitialIdentityService, DigitialIdentityService>();
                 services.AddTransient<IDigitalIdentityClient, DigitalIdentityClient>();
                 services.AddTransient<IRequeueService, RequeueService>();
+                services.AddTransient<ICosmosDBProvider, CosmosDBProvider>();
                 services.AddHttpClient("AzureB2C", client =>
                 {
                     client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("AzureB2C.ApiKey"));
