@@ -1,6 +1,5 @@
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NCS.DSS.ContentPushService.Constants;
@@ -71,7 +70,7 @@ public class DigitalIdentityServiceTests
         RequeueService
             .Setup(x => x.RequeueItem(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<ServiceBusReceivedMessage>()))
             .Returns(Task.FromResult(true));
-        var msg = new Message(Encoding.Default.GetBytes(JsonConvert.SerializeObject(identity)));
+        var msg = new ServiceBusMessage(Encoding.Default.GetBytes(JsonConvert.SerializeObject(identity)));
         var message =
             ServiceBusModelFactory.ServiceBusReceivedMessage(
                 new BinaryData(Encoding.Default.GetBytes(JsonConvert.SerializeObject(identity))));

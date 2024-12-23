@@ -1,6 +1,5 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
 using NCS.DSS.ContentPushService.Constants;
 using NCS.DSS.ContentPushService.Models;
@@ -15,6 +14,7 @@ namespace NCS.DSS.ContentPushService.Services
         private readonly IRequeueService _requeueService;
         private readonly IDigitalIdentityClient _digitalidentityClient;
         private readonly ILogger<DigitialIdentityService> _logger;
+        private readonly int _serviceBusRetryAttemptLimit = 12;
 
         public DigitialIdentityService(IRequeueService requeue, IDigitalIdentityClient digitalidentityclient, ILogger<DigitialIdentityService> logger)
         {
@@ -28,36 +28,45 @@ namespace NCS.DSS.ContentPushService.Services
 
             if (serviceBusMessage == null)
             {
-                _logger.LogInformation("Digital Identity message is null, unable to post message");
+                _logger.LogWarning("Digital Identity message is null, unable to post message");
                 return DigitalIdentityServiceActions.CouldNotAction;
             }
 
             var body = Encoding.UTF8.GetString(serviceBusMessage.Body);
+            _logger.LogInformation("Deserializing DigitalIdentity body");
             var digitalidentity = JsonConvert.DeserializeObject<DigitalIdentity>(body);
             var successfullyActioned = false;
 
             if (digitalidentity != null)
             {
+                _logger.LogInformation("Successfully deserialized DigitalIdentity body");
+
                 if (digitalidentity.DeleteDigitalIdentity == true)
                 {
+                    _logger.LogInformation("Attempting to DigitalIdentity. Calling function: {FunctionName}", nameof(DeleteDigitalIdentity));
                     successfullyActioned = await DeleteDigitalIdentity(digitalidentity);
                 }
                 else if (digitalidentity.CreateDigitalIdentity == true)
                 {
+                    _logger.LogInformation("Attempting to create new DigitalIdentity. Calling function: {FunctionName}", nameof(CreateNewDigitalIdentity));
                     successfullyActioned = await CreateNewDigitalIdentity(digitalidentity);
                 }
                 else if (digitalidentity.ChangeEmailAddress == true)
                 {
+                    _logger.LogInformation("Attempting to change DigitalIdentity email address. Calling function: {FunctionName}", nameof(ChangeEmail));
                     successfullyActioned = await ChangeEmail(digitalidentity);
                 }
                 else if (digitalidentity.UpdateDigitalIdentity == true)
                 {
+                    _logger.LogInformation("Attempting to update DigitalIdentity. Calling function: {FunctionName}", nameof(UpdateUser));
                     successfullyActioned = await UpdateUser(digitalidentity);
                 }
                 else
                 {
                     //cannot action digital identity, deadletter message in queue.
                     var errMsg = $"Unable to determine if digital identity needs to be updated/created/deleted for customer: {digitalidentity.CustomerGuid}";
+                    _logger.LogError(errMsg);
+                    _logger.LogInformation("Attempting to send message to dead letter queue.");
                     await messageActions.DeadLetterMessageAsync(serviceBusMessage, null, "MaxTriesExceeded",
                         errMsg);
                     throw new Exception(errMsg);
@@ -72,24 +81,29 @@ namespace NCS.DSS.ContentPushService.Services
                 }
                 else
                 {
+                    _logger.LogInformation($"Failed to action CustomerId:{digitalidentity.CustomerGuid} - Create: {digitalidentity.CreateDigitalIdentity}, Delete:{digitalidentity.DeleteDigitalIdentity}, ChangeEmail: {digitalidentity.ChangeEmailAddress}");
+
                     //requeue message on topic if message was not successfully actioned
-                    var retry = await _requeueService.RequeueItem(topic, 12, serviceBusMessage);
+                    var retry = await _requeueService.RequeueItem(topic, _serviceBusRetryAttemptLimit, serviceBusMessage);
                     if (!retry)
                     {
                         await messageActions.DeadLetterMessageAsync(serviceBusMessage, null, "MaxTriesExceeded",
-                            "Attempted to send notification to Endpoint 12 times & failed!");
-                        _logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{serviceBusMessage.MessageId} has been deadlettered after 12 attempts");
+                            "Attempted to send notification to Endpoint " + _serviceBusRetryAttemptLimit.ToString() + " times & failed!");
+                        _logger.LogInformation($"CustomerId:{digitalidentity.CustomerGuid} - message:{serviceBusMessage.MessageId} has been deadlettered after {_serviceBusRetryAttemptLimit} attempts");
                         return DigitalIdentityServiceActions.DeadLettered;
                     }
                     else
+                    {
+                        _logger.LogInformation("Successfully resent notification to Endpoint.");
                         await messageActions.CompleteMessageAsync(serviceBusMessage);
+                    }
 
                     return DigitalIdentityServiceActions.Requeued;
                 }
             }
             else
             {
-                _logger.LogInformation($"{serviceBusMessage.MessageId} could not deserialize DigitalIdentity from message");
+                _logger.LogWarning($"{serviceBusMessage.MessageId} could not deserialize DigitalIdentity from message");
                 return DigitalIdentityServiceActions.CouldNotAction;
             }
         }
@@ -118,11 +132,6 @@ namespace NCS.DSS.ContentPushService.Services
         private async Task<bool> DeleteDigitalIdentity(DigitalIdentity digitalidentity)
         {
             return await _digitalidentityClient.Delete(digitalidentity.CustomerGuid?.ToString(), digitalidentity.IdentityStoreId?.ToString(), "", $"DeleteUser?id={digitalidentity.IdentityStoreId}");
-        }
-
-        private string GetLockToken(Message msg)
-        {
-            return (msg.SystemProperties?.IsLockTokenSet == true) ? msg.SystemProperties?.LockToken : null;
         }
     }
 }
