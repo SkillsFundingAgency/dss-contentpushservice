@@ -47,11 +47,12 @@ public class MessagePushService : IMessagePushService
         try
         {
             _logger.LogInformation("Attempting to get Access Token");
-            bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger);
+            bearerToken = await AuthenticationHelper.GetAccessToken(clientUrl, _logger);
         }
         catch (Exception ex)
         {
             _logger.LogError("Unable to get Access Token", ex);
+            return;
         }
         _logger.LogInformation("Successfully retrieved Access Token");
 

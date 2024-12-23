@@ -5,7 +5,7 @@ namespace NCS.DSS.ContentPushService.Auth
 {
     public static class AuthenticationHelper
     {
-        public static async Task<string> GetAccessToken(string appIdUri, ILogger log)
+        public static async Task<string> GetAccessToken(string clientUrl, ILogger log)
         {
             var clientId = Environment.GetEnvironmentVariable("Authentication.PushServiceClientId");
             var clientSecret = Environment.GetEnvironmentVariable("Authentication.PushServiceClientSecret");
@@ -21,7 +21,7 @@ namespace NCS.DSS.ContentPushService.Auth
             .Build();
 
             log.LogInformation("Attempting to retrieve access token");
-            var scopes = new[] { appIdUri + "/.default" }; 
+            var scopes = new[] { clientUrl + "/.default" }; 
             var authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
 
             if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
