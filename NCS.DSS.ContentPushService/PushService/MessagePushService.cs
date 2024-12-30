@@ -238,17 +238,9 @@ public class MessagePushService : IMessagePushService
             BearerToken = string.Empty,
             Success = Success,
             Notification = rspNotification,
-            Timestamp = DateTime.UtcNow
+            Timestamp = DateTime.UtcNow,
+            id = Guid.NewGuid().ToString()
         };
-
-        _logger.LogInformation("MessageId: {NotificationId}", DBNotification.MessageId);
-        _logger.LogInformation("Http Code: {ResponceCode}", DBNotification.HttpCode);
-        _logger.LogInformation("AppIdUri: {AppIdUri}", DBNotification.AppIdUri);
-        _logger.LogInformation("ClientUrl: {ClientUrl}", DBNotification.ClientUrl);
-        _logger.LogInformation("Success: {Success}", DBNotification.Success);
-        _logger.LogInformation("Notification Customer Id: {Notification}", DBNotification.Notification.CustomerId);
-        _logger.LogInformation("Notification Resource URL: {Notification}", DBNotification.Notification.ResourceURL);
-        _logger.LogInformation("Notification: {Notification}", DBNotification.Notification.LastModifiedDate);
 
         await _cosmosDbProvider.CreateNotificationAsync(DBNotification);
     }

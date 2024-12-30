@@ -61,7 +61,7 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error when creating notification. Stack Trace: {message}", ex.Message);
+                _logger.LogError(ex, "Error when creating notification.");
                 throw;
             }
         }
