@@ -48,14 +48,22 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
 
         public async Task<ItemResponse<Models.DBNotification>> CreateNotificationAsync(Models.DBNotification notification)
         {
-            _logger.LogInformation("Creating Notification. Notificationr ID: {NotificationId}", notification.MessageId);
+            try
+            {
+                _logger.LogInformation("Creating Notification. Notificationr ID: {NotificationId}", notification.MessageId);
 
-            var response = await _notificationsContainer.CreateItemAsync(
-                notification,
-                _partitionKey);
+                var response = await _notificationsContainer.CreateItemAsync(
+                    notification,
+                    _partitionKey);
 
-            _logger.LogInformation("Finished creating Notification. Notification ID: {CustomerId}", notification.MessageId);
-            return response;
+                _logger.LogInformation("Finished creating Notification. Notification ID: {CustomerId}", notification.MessageId);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when creating notification");
+                throw;
+            }
         }
 
     }
