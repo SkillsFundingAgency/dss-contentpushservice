@@ -246,7 +246,9 @@ public class MessagePushService : IMessagePushService
         _logger.LogInformation("AppIdUri: {AppIdUri}", DBNotification.AppIdUri);
         _logger.LogInformation("ClientUrl: {ClientUrl}", DBNotification.ClientUrl);
         _logger.LogInformation("Success: {Success}", DBNotification.Success);
-        _logger.LogInformation("Notification: {Notification}", DBNotification.Notification);
+        _logger.LogInformation("Notification Customer Id: {Notification}", DBNotification.Notification.CustomerId);
+        _logger.LogInformation("Notification Resource URL: {Notification}", DBNotification.Notification.ResourceURL);
+        _logger.LogInformation("Notification: {Notification}", DBNotification.Notification.LastModifiedDate);
 
         await _cosmosDbProvider.CreateNotificationAsync(DBNotification);
     }
