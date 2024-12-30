@@ -50,13 +50,13 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
         {
             try
             {
-                _logger.LogInformation("Creating Notification. Notificationr ID: {NotificationId}", notification.MessageId);
+                _logger.LogInformation("Creating Notification. Notification ID: {NotificationId}", notification.MessageId);
 
                 var response = await _notificationsContainer.CreateItemAsync(
                     notification,
                     _partitionKey);
 
-                _logger.LogInformation("Finished creating Notification. Notification ID: {CustomerId}", notification.MessageId);
+                _logger.LogInformation("Finished creating Notification. Notification ID: {NotificationId}", notification.MessageId);
                 return response;
             }
             catch (Exception ex)

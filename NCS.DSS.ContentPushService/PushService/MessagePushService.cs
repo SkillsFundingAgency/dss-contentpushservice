@@ -241,6 +241,13 @@ public class MessagePushService : IMessagePushService
             Timestamp = DateTime.UtcNow
         };
 
+        _logger.LogInformation("MessageId: {NotificationId}", DBNotification.MessageId);
+        _logger.LogInformation("Http Code: {ResponceCode}", DBNotification.HttpCode);
+        _logger.LogInformation("AppIdUri: {AppIdUri}", DBNotification.AppIdUri);
+        _logger.LogInformation("ClientUrl: {ClientUrl}", DBNotification.ClientUrl);
+        _logger.LogInformation("Success: {Success}", DBNotification.Success);
+        _logger.LogInformation("Notification: {Notification}", DBNotification.Notification);
+
         await _cosmosDbProvider.CreateNotificationAsync(DBNotification);
     }
 
