@@ -17,9 +17,9 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
             IOptions<ContentPushServiceConfigurationSettings> configuration,
             ILogger<CosmosDBProvider> logger)
         {
-            _notificationsContainer = GetContainer(cosmosClient, _configurationSettings.Value.NotificationDatabaseId, _configurationSettings.Value.NotificationCollectionId);
             _configurationSettings = configuration;
             _logger = logger;
+            _notificationsContainer = GetContainer(cosmosClient, _configurationSettings.Value.NotificationDatabaseId, _configurationSettings.Value.NotificationCollectionId);
         }
 
         private static Container GetContainer(CosmosClient cosmosClient, string databaseId, string collectionId)
