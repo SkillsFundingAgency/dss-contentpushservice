@@ -11,10 +11,10 @@ namespace NCS.DSS.ContentPushService.Auth
         {
             var config = configOptions.Value;
             
-            var clientId = config.Authentication.PushServiceClientId;
-            var clientSecret = config.Authentication.PushServiceClientSecret;
-            var authorityUri = config.Authentication.AuthorityUri;
-            var tenant = config.Authentication.Tenant;
+            var clientId = config.AuthenticationPushServiceClientId;
+            var clientSecret = config.AuthenticationPushServiceClientSecret;
+            var authorityUri = config.AuthenticationAuthorityUri;
+            var tenant = config.AuthenticationTenant;
 
             var authority = string.Concat(authorityUri, tenant);
 

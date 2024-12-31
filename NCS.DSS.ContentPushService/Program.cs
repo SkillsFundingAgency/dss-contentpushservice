@@ -40,8 +40,8 @@ namespace NCS.DSS.ContentPushService
                 services.AddTransient<ICosmosDBProvider, CosmosDBProvider>();
                 services.AddHttpClient("AzureB2C", client =>
                 {
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", configuration["AzureB2C.ApiKey"]);
-                    client.BaseAddress = new Uri(configuration["AzureB2C.ApiUrl"]);
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", configuration["AzureB2CApiKey"]);
+                    client.BaseAddress = new Uri(configuration["AzureB2CApiUrl"]);
                 });
 
                 services.Configure<LoggerFilterOptions>(options =>
