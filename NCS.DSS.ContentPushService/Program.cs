@@ -1,11 +1,12 @@
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Listeners;
+using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.PushService;
 using NCS.DSS.ContentPushService.Services;
 using NCS.DSS.ContentPushService.Utils;
@@ -18,8 +19,12 @@ namespace NCS.DSS.ContentPushService
         {
             var host = new HostBuilder()
             .ConfigureFunctionsWorkerDefaults()
-            .ConfigureServices(services =>
+            .ConfigureServices((context, services) =>
             {
+                var configuration = context.Configuration;
+                services.AddOptions<ContentPushServiceConfigurationSettings>()
+                    .Bind(configuration);
+
                 services.AddApplicationInsightsTelemetryWorkerService();
                 services.ConfigureFunctionsApplicationInsights();
 
@@ -35,8 +40,8 @@ namespace NCS.DSS.ContentPushService
                 services.AddTransient<ICosmosDBProvider, CosmosDBProvider>();
                 services.AddHttpClient("AzureB2C", client =>
                 {
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Environment.GetEnvironmentVariable("AzureB2C.ApiKey"));
-                    client.BaseAddress = new Uri(Environment.GetEnvironmentVariable("AzureB2C.ApiUrl"));
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", configuration["AzureB2C.ApiKey"]);
+                    client.BaseAddress = new Uri(configuration["AzureB2C.ApiUrl"]);
                 });
 
                 services.Configure<LoggerFilterOptions>(options =>
@@ -51,8 +56,8 @@ namespace NCS.DSS.ContentPushService
 
                 services.AddSingleton(s =>
                 {
-                    var cosmosEndpoint = Environment.GetEnvironmentVariable("Endpoint");
-                    var cosmosKey = Environment.GetEnvironmentVariable("Key");
+                    var cosmosEndpoint = configuration["Endpoint"];
+                    var cosmosKey = configuration["Key"];
 
                     return new CosmosClient(cosmosEndpoint, cosmosKey);
                 });

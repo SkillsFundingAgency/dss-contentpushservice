@@ -1,21 +1,24 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NCS.DSS.ContentPushService.Models;
 
 namespace NCS.DSS.ContentPushService.Cosmos.Provider
 {
     public class CosmosDBProvider : ICosmosDBProvider
     {
         private readonly Container _notificationsContainer;
-        private readonly string _databaseId = Environment.GetEnvironmentVariable("DatabaseId");
-        private readonly string _collectionId = Environment.GetEnvironmentVariable("CollectionId");
         private readonly PartitionKey _partitionKey = PartitionKey.None;
+        IOptions<ContentPushServiceConfigurationSettings> _configurationSettings;
         private readonly ILogger<CosmosDBProvider> _logger;
 
         public CosmosDBProvider(
             CosmosClient cosmosClient,
+            IOptions<ContentPushServiceConfigurationSettings> configuration,
             ILogger<CosmosDBProvider> logger)
         {
-            _notificationsContainer = GetContainer(cosmosClient, _databaseId, _collectionId);
+            _notificationsContainer = GetContainer(cosmosClient, _configurationSettings.Value.NotificationDatabaseId, _configurationSettings.Value.NotificationCollectionId);
+            _configurationSettings = configuration;
             _logger = logger;
         }
 

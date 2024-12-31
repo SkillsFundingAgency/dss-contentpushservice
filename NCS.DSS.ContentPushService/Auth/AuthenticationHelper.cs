@@ -1,17 +1,20 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
+using NCS.DSS.ContentPushService.Models;
 
 namespace NCS.DSS.ContentPushService.Auth
 {
     public static class AuthenticationHelper
     {
-        public static async Task<string> GetAccessToken(string appIdUri, ILogger log)
+        public static async Task<string> GetAccessToken(string appIdUri, ILogger log, IOptions<ContentPushServiceConfigurationSettings> configOptions)
         {
-            var clientId = Environment.GetEnvironmentVariable("Authentication.PushServiceClientId");
-            var clientSecret = Environment.GetEnvironmentVariable("Authentication.PushServiceClientSecret");
-
-            var authorityUri = Environment.GetEnvironmentVariable("Authentication.AuthorityUri");
-            var tenant = Environment.GetEnvironmentVariable("Authentication.Tenant");
+            var config = configOptions.Value;
+            
+            var clientId = config.Authentication.PushServiceClientId;
+            var clientSecret = config.Authentication.PushServiceClientSecret;
+            var authorityUri = config.Authentication.AuthorityUri;
+            var tenant = config.Authentication.Tenant;
 
             var authority = string.Concat(authorityUri, tenant);
 
