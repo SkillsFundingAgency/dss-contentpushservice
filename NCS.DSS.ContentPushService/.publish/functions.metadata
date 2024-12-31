@@ -1,0 +1,531 @@
+[
+  {
+    "name": "TOUCHPOINT_0000000999",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.CareersHelplineListener.TouchPoint_0000000999",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000999",
+        "subscriptionName": "0000000999",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "DigitalIdentityTopicListener",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.DigitalIdentityTopicListener.RunAsync",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "digitalidentity",
+        "subscriptionName": "DigitalIdentity",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000101",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000101",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000101",
+        "subscriptionName": "0000000101",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000102",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000102",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000102",
+        "subscriptionName": "0000000102",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000103",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000103",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000103",
+        "subscriptionName": "0000000103",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000104",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000104",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000104",
+        "subscriptionName": "0000000104",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000105",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000105",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000105",
+        "subscriptionName": "0000000105",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000106",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000106",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000106",
+        "subscriptionName": "0000000106",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000107",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000107",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000107",
+        "subscriptionName": "0000000107",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000108",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000108",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000108",
+        "subscriptionName": "0000000108",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000109",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners1.TouchPoint_0000000109",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000109",
+        "subscriptionName": "0000000109",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000201",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000201",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000201",
+        "subscriptionName": "0000000201",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000202",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000202",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000202",
+        "subscriptionName": "0000000202",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000203",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000203",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000203",
+        "subscriptionName": "0000000203",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000204",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000204",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000204",
+        "subscriptionName": "0000000204",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000205",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000205",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000205",
+        "subscriptionName": "0000000205",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000206",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000206",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000206",
+        "subscriptionName": "0000000206",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000207",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000207",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000207",
+        "subscriptionName": "0000000207",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000208",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000208",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000208",
+        "subscriptionName": "0000000208",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_0000000209",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListeners2.TouchPoint_0000000209",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "0000000209",
+        "subscriptionName": "0000000209",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_9000000001",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListenersTest.TouchPoint_9000000001",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "9000000001",
+        "subscriptionName": "9000000001",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_9000000002",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListenersTest.TouchPoint_9000000002",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "9000000002",
+        "subscriptionName": "9000000002",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  },
+  {
+    "name": "TOUCHPOINT_9000000003",
+    "scriptFile": "NCS.DSS.ContentPushService.dll",
+    "entryPoint": "NCS.DSS.ContentPushService.Listeners.TouchPointListenersTest.TouchPoint_9000000003",
+    "language": "dotnet-isolated",
+    "properties": {
+      "IsCodeless": false
+    },
+    "bindings": [
+      {
+        "name": "serviceBusMessage",
+        "direction": "In",
+        "type": "serviceBusTrigger",
+        "topicName": "9000000003",
+        "subscriptionName": "9000000003",
+        "connection": "ServiceBusConnectionString",
+        "cardinality": "One",
+        "properties": {
+          "supportsDeferredBinding": "True"
+        }
+      }
+    ]
+  }
+]

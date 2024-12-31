@@ -2,12 +2,13 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
 using NCS.DSS.ContentPushService.Models;
+using NCS.DSS.ContentPushService.PushService;
 
 namespace NCS.DSS.ContentPushService.Auth
 {
     public static class AuthenticationHelper
     {
-        public static async Task<string> GetAccessToken(string appIdUri, ILogger log, IOptions<ContentPushServiceConfigurationSettings> configOptions)
+        public static async Task<string> GetAccessToken(string appIdUri, ILogger<MessagePushService> log, IOptions<ContentPushServiceConfigurationSettings> configOptions)
         {
             var config = configOptions.Value;
             

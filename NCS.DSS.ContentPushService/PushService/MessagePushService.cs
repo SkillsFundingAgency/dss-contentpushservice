@@ -58,7 +58,7 @@ public class MessagePushService : IMessagePushService
         }
         catch (Exception ex)
         {
-            _logger.LogError("Unable to get Access Token", ex);
+            _logger.LogError(ex, "Unable to get Access Token. Exception Message: {Message} Stack Trace: {StackTrace}", ex.Message, ex.StackTrace);
             return;
         }
         _logger.LogInformation("Successfully retrieved Access Token");
