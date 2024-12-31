@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Listeners;
 using NCS.DSS.ContentPushService.Models;
@@ -44,6 +45,14 @@ namespace NCS.DSS.ContentPushService
                     client.BaseAddress = new Uri(configuration["AzureB2CApiUrl"]);
                 });
 
+                services.AddSingleton(s =>
+                {
+                    var settings = s.GetRequiredService<IOptions<ContentPushServiceConfigurationSettings>>().Value;
+                    var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
+
+                    return new CosmosClient(settings.Endpoint, settings.Key);
+                });
+
                 services.Configure<LoggerFilterOptions>(options =>
                 {
                     LoggerFilterRule toRemove = options.Rules.FirstOrDefault(rule => rule.ProviderName
@@ -52,15 +61,7 @@ namespace NCS.DSS.ContentPushService
                     {
                         options.Rules.Remove(toRemove);
                     }
-                });
-
-                services.AddSingleton(s =>
-                {
-                    var cosmosEndpoint = configuration["Endpoint"];
-                    var cosmosKey = configuration["Key"];
-
-                    return new CosmosClient(cosmosEndpoint, cosmosKey);
-                });
+                });                
             })
             .Build();
 
