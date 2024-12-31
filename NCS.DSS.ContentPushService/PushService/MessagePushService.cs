@@ -53,13 +53,14 @@ public class MessagePushService : IMessagePushService
         var bearerToken = "";
         try
         {
-            _logger.LogInformation("Attempting to get Access Token");
+            var config = _configurationSettings.Value;
+            _logger.LogInformation("Attempting to get Access Token for following details: \nClientId:{ClientId}\nClient secret:{ClientSecret}\nAuthority Uri: {AuthorityUri}\nTenant: {Tenant}", config.AuthenticationPushServiceClientId, config.AuthenticationPushServiceClientSecret, config.AuthenticationAuthorityUri, config.AuthenticationTenant);
             bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger, _configurationSettings);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unable to get Access Token. Exception Message: {Message} Stack Trace: {StackTrace}", ex.Message, ex.StackTrace);
-            return;
+            throw;
         }
         _logger.LogInformation("Successfully retrieved Access Token");
 
