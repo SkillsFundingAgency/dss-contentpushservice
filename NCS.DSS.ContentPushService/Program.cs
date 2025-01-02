@@ -1,6 +1,5 @@
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,9 +13,9 @@ using NCS.DSS.ContentPushService.Utils;
 
 namespace NCS.DSS.ContentPushService
 {
-    class Program
+    internal class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var host = new HostBuilder()
             .ConfigureFunctionsWorkerDefaults()
@@ -39,10 +38,12 @@ namespace NCS.DSS.ContentPushService
                 services.AddTransient<IDigitalIdentityClient, DigitalIdentityClient>();
                 services.AddTransient<IRequeueService, RequeueService>();
                 services.AddTransient<ICosmosDBProvider, CosmosDBProvider>();
-                services.AddHttpClient("AzureB2C", client =>
+                services.AddHttpClient("AzureB2C", (serviceProvider, client) =>
                 {
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", configuration["AzureB2CApiKey"]);
-                    client.BaseAddress = new Uri(configuration["AzureB2CApiUrl"]);
+                    var config = serviceProvider.GetRequiredService<IOptions<ContentPushServiceConfigurationSettings>>().Value;
+
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", config.AzureB2CApiKey);
+                    client.BaseAddress = new Uri(config.AzureB2CApiUrl);
                 });
 
                 services.AddSingleton(s =>
@@ -50,7 +51,7 @@ namespace NCS.DSS.ContentPushService
                     var settings = s.GetRequiredService<IOptions<ContentPushServiceConfigurationSettings>>().Value;
                     var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
 
-                    return new CosmosClient(settings.Endpoint, settings.Key);
+                    return new CosmosClient(settings.Endpoint, settings.Key, options);
                 });
 
                 services.Configure<LoggerFilterOptions>(options =>

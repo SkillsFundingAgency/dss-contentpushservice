@@ -6,6 +6,7 @@
         public required string AuthenticationPushServiceClientId { get; set; }
         public required string AuthenticationPushServiceClientSecret { get; set; }
         public required string AuthenticationTenant { get; set; }
+        public required string AzureB2CApiUrl { get; set; }
         public required string AzureB2CApiKey { get; set; }
         public required string AzureB2CTenant { get; set; }
         public required string CollectionId { get; set; }
