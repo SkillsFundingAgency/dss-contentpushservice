@@ -2,13 +2,13 @@
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "authentication.PushServiceClientId": {
+        "authentication__PushServiceClientId": {
             "value": "00000000-0000-0000-0000-000000000000"
         },
-        "authentication.PushServiceClientSecret": {
+        "authentication__PushServiceClientSecret": {
             "value": "not-a-real-secret"
         },
-        "authentication.Tenant": {
+        "authentication__Tenant": {
             "value": "00000000-0000-0000-0000-000000000000"
         },
         "cosmosDbCollectionId": {
@@ -43,142 +43,142 @@
       "templateBaseUrl": {
         "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/master/Resources/ArmTemplates"
       },
-        "azureB2C.ApiUrl": {
+        "azureB2C__ApiUrl": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "azureB2C.ApiKey": {
+        "azureB2C__ApiKey": {
             "value": "not-a-real-key"
         },
-        "touchPoint.0000000101.AppIdUri": {
+        "touchPoint__0000000101__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000101.Url": {
+        "touchPoint__0000000101__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000201.AppIdUri": {
+        "touchPoint__0000000201__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000201.Url": {
+        "touchpoint__0000000201__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000102.AppIdUri": {
+        "touchpoint__0000000102__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000102.Url": {
+        "touchpoint__0000000102__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000202.AppIdUri": {
+        "touchpoint__0000000202__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000202.Url": {
+        "touchpoint__0000000202__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000103.AppIdUri": {
+        "touchpoint__0000000103__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000103.Url": {
+        "touchpoint__0000000103__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000203.AppIdUri": {
+        "touchpoint__0000000203__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000203.Url": {
+        "touchpoint__0000000203__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000104.AppIdUri": {
+        "touchpoint__0000000104__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000104.Url": {
+        "touchpoint__0000000104__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000204.AppIdUri": {
+        "touchpoint__0000000204__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000204.Url": {
+        "touchpoint__0000000204__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000105.AppIdUri": {
+        "touchpoint__0000000105__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000105.Url": {
+        "touchpoint__0000000105__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000205.AppIdUri": {
+        "touchpoint__0000000205__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000205.Url": {
+        "touchpoint__0000000205__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000106.AppIdUri": {
+        "touchpoint__0000000106__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000106.Url": {
+        "touchpoint__0000000106__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000206.AppIdUri": {
+        "touchpoint__0000000206__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000206.Url": {
+        "touchpoint__0000000206__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000107.AppIdUri": {
+        "touchpoint__0000000107__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000107.Url": {
+        "touchpoint__0000000107__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000207.AppIdUri": {
+        "touchpoint__0000000207__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000207.Url": {
+        "touchpoint__0000000207__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000108.AppIdUri": {
+        "touchpoint__0000000108__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000108.Url": {
+        "touchpoint__0000000108__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000208.AppIdUri": {
+        "touchpoint__0000000208__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000208.Url": {
+        "touchpoint__0000000208__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000109.AppIdUri": {
+        "touchpoint__0000000109__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000109.Url": {
+        "touchpoint__0000000109__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000209.AppIdUri": {
+        "touchpoint__0000000209__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000209.Url": {
+        "touchpoint__0000000209__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.0000000999.AppIdUri": {
+        "touchpoint__0000000999__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.0000000999.Url": {
+        "touchpoint__0000000999__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.9000000001.AppIdUri": {
+        "touchpoint__9000000001__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.9000000001.Url": {
+        "touchpoint__9000000001__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.9000000002.AppIdUri": {
+        "touchpoint__9000000002__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.9000000002.Url": {
+        "touchpoint__9000000002__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
-        "touchPoint.9000000003.AppIdUri": {
+        "touchpoint__9000000003__AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
-        "touchPoint.9000000003.Url": {
+        "touchpoint__9000000003__Url": {
             "value": "https://not-a-real-endpoint.azurewebsites.net/api/URLEndpoint"
         },
         "appInsightsInstrumentationKey": {

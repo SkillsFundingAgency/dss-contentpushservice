@@ -11,13 +11,13 @@
     "appServicePlanId": {
       "type": "string"
     },
-    "authentication.PushServiceClientId": {
+    "authentication__PushServiceClientId": {
       "type": "string"
     },
-    "authentication.PushServiceClientSecret": {
+    "authentication__PushServiceClientSecret": {
       "type": "string"
     },
-    "authentication.Tenant": {
+    "authentication__Tenant": {
       "type": "string"
     },
     "configEnvironmentName": {
@@ -38,142 +38,142 @@
     "serviceBusConnectionString": {
       "type": "string"
     },
-    "azureB2C.ApiUrl": {
+    "azureB2C__ApiUrl": {
       "type": "string"
     },
-    "azureB2C.ApiKey": {
+    "azureB2C__ApiKey": {
       "type": "string"
     },
-    "touchPoint.0000000101.AppIdUri": {
+    "touchPoint__0000000101__AppIdUri": {
       "type": "string"
     },
-    "touchPoint.0000000101.Url": {
+    "touchPoint__0000000101__Url": {
         "type": "string"
     },
-    "touchPoint.0000000201.AppIdUri": {
+    "touchPoint__0000000201__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000201.Url": {
+    "touchPoint__0000000201__Url": {
         "type": "string"
     },
-    "touchPoint.0000000102.AppIdUri": {
+    "touchPoint__0000000102__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000102.Url": {
+    "touchPoint__0000000102__Url": {
         "type": "string"
     },
-    "touchPoint.0000000202.AppIdUri": {
+    "touchPoint__0000000202__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000202.Url": {
+    "touchPoint__0000000202__Url": {
         "type": "string"
     },
-    "touchPoint.0000000103.AppIdUri": {
+    "touchPoint__0000000103__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000103.Url": {
+    "touchPoint__0000000103__Url": {
         "type": "string"
     },
-    "touchPoint.0000000203.AppIdUri": {
+    "touchPoint__0000000203__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000203.Url": {
+    "touchPoint__0000000203__Url": {
         "type": "string"
     },
-    "touchPoint.0000000104.AppIdUri": {
+    "touchPoint__0000000104__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000104.Url": {
+    "touchPoint__0000000104__Url": {
         "type": "string"
     },
-    "touchPoint.0000000204.AppIdUri": {
+    "touchPoint__0000000204__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000204.Url": {
+    "touchPoint__0000000204__Url": {
         "type": "string"
     },
-    "touchPoint.0000000105.AppIdUri": {
+    "touchPoint__0000000105__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000105.Url": {
+    "touchPoint__0000000105__Url": {
         "type": "string"
     },
-    "touchPoint.0000000205.AppIdUri": {
+    "touchPoint__0000000205__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000205.Url": {
+    "touchPoint__0000000205__Url": {
         "type": "string"
     },
-    "touchPoint.0000000106.AppIdUri": {
+    "touchPoint__0000000106__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000106.Url": {
+    "touchPoint__0000000106__Url": {
         "type": "string"
     },
-    "touchPoint.0000000206.AppIdUri": {
+    "touchPoint__0000000206__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000206.Url": {
+    "touchPoint__0000000206__Url": {
         "type": "string"
     },
-    "touchPoint.0000000107.AppIdUri": {
+    "touchPoint__0000000107__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000107.Url": {
+    "touchPoint__0000000107__Url": {
         "type": "string"
     },
-    "touchPoint.0000000207.AppIdUri": {
+    "touchPoint__0000000207__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000207.Url": {
+    "touchPoint__0000000207__Url": {
         "type": "string"
     },
-    "touchPoint.0000000108.AppIdUri": {
+    "touchPoint__0000000108__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000108.Url": {
+    "touchPoint__0000000108__Url": {
         "type": "string"
     },
-    "touchPoint.0000000208.AppIdUri": {
+    "touchPoint__0000000208__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000208.Url": {
+    "touchPoint__0000000208__Url": {
         "type": "string"
     },
-    "touchPoint.0000000109.AppIdUri": {
+    "touchPoint__0000000109__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000109.Url": {
+    "touchPoint__0000000109__Url": {
         "type": "string"
     },
-    "touchPoint.0000000209.AppIdUri": {
+    "touchPoint__0000000209__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000209.Url": {
+    "touchPoint__0000000209__Url": {
         "type": "string"
     },
-    "touchPoint.0000000999.AppIdUri": {
+    "touchPoint__0000000999__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.0000000999.Url": {
+    "touchPoint__0000000999__Url": {
         "type": "string"
     },
-    "touchPoint.9000000001.AppIdUri": {
+    "touchPoint__9000000001__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.9000000001.Url": {
+    "touchPoint__9000000001__Url": {
         "type": "string"
     },
-    "touchPoint.9000000002.AppIdUri": {
+    "touchPoint__9000000002__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.9000000002.Url": {
+    "touchPoint__9000000002__Url": {
         "type": "string"
     },
-    "touchPoint.9000000003.AppIdUri": {
+    "touchPoint__9000000003__AppIdUri": {
         "type": "string"
     },
-    "touchPoint.9000000003.Url": {
+    "touchPoint__9000000003__Url": {
         "type": "string"
     }
   },
@@ -244,204 +244,204 @@
               "value": "[parameters('serviceBusConnectionString')]"
             },
             {
-              "name": "Authentication.AuthorityUri",
+              "name": "Authentication__AuthorityUri",
               "value": "https://login.microsoftonline.com/"
             },
             {
-              "name": "Authentication.PushServiceClientId",
-              "value": "[parameters('authentication.PushServiceClientId')]"
+              "name": "Authentication__PushServiceClientId",
+              "value": "[parameters('authentication__PushServiceClientId')]"
             },
             {
-              "name": "Authentication.PushServiceClientSecret",
-              "value": "[parameters('authentication.PushServiceClientSecret')]"
+              "name": "Authentication__PushServiceClientSecret",
+              "value": "[parameters('authentication__PushServiceClientSecret')]"
             },
             {
-              "name": "Authentication.Tenant",
-              "value": "[parameters('authentication.Tenant')]"
+              "name": "Authentication__Tenant",
+              "value": "[parameters('authentication__Tenant')]"
             },
             {
-              "name": "AzureB2C.ApiUrl",
-              "value": "[parameters('azureB2C.ApiUrl')]"
+              "name": "AzureB2C__ApiUrl",
+              "value": "[parameters('azureB2C__ApiUrl')]"
             },
             {
-              "name": "AzureB2C.ApiKey",
-              "value": "[parameters('azureB2C.ApiKey')]"
+              "name": "AzureB2C__ApiKey",
+              "value": "[parameters('azureB2C__ApiKey')]"
             },
             {
-              "name": "TouchPoint.0000000101.AppIdUri",
-              "value": "[parameters('touchPoint.0000000101.AppIdUri')]"
+              "name": "touchPoint__0000000101__AppIdUri",
+              "value": "[parameters('touchPoint__0000000101__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000101.Url",
-              "value": "[parameters('touchPoint.0000000101.Url')]"
+              "name": "touchPoint__0000000101__Url",
+              "value": "[parameters('touchPoint__0000000101__Url')]"
             },
             {
-              "name": "TouchPoint.0000000201.AppIdUri",
-              "value": "[parameters('touchPoint.0000000201.AppIdUri')]"
+              "name": "touchPoint__0000000201__AppIdUri",
+              "value": "[parameters('touchPoint__0000000201__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000201.Url",
-              "value": "[parameters('touchPoint.0000000201.Url')]"
+              "name": "touchPoint__0000000201__Url",
+              "value": "[parameters('touchPoint__0000000201__Url')]"
             },
             {
-              "name": "TouchPoint.0000000102.AppIdUri",
-              "value": "[parameters('touchPoint.0000000102.AppIdUri')]"
+              "name": "touchPoint__0000000102__AppIdUri",
+              "value": "[parameters('touchPoint__0000000102__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000102.Url",
-              "value": "[parameters('touchPoint.0000000102.Url')]"
+              "name": "touchPoint__0000000102__Url",
+              "value": "[parameters('touchPoint__0000000102__Url')]"
             },
             {
-              "name": "TouchPoint.0000000202.AppIdUri",
-              "value": "[parameters('touchPoint.0000000202.AppIdUri')]"
+              "name": "touchPoint__0000000202__AppIdUri",
+              "value": "[parameters('touchPoint__0000000202__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000202.Url",
-              "value": "[parameters('touchPoint.0000000202.Url')]"
+              "name": "touchPoint__0000000202__Url",
+              "value": "[parameters('touchPoint__0000000202__Url')]"
             },
             {
-              "name": "TouchPoint.0000000103.AppIdUri",
-              "value": "[parameters('touchPoint.0000000103.AppIdUri')]"
+              "name": "touchPoint__0000000103__AppIdUri",
+              "value": "[parameters('touchPoint__0000000103__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000103.Url",
-              "value": "[parameters('touchPoint.0000000103.Url')]"
+              "name": "touchPoint__0000000103__Url",
+              "value": "[parameters('touchPoint__0000000103__Url')]"
             },
             {
-              "name": "TouchPoint.0000000203.AppIdUri",
-              "value": "[parameters('touchPoint.0000000203.AppIdUri')]"
+              "name": "touchPoint__0000000203__AppIdUri",
+              "value": "[parameters('touchPoint__0000000203__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000203.Url",
-              "value": "[parameters('touchPoint.0000000203.Url')]"
+              "name": "touchPoint__0000000203__Url",
+              "value": "[parameters('touchPoint__0000000203__Url')]"
             },
             {
-              "name": "TouchPoint.0000000104.AppIdUri",
-              "value": "[parameters('touchPoint.0000000104.AppIdUri')]"
+              "name": "touchPoint__0000000104__AppIdUri",
+              "value": "[parameters('touchPoint__0000000104__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000104.Url",
-              "value": "[parameters('touchPoint.0000000104.Url')]"
+              "name": "touchPoint__0000000104__Url",
+              "value": "[parameters('touchPoint__0000000104__Url')]"
             },
             {
-              "name": "TouchPoint.0000000204.AppIdUri",
-              "value": "[parameters('touchPoint.0000000204.AppIdUri')]"
+              "name": "touchPoint__0000000204__AppIdUri",
+              "value": "[parameters('touchPoint__0000000204__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000204.Url",
-              "value": "[parameters('touchPoint.0000000204.Url')]"
+              "name": "touchPoint__0000000204__Url",
+              "value": "[parameters('touchPoint__0000000204__Url')]"
             },
             {
-              "name": "TouchPoint.0000000105.AppIdUri",
-              "value": "[parameters('touchPoint.0000000105.AppIdUri')]"
+              "name": "touchPoint__0000000105__AppIdUri",
+              "value": "[parameters('touchPoint__0000000105__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000105.Url",
-              "value": "[parameters('touchPoint.0000000105.Url')]"
+              "name": "touchPoint__0000000105__Url",
+              "value": "[parameters('touchPoint__0000000105__Url')]"
             },
             {
-              "name": "TouchPoint.0000000205.AppIdUri",
-              "value": "[parameters('touchPoint.0000000205.AppIdUri')]"
+              "name": "touchPoint__0000000205__AppIdUri",
+              "value": "[parameters('touchPoint__0000000205__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000205.Url",
-              "value": "[parameters('touchPoint.0000000205.Url')]"
+              "name": "touchPoint__0000000205__Url",
+              "value": "[parameters('touchPoint__0000000205__Url')]"
             },
             {
-              "name": "TouchPoint.0000000106.AppIdUri",
-              "value": "[parameters('touchPoint.0000000106.AppIdUri')]"
+              "name": "touchPoint__0000000106__AppIdUri",
+              "value": "[parameters('touchPoint__0000000106__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000106.Url",
-              "value": "[parameters('touchPoint.0000000106.Url')]"
+              "name": "touchPoint__0000000106__Url",
+              "value": "[parameters('touchPoint__0000000106__Url')]"
             },
             {
-              "name": "TouchPoint.0000000206.AppIdUri",
-              "value": "[parameters('touchPoint.0000000206.AppIdUri')]"
+              "name": "touchPoint__0000000206__AppIdUri",
+              "value": "[parameters('touchPoint__0000000206__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000206.Url",
-              "value": "[parameters('touchPoint.0000000206.Url')]"
+              "name": "touchPoint__0000000206__Url",
+              "value": "[parameters('touchPoint__0000000206__Url')]"
             },
             {
-              "name": "TouchPoint.0000000107.AppIdUri",
-              "value": "[parameters('touchPoint.0000000107.AppIdUri')]"
+              "name": "touchPoint__0000000107__AppIdUri",
+              "value": "[parameters('touchPoint__0000000107__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000107.Url",
-              "value": "[parameters('touchPoint.0000000107.Url')]"
+              "name": "touchPoint__0000000107__Url",
+              "value": "[parameters('touchPoint__0000000107__Url')]"
             },
             {
-              "name": "TouchPoint.0000000207.AppIdUri",
-              "value": "[parameters('touchPoint.0000000207.AppIdUri')]"
+              "name": "touchPoint__0000000207__AppIdUri",
+              "value": "[parameters('touchPoint__0000000207__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000207.Url",
-              "value": "[parameters('touchPoint.0000000207.Url')]"
+              "name": "touchPoint__0000000207__Url",
+              "value": "[parameters('touchPoint__0000000207__Url')]"
             },
             {
-              "name": "TouchPoint.0000000108.AppIdUri",
-              "value": "[parameters('touchPoint.0000000108.AppIdUri')]"
+              "name": "touchPoint__0000000108__AppIdUri",
+              "value": "[parameters('touchPoint__0000000108__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000108.Url",
-              "value": "[parameters('touchPoint.0000000108.Url')]"
+              "name": "touchPoint__0000000108__Url",
+              "value": "[parameters('touchPoint__0000000108__Url')]"
             },
             {
-              "name": "TouchPoint.0000000208.AppIdUri",
-              "value": "[parameters('touchPoint.0000000208.AppIdUri')]"
+              "name": "touchPoint__0000000208__AppIdUri",
+              "value": "[parameters('touchPoint__0000000208__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000208.Url",
-              "value": "[parameters('touchPoint.0000000208.Url')]"
+              "name": "touchPoint__0000000208__Url",
+              "value": "[parameters('touchPoint__0000000208__Url')]"
             },
             {
-              "name": "TouchPoint.0000000109.AppIdUri",
-              "value": "[parameters('touchPoint.0000000109.AppIdUri')]"
+              "name": "touchPoint__0000000109__AppIdUri",
+              "value": "[parameters('touchPoint__0000000109__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000109.Url",
-              "value": "[parameters('touchPoint.0000000109.Url')]"
+              "name": "touchPoint__0000000109__Url",
+              "value": "[parameters('touchPoint__0000000109__Url')]"
             },
             {
-              "name": "TouchPoint.0000000209.AppIdUri",
-              "value": "[parameters('touchPoint.0000000209.AppIdUri')]"
+              "name": "touchPoint__0000000209__AppIdUri",
+              "value": "[parameters('touchPoint__0000000209__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000209.Url",
-              "value": "[parameters('touchPoint.0000000209.Url')]"
+              "name": "touchPoint__0000000209__Url",
+              "value": "[parameters('touchPoint__0000000209__Url')]"
             },
             {
-              "name": "TouchPoint.0000000999.AppIdUri",
-              "value": "[parameters('touchPoint.0000000999.AppIdUri')]"
+              "name": "touchPoint__0000000999__AppIdUri",
+              "value": "[parameters('touchPoint__0000000999__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.0000000999.Url",
-              "value": "[parameters('touchPoint.0000000999.Url')]"
+              "name": "touchPoint__0000000999__Url",
+              "value": "[parameters('touchPoint__0000000999__Url')]"
             },
             {
-              "name": "TouchPoint.9000000001.AppIdUri",
-              "value": "[parameters('touchPoint.9000000001.AppIdUri')]"
+              "name": "touchPoint__9000000001__AppIdUri",
+              "value": "[parameters('touchPoint__9000000001__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.9000000001.Url",
-              "value": "[parameters('touchPoint.9000000001.Url')]"
+              "name": "touchPoint__9000000001__Url",
+              "value": "[parameters('touchPoint__9000000001__Url')]"
             },
             {
-              "name": "TouchPoint.9000000002.AppIdUri",
-              "value": "[parameters('touchPoint.9000000002.AppIdUri')]"
+              "name": "touchPoint__9000000002__AppIdUri",
+              "value": "[parameters('touchPoint__9000000002__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.9000000002.Url",
-              "value": "[parameters('touchPoint.9000000002.Url')]"
+              "name": "touchPoint__9000000002__Url",
+              "value": "[parameters('touchPoint__9000000002__Url')]"
             },
             {
-              "name": "TouchPoint.9000000003.AppIdUri",
-              "value": "[parameters('touchPoint.9000000003.AppIdUri')]"
+              "name": "touchPoint__9000000003__AppIdUri",
+              "value": "[parameters('touchPoint__9000000003__AppIdUri')]"
             },
             {
-              "name": "TouchPoint.9000000003.Url",
-              "value": "[parameters('touchPoint.9000000003.Url')]"
+              "name": "touchPoint__9000000003__Url",
+              "value": "[parameters('touchPoint__9000000003__Url')]"
             }
           ]
         }
