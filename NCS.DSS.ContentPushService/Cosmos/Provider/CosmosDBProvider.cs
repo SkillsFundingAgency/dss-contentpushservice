@@ -8,48 +8,24 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
     public class CosmosDBProvider : ICosmosDBProvider
     {
         private readonly Container _notificationsContainer;
-        private readonly PartitionKey _partitionKey = PartitionKey.None;
-        IOptions<ContentPushServiceConfigurationSettings> _configurationSettings;
         private readonly ILogger<CosmosDBProvider> _logger;
+        private readonly PartitionKey _partitionKey = PartitionKey.None;
 
         public CosmosDBProvider(
             CosmosClient cosmosClient,
             IOptions<ContentPushServiceConfigurationSettings> configuration,
             ILogger<CosmosDBProvider> logger)
         {
-            _configurationSettings = configuration;
+            var config = configuration.Value;
+
             _logger = logger;
-            _notificationsContainer = GetContainer(cosmosClient, _configurationSettings.Value.NotificationDatabaseId, _configurationSettings.Value.NotificationCollectionId);
+            _notificationsContainer = GetContainer(cosmosClient, config.NotificationDatabaseId, config.NotificationCollectionId);
         }
 
         private static Container GetContainer(CosmosClient cosmosClient, string databaseId, string collectionId)
             => cosmosClient.GetContainer(databaseId, collectionId);
 
-        public async Task<bool> DoesNotificationResourceExist(Guid notificationId)
-        {
-            try
-            {
-                _logger.LogInformation("Checking whether the notification resource {NotificationId} exists.", notificationId);
-                var response = await _notificationsContainer.ReadItemAsync<Models.DBNotification>(
-                    notificationId.ToString(),
-                    _partitionKey);
-
-                _logger.LogInformation("Check complete with response code: {0}.", (int)response?.StatusCode);
-                return response.Resource != null;
-            }
-            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                _logger.LogWarning("Notification resource {NotificationId} not found.", notificationId);
-                return false;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error checking notification resource existence. Notification ID: {NotificationId}", notificationId);
-                throw;
-            }
-        }
-
-        public async Task<ItemResponse<Models.DBNotification>> CreateNotificationAsync(Models.DBNotification notification)
+        public async Task<ItemResponse<DBNotification>> CreateNotificationAsync(DBNotification notification)
         {
             try
             {
