@@ -24,7 +24,9 @@ namespace NCS.DSS.ContentPushService.Auth
             .WithAuthority(new Uri(authority))
             .Build();
 
+            //TODO: Remove this debugging logging line
             log.LogInformation("Attempting to retrieve access token for following details: \nClientId:{ClientId}\nClient secret:{ClientSecret}\nAuthority Uri: {AuthorityUri}\nTenant: {Tenant}", clientId, clientSecret, authorityUri, tenant);
+            
             var scopes = new[] { appIdUri + "/.default" }; 
             var authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
 
