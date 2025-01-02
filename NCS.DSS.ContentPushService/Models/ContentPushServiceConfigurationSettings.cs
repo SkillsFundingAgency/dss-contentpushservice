@@ -60,8 +60,5 @@
         public required string TouchPoint9000000002Url { get; set; }
         public required string TouchPoint9000000003AppIdUri { get; set; }
         public required string TouchPoint9000000003Url { get; set; }
-
-
-
     }
 }
