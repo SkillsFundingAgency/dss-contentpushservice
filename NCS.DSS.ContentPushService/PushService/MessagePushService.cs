@@ -33,6 +33,8 @@ public class MessagePushService : IMessagePushService
     public async Task PushToTouchpoint(string touchpoint, ServiceBusReceivedMessage message,
         ServiceBusMessageActions messageActions)
     {
+        _logger.LogInformation("{FunctionName} has been invoked", nameof(PushToTouchpoint));
+
         if (message == null)
         {
             _logger.LogError("Received Service Bus message is NULL");
@@ -52,7 +54,7 @@ public class MessagePushService : IMessagePushService
 
         _logger.LogInformation("Retrieved body from stream reader");
 
-        _logger.LogInformation("Attempting to Deserialise customer MessageModel body");
+        _logger.LogInformation("Attempting to deserialise customer MessageModel body");
         var customer = JsonConvert.DeserializeObject<MessageModel>(body);
 
         if (customer == null)
@@ -117,26 +119,24 @@ public class MessagePushService : IMessagePushService
             await messageActions.CompleteMessageAsync(message);
             _logger.LogInformation("Successfully executed {FunctionName}", nameof(messageActions.CompleteMessageAsync));
 
-            _logger.LogInformation("Saving to DB: Response code: {StatusCode}. ResourceUrl: {ResourceURL}. MessageId: {MessageId}",
+            _logger.LogInformation("Saving Notification in Cosmos DB. Response code: {StatusCode}. ResourceUrl: {ResourceURL}. MessageId: {MessageId}",
                 (int)response?.StatusCode, notification.ResourceURL, message.MessageId);
             await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri,
                 clientUrl, bearerToken, true);
-            _logger.LogInformation("Saved to DB successfully");
+            _logger.LogInformation("Successfully saved Notification in Cosmos DB");
         }
         else
         {
-            _logger.LogWarning("Response status code is not 200, 201 or 202. Saving to DB. Response code: {StatusCode} ResourceUrl: {ResourceURL} MessageId: {MessageId}",
+            _logger.LogWarning("Response status code is not 200, 201 or 202. Saving Notification in Cosmos DB. Response code: {StatusCode} ResourceUrl: {ResourceURL} MessageId: {MessageId}",
                 (int)response?.StatusCode, notification.ResourceURL, message.MessageId);
-
-            //Save notification to db
             await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri,
                 clientUrl, bearerToken, false);
-            _logger.LogInformation("Successfully saved to DB");
+            _logger.LogInformation("Successfully saved Notification in Cosmos DB");
 
             //Create Servicebus resend client
-            _logger.LogInformation("Attempting to Service Bus resend client");
+            _logger.LogInformation("Attempting to create Service Bus client");
             await using var serviceBusClient = new ServiceBusClient(_connectionString);
-            _logger.LogInformation("Successfully created Service Bus resend client");
+            _logger.LogInformation("Successfully created Service Bus client");
             var resendClient = serviceBusClient.CreateSender(touchpoint);
 
 
@@ -156,7 +156,7 @@ public class MessagePushService : IMessagePushService
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError("Error when attempting to deadletter!", ex);
+                    _logger.LogError("Error when attempting to send message to dead letter queue", ex);
                     throw;
                 }
                 finally
@@ -181,12 +181,12 @@ public class MessagePushService : IMessagePushService
                 try
                 {
                     //Resend Message to the Topic
-                    _logger.LogInformation("Attempting to resend message to the Topic");
+                    _logger.LogInformation("Attempting to resend message to the topic");
                     await resendClient.SendMessageAsync(resendMessage);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error when resending message!. Error message: {Message}", ex.Message);
+                    _logger.LogError(ex, "Error when resending message. Error message: {Message}", ex.Message);
                     throw;
                 }
                 finally
@@ -200,7 +200,7 @@ public class MessagePushService : IMessagePushService
             }
         }
 
-        _logger.LogInformation("Exiting PushToTouchpoint");
+        _logger.LogInformation("{FunctionName} has finished invoking", nameof(PushToTouchpoint));
     }
 
     public (string, string) GetAppIdUriAndClientUrl(IOptions<ContentPushServiceConfigurationSettings> configOptions, string touchpoint)
@@ -210,91 +210,91 @@ public class MessagePushService : IMessagePushService
         switch (touchpoint)
         {
             case TouchPointListeners1.TP_0000000101:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000101);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000101);
                 return (config.TouchPoint0000000101AppIdUri, config.TouchPoint0000000101Url);
 
             case TouchPointListeners1.TP_0000000102:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000102);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000102);
                 return (config.TouchPoint0000000102AppIdUri, config.TouchPoint0000000102Url);
 
             case TouchPointListeners1.TP_0000000103:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000103);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000103);
                 return (config.TouchPoint0000000103AppIdUri, config.TouchPoint0000000103Url);
 
             case TouchPointListeners1.TP_0000000104:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000104);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000104);
                 return (config.TouchPoint0000000104AppIdUri, config.TouchPoint0000000104Url);
 
             case TouchPointListeners1.TP_0000000105:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000105);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000105);
                 return (config.TouchPoint0000000105AppIdUri, config.TouchPoint0000000105Url);
 
             case TouchPointListeners1.TP_0000000106:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000106);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000106);
                 return (config.TouchPoint0000000106AppIdUri, config.TouchPoint0000000106Url);
 
             case TouchPointListeners1.TP_0000000107:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000107);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000107);
                 return (config.TouchPoint0000000107AppIdUri, config.TouchPoint0000000107Url);
 
             case TouchPointListeners1.TP_0000000108:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000108);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000108);
                 return (config.TouchPoint0000000108AppIdUri, config.TouchPoint0000000108Url);
 
             case TouchPointListeners1.TP_0000000109:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners1.TP_0000000109);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners1.TP_0000000109);
                 return (config.TouchPoint0000000109AppIdUri, config.TouchPoint0000000109Url);
 
             case TouchPointListeners2.TP_0000000201:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000201);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000201);
                 return (config.TouchPoint0000000201AppIdUri, config.TouchPoint0000000201Url);
 
             case TouchPointListeners2.TP_0000000202:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000202);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000202);
                 return (config.TouchPoint0000000202AppIdUri, config.TouchPoint0000000202Url);
 
             case TouchPointListeners2.TP_0000000203:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000203);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000203);
                 return (config.TouchPoint0000000203AppIdUri, config.TouchPoint0000000203Url);
 
             case TouchPointListeners2.TP_0000000204:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000204);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000204);
                 return (config.TouchPoint0000000204AppIdUri, config.TouchPoint0000000204Url);
 
             case TouchPointListeners2.TP_0000000205:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000205);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000205);
                 return (config.TouchPoint0000000205AppIdUri, config.TouchPoint0000000205Url);
 
             case TouchPointListeners2.TP_0000000206:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000206);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000206);
                 return (config.TouchPoint0000000206AppIdUri, config.TouchPoint0000000206Url);
 
             case TouchPointListeners2.TP_0000000207:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000207);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000207);
                 return (config.TouchPoint0000000207AppIdUri, config.TouchPoint0000000207Url);
 
             case TouchPointListeners2.TP_0000000208:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000208);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000208);
                 return (config.TouchPoint0000000208AppIdUri, config.TouchPoint0000000208Url);
 
             case TouchPointListeners2.TP_0000000209:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListeners2.TP_0000000209);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListeners2.TP_0000000209);
                 return (config.TouchPoint0000000209AppIdUri, config.TouchPoint0000000209Url);
 
             case CareersHelplineListener.TP_0000000999:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", CareersHelplineListener.TP_0000000999);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", CareersHelplineListener.TP_0000000999);
                 return (config.TouchPoint0000000999AppIdUri, config.TouchPoint0000000999Url);
 
             case TouchPointListenersTest.TP_9000000001:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListenersTest.TP_9000000001);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListenersTest.TP_9000000001);
                 return (config.TouchPoint9000000001AppIdUri, config.TouchPoint9000000001Url);
 
             case TouchPointListenersTest.TP_9000000002:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListenersTest.TP_9000000002);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListenersTest.TP_9000000002);
                 return (config.TouchPoint9000000002AppIdUri, config.TouchPoint9000000002Url);
 
             case TouchPointListenersTest.TP_9000000003:
-                _logger.LogInformation("Retrieving App Id Uri and client Url for {touchpoint}", TouchPointListenersTest.TP_9000000003);
+                _logger.LogInformation("Retrieving App Id URI and Client URL for TouchPoint ID: {touchpoint}", TouchPointListenersTest.TP_9000000003);
                 return (config.TouchPoint9000000003AppIdUri, config.TouchPoint9000000003Url);
 
             default:

@@ -35,7 +35,7 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
                     notification,
                     _partitionKey);
 
-                _logger.LogInformation("Finished creating Notification in CDB. Response code: {response} Notification ID: {NotificationId}", response.StatusCode, notification.MessageId);
+                _logger.LogInformation("Finished creating Notification in Cosmos DB. Response code: {response} Notification ID: {NotificationId}", response.StatusCode, notification.MessageId);
                 return response;
             }
             catch (Exception ex)

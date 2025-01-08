@@ -21,16 +21,16 @@ public class ListenersHelper : IListenersHelper
     {
         try
         {
-            _logger.LogInformation("Attempting to push message to TouchPoint ID: {touchPointId}", touchPointId);
+            _logger.LogInformation("Attempting to push message to TouchPoint ID: {TouchPointID}", touchPointId);
             await _messagepushService.PushToTouchpoint(
                 touchPointId,
                 serviceBusMessage,
                 messageActions);
-            _logger.LogInformation("Finished pushing message to TouchPoint ID: {touchPointId}", touchPointId);
+            _logger.LogInformation("Finished pushing message to TouchPoint ID: {TouchPointID}", touchPointId);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unexpected exception in {FunctionName}", nameof(SendMessageAsync));
+            _logger.LogError(ex, "An error occurred when attempting to push a service bus message to TouchPoint ID: {TouchPointID}. Exception: {Message}", touchPointId, ex.Message);
         }
     }
 }
