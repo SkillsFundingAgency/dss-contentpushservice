@@ -45,7 +45,7 @@ public class MessagePushService : IMessagePushService
             throw new ArgumentNullException(nameof(touchpoint));
         }
 
-        var (appIdUri, clientUrl) = GetAppIdUriAndClientUrl(_configurationSettings, _logger, touchpoint);
+        var (appIdUri, clientUrl) = GetAppIdUriAndClientUrl(_configurationSettings, touchpoint);
         var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger, _configurationSettings);;
         var client = HttpClientFactory.Create();
         var body = Encoding.UTF8.GetString(message.Body);
@@ -203,7 +203,7 @@ public class MessagePushService : IMessagePushService
         _logger.LogInformation("Exiting PushToTouchpoint");
     }
 
-    public (string, string) GetAppIdUriAndClientUrl(IOptions<ContentPushServiceConfigurationSettings> configOptions, ILogger<MessagePushService> _logger, string touchpoint)
+    public (string, string) GetAppIdUriAndClientUrl(IOptions<ContentPushServiceConfigurationSettings> configOptions, string touchpoint)
     {
         var config = configOptions.Value;
 
