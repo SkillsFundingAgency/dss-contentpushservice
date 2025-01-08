@@ -24,20 +24,26 @@ namespace NCS.DSS.ContentPushService.Auth
             .WithAuthority(new Uri(authority))
             .Build();
 
-            //TODO: Remove this debugging logging line
-            log.LogInformation("Attempting to retrieve access token for following details: \nClientId:{ClientId}\nClient secret:{ClientSecret}\nAuthority Uri: {AuthorityUri}\nTenant: {Tenant}", clientId, clientSecret, authorityUri, tenant);
-            
-            var scopes = new[] { appIdUri + "/.default" }; 
-            var authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
+            var scopes = new[] { appIdUri + "/.default" };
 
-            if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
+            try
             {
-                log.LogInformation("Successfully retrieved access token");
-                return authenticationResult.AccessToken;
-            }
+                var authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
 
-            log.LogWarning("Failed to retrieve access token");
-            return string.Empty;
+                if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
+                {
+                    log.LogInformation("Successfully retrieved access token");
+                    return authenticationResult.AccessToken;
+                }
+
+                log.LogWarning("Failed to retrieve access token");
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                log.LogError(ex, "Error occurred when retrieving access token");
+                throw;
+            }
         }
     }
 }

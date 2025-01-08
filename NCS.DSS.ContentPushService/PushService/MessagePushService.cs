@@ -7,7 +7,6 @@ using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Listeners;
 using NCS.DSS.ContentPushService.Models;
 using Newtonsoft.Json;
-using System.Configuration;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
@@ -19,8 +18,8 @@ public class MessagePushService : IMessagePushService
     private readonly string _connectionString;
     private readonly ICosmosDBProvider _cosmosDbProvider;
     private readonly IOptions<ContentPushServiceConfigurationSettings> _configurationSettings;
-    private readonly ILogger<MessagePushService> _logger;  
-    private readonly int _serviceBusRetryAttemptLimit = 12;
+    private readonly ILogger<MessagePushService> _logger;
+    private const int TP_ServiceBusRetryAttemptLimit = 12;
 
     public MessagePushService(ICosmosDBProvider cosmosDbProvider,  IOptions<ContentPushServiceConfigurationSettings> configOptions, ILogger<MessagePushService> logger)
     {
@@ -36,7 +35,7 @@ public class MessagePushService : IMessagePushService
     {
         if (message == null)
         {
-            _logger.LogError("Received Service Bus message is null");
+            _logger.LogError("Received Service Bus message is NULL");
             throw new ArgumentNullException(nameof(message));
         }
 
@@ -46,37 +45,22 @@ public class MessagePushService : IMessagePushService
             throw new ArgumentNullException(nameof(touchpoint));
         }
 
-        var appIdUriAndClientUrl = GetAppIdUriAndClientUrl(_configurationSettings, _logger, touchpoint);
-        var appIdUri = appIdUriAndClientUrl.Item1;
-        var clientUrl = appIdUriAndClientUrl.Item2;
-
-        var bearerToken = "";
-        try
-        {
-            var config = _configurationSettings.Value;
-            _logger.LogInformation("Attempting to get Access Token for following details: \nClientId:{ClientId}\nClient secret:{ClientSecret}\nAuthority Uri: {AuthorityUri}\nTenant: {Tenant}", config.AuthenticationPushServiceClientId, config.AuthenticationPushServiceClientSecret, config.AuthenticationAuthorityUri, config.AuthenticationTenant);
-            bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger, _configurationSettings);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Unable to get Access Token. Exception Message: {Message} Stack Trace: {StackTrace}", ex.Message, ex.StackTrace);
-            throw;
-        }
-        _logger.LogInformation("Successfully retrieved Access Token");
-
+        var (appIdUri, clientUrl) = GetAppIdUriAndClientUrl(_configurationSettings, _logger, touchpoint);
+        var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger, _configurationSettings);;
         var client = HttpClientFactory.Create();
         var body = Encoding.UTF8.GetString(message.Body);
+
         _logger.LogInformation("Retrieved body from stream reader");
 
-        _logger.LogInformation("Attempting to Deserialise customer MessageModel Body");
+        _logger.LogInformation("Attempting to Deserialise customer MessageModel body");
         var customer = JsonConvert.DeserializeObject<MessageModel>(body);
 
         if (customer == null)
         {
-            _logger.LogWarning("Failed to Deserialise customer MessageModel Body. MessageModel Body is NULL");
+            _logger.LogWarning("Failed to deserialise customer MessageModel body. MessageModel body is NULL");
             return;
         }
-        _logger.LogInformation("Successfully Deserialised customer MessageModel Body");
+        _logger.LogInformation("Successfully deserialised customer MessageModel body");
 
 
         var notification = new Notification
@@ -94,16 +78,16 @@ public class MessagePushService : IMessagePushService
         };
 
         var content = "";
-        _logger.LogInformation("Attempting to Serialise notification to Json");
+        _logger.LogInformation("Attempting to serialise notification");
         if (customer.DataCollections.HasValue)
         {
             content = JsonConvert.SerializeObject(notificationDC);
-            _logger.LogInformation("Successfully Serialised notificationDC object to Json");
+            _logger.LogInformation("Successfully serialised notificationDC object");
         }
         else
         {
             content = JsonConvert.SerializeObject(notification);
-            _logger.LogInformation("Attempting to Serialise notification object to Json");
+            _logger.LogInformation("Successfully serialised notification object");
         }
 
         var buffer = Encoding.UTF8.GetBytes(content);
@@ -117,38 +101,37 @@ public class MessagePushService : IMessagePushService
 
         try
         {
-            _logger.LogInformation("Attempting to post notification to clientUrl {0}", clientUrl);
+            _logger.LogInformation("Attempting to post notification to client URL: {ClientUrl}", clientUrl);
             response = await client.PostAsync(clientUrl, byteContent);
         }
         catch (Exception ex)
         {
-            _logger.LogError(string.Format("Error when attempting to post to clientUrl {0}", clientUrl), ex);
+            _logger.LogError(ex, "Error when attempting to post to client URL: {ClientUrl}", clientUrl);
             throw;
         }
 
-        if (response?.StatusCode == HttpStatusCode.OK || response?.StatusCode == HttpStatusCode.Created ||
-            response?.StatusCode == HttpStatusCode.Accepted)
+        if (response?.StatusCode is HttpStatusCode.OK or HttpStatusCode.Created or HttpStatusCode.Accepted)
         {
             //Each messageReceiver must complete it's own message or we'll get a lockToken error
-            _logger.LogInformation("Calling {FunctionName}", nameof(messageActions.CompleteMessageAsync));
+            _logger.LogInformation("Executing {FunctionName}", nameof(messageActions.CompleteMessageAsync));
             await messageActions.CompleteMessageAsync(message);
-            _logger.LogInformation("Successfully called {FunctionName}", nameof(messageActions.CompleteMessageAsync));
+            _logger.LogInformation("Successfully executed {FunctionName}", nameof(messageActions.CompleteMessageAsync));
 
-            _logger.LogInformation(string.Format("Saving to DB: Responsecode: {0} ResourceUrl: {1} MessageId: {2}",
-                (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
+            _logger.LogInformation("Saving to DB: Response code: {StatusCode}. ResourceUrl: {ResourceURL}. MessageId: {MessageId}",
+                (int)response?.StatusCode, notification.ResourceURL, message.MessageId);
             await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri,
                 clientUrl, bearerToken, true);
-            _logger.LogInformation("Saved to DB successfully.");
+            _logger.LogInformation("Saved to DB successfully");
         }
         else
         {
-            _logger.LogWarning(string.Format("Response status code not 200, 201 or 202. Saving to DB. Responsecode: {0} ResourceUrl: {1} MessageId: {2}",
-                (int)response?.StatusCode, notification.ResourceURL, message.MessageId));
+            _logger.LogWarning("Response status code is not 200, 201 or 202. Saving to DB. Response code: {StatusCode} ResourceUrl: {ResourceURL} MessageId: {MessageId}",
+                (int)response?.StatusCode, notification.ResourceURL, message.MessageId);
 
             //Save notification to db
             await SaveNotificationToDBAsync((int)response.StatusCode, message.MessageId, notification, appIdUri,
                 clientUrl, bearerToken, false);
-            _logger.LogInformation("Successfully saved to DB.");
+            _logger.LogInformation("Successfully saved to DB");
 
             //Create Servicebus resend client
             _logger.LogInformation("Attempting to Service Bus resend client");
@@ -161,14 +144,14 @@ public class MessagePushService : IMessagePushService
             message.ApplicationProperties.TryGetValue("RetryCount", out var rVal);
             var RetryCount = (int)rVal;
 
-            if (RetryCount >= _serviceBusRetryAttemptLimit)
+            if (RetryCount >= TP_ServiceBusRetryAttemptLimit)
             {
                 try
                 {
                     //Deadletter as max retries exceeded
-                    _logger.LogWarning("Message retry max attempts of {_serviceBusRetryAttemptLimit} reached. Sending message to dead letter queue.", _serviceBusRetryAttemptLimit.ToString());
+                    _logger.LogWarning("Message retry max attempts of {ServiceBusRetryAttemptLimit} reached. Sending message to dead letter queue.", TP_ServiceBusRetryAttemptLimit.ToString());
                     await messageActions.DeadLetterMessageAsync(message, null, "MaxTriesExceeded",
-                        $"Attempted to send notification to Endpoint {_serviceBusRetryAttemptLimit} times & failed!");
+                        $"Attempted to send notification to Endpoint {TP_ServiceBusRetryAttemptLimit} times & failed!");
                     _logger.LogInformation("Successfully sent message to dead letter queue.");
                 }
                 catch (Exception ex)
@@ -193,7 +176,7 @@ public class MessagePushService : IMessagePushService
 
                 //Increment retry count by 1
                 resendMessage.ApplicationProperties["RetryCount"] = RetryCount + 1;
-                _logger.LogInformation(string.Format("Retrying message delivery Count {0}", RetryCount));
+                _logger.LogInformation("Retrying message delivery Count {RetryCount}", RetryCount);
 
                 try
                 {
@@ -203,7 +186,7 @@ public class MessagePushService : IMessagePushService
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError("Error when resending message!", ex);
+                    _logger.LogError(ex, "Error when resending message!. Error message: {Message}", ex.Message);
                     throw;
                 }
                 finally
@@ -320,17 +303,17 @@ public class MessagePushService : IMessagePushService
         }
     }
 
-    public async Task SaveNotificationToDBAsync(int rspHttpCode, string MessageId, Notification rspNotification,
-        string AppIdUri, string ClientUrl, string BearerToken, bool Success)
+    public async Task SaveNotificationToDBAsync(int rspHttpCode, string messageId, Notification rspNotification,
+        string appIdUri, string clientUrl, string bearerToken, bool success)
     {
         var DBNotification = new DBNotification
         {
-            MessageId = MessageId,
+            MessageId = messageId,
             HttpCode = rspHttpCode,
-            AppIdUri = AppIdUri,
-            ClientUrl = ClientUrl,
+            AppIdUri = appIdUri,
+            ClientUrl = clientUrl,
             BearerToken = string.Empty,
-            Success = Success,
+            Success = success,
             Notification = rspNotification,
             Timestamp = DateTime.UtcNow,
             id = Guid.NewGuid().ToString()
@@ -339,9 +322,9 @@ public class MessagePushService : IMessagePushService
         await _cosmosDbProvider.CreateNotificationAsync(DBNotification);
     }
 
-    public int GetRetrySeconds(int RetryCount)
+    public int GetRetrySeconds(int retryCount)
     {
-        switch (RetryCount)
+        switch (retryCount)
         {
             case 0:
                 return 1;
