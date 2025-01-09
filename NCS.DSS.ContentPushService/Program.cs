@@ -27,11 +27,8 @@ namespace NCS.DSS.ContentPushService
 
                 services.AddApplicationInsightsTelemetryWorkerService();
                 services.ConfigureFunctionsApplicationInsights();
+                services.AddLogging();
 
-                services.AddLogging(log =>
-                {
-                    log.SetMinimumLevel(LogLevel.Trace);
-                });
                 services.AddTransient<IListenersHelper, ListenersHelper>();
                 services.AddTransient<IMessagePushService, MessagePushService>();
                 services.AddTransient<IDigitialIdentityService, DigitialIdentityService>();
