@@ -1,6 +1,5 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
 
 namespace NCS.DSS.ContentPushService.Listeners;
 
@@ -18,12 +17,10 @@ public class TouchPointListeners2
     public const string TP_0000000208 = "0000000208";
     public const string TP_0000000209 = "0000000209";
     private readonly IListenersHelper _listenersHelper;
-    private readonly ILogger _logger;
 
-    public TouchPointListeners2(IListenersHelper listenersHelper, ILogger<TouchPointListeners2> logger)
+    public TouchPointListeners2(IListenersHelper listenersHelper)
     {
         _listenersHelper = listenersHelper;
-        _logger = logger;
     }
 
     [Function("TOUCHPOINT_" + TP_0000000201)]
@@ -31,7 +28,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000201, TP_0000000201, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000201, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000201, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000202)]
@@ -39,7 +36,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000202, TP_0000000202, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000202, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000202, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000203)]
@@ -47,7 +44,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000203, TP_0000000203, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000203, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000203, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000204)]
@@ -55,7 +52,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000204, TP_0000000204, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000204, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000204, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000205)]
@@ -63,7 +60,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000205, TP_0000000205, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000205, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000205, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000206)]
@@ -71,7 +68,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000206, TP_0000000206, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000206, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000206, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000207)]
@@ -79,7 +76,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000207, TP_0000000207, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000207, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000207, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000208)]
@@ -87,7 +84,7 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000208, TP_0000000208, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000208, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000208, messageActions);
     }
 
     [Function("TOUCHPOINT_" + TP_0000000209)]
@@ -95,6 +92,6 @@ public class TouchPointListeners2
         [ServiceBusTrigger(TP_0000000209, TP_0000000209, Connection = ServiceBusConnectionString)]
         ServiceBusReceivedMessage serviceBusMessage, ServiceBusMessageActions messageActions)
     {
-        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000209, messageActions, _logger);
+        await _listenersHelper.SendMessageAsync(serviceBusMessage, TP_0000000209, messageActions);
     }
 }
