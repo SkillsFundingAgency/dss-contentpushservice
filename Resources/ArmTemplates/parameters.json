@@ -33,22 +33,13 @@
             "value": "__CosmosDbKey__"
         },
         "environmentName": {
-            "value": "__NotTokenised__"
+            "value": "__environmentName__"
         },
         "functionAppNames": {
             "value": "__NotTokenised__"
         },
         "serviceBusConnectionString": {
             "value": "__serviceBusConnectionString__"
-        },
-        "sharedAppServicePlanName": {
-            "value": "__SharedAppServicePlanName__"
-        },
-        "sharedAppServicePlanResourceGroup": {
-            "value": "__SharedAppServicePlanResourceGroup__"
-        },
-        "templateBaseUrl": {
-            "value": "__NestedArmTemplateBaseUrl__"
         },
         "touchPoint0000000101AppIdUri": {
             "value": "__TouchPoint0000000101AppIdUri__"
