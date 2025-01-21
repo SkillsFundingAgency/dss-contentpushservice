@@ -254,7 +254,7 @@
         },
         "copy": {
             "name": "FunctionAppSettingsCopy",
-            "count": "[length(parameters(functionAppNames))]"
+            "count": "[length(parameters('functionAppNames'))]"
         }
     },
     {
