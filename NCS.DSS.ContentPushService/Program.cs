@@ -32,13 +32,6 @@ namespace NCS.DSS.ContentPushService
                 services.AddTransient<IMessagePushService, MessagePushService>();
                 services.AddTransient<IRequeueService, RequeueService>();
                 services.AddTransient<ICosmosDBProvider, CosmosDBProvider>();
-                services.AddHttpClient("AzureB2C", (serviceProvider, client) =>
-                {
-                    var config = serviceProvider.GetRequiredService<IOptions<ContentPushServiceConfigurationSettings>>().Value;
-
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", config.AzureB2CApiKey);
-                    client.BaseAddress = new Uri(config.AzureB2CApiUrl);
-                });
 
                 services.AddSingleton(s =>
                 {

@@ -5,6 +5,6 @@ namespace NCS.DSS.ContentPushService.Cosmos.Provider
 {
     public interface ICosmosDBProvider
     {
-        Task<ItemResponse<Models.DBNotification>> CreateNotificationAsync(DBNotification notification);
+        Task<ItemResponse<DBNotification>> CreateNotificationAsync(DBNotification notification);
     }
 }
