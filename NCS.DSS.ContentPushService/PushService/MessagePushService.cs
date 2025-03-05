@@ -29,7 +29,6 @@ public class MessagePushService : IMessagePushService
         _connectionString = configOptions.Value.ServiceBusConnectionString;
     }
 
-
     public async Task PushToTouchpoint(string touchpoint, ServiceBusReceivedMessage message,
         ServiceBusMessageActions messageActions)
     {
