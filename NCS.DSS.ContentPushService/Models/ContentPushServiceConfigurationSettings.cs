@@ -6,17 +6,9 @@
         public required string AuthenticationPushServiceClientId { get; set; }
         public required string AuthenticationPushServiceClientSecret { get; set; }
         public required string AuthenticationTenant { get; set; }
-
-        // - AZURE B2C -
-
-        public required string AzureB2CApiUrl { get; set; }
-        public required string AzureB2CApiKey { get; set; }
-        public required string AzureB2CTenant { get; set; }
-
+        
         // - AZURE COSMOS DB -
 
-        public required string CollectionId { get; set; }
-        public required string DatabaseId { get; set; }
         public required string Endpoint { get; set; }
         public required string EnvironmentName { get; set; }
         public required string Key { get; set; }

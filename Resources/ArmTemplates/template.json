@@ -14,18 +14,6 @@
     "authenticationTenant": {
       "type": "string"
     },
-    "azureB2CApiUrl": {
-      "type": "string"
-    },
-    "azureB2CApiKey": {
-      "type": "string"
-    },
-    "cosmosDbCollectionId": {
-      "type": "string"
-    },
-    "cosmosDbDatabaseId": {
-      "type": "string"
-    },
     "cosmosDbEndpoint": {
       "type": "string"
     },
@@ -194,8 +182,6 @@
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]",
             "FUNCTIONS_EXTENSION_VERSION": "~4",
             "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-            "CollectionId": "[parameters('cosmosDbCollectionId')]",
-            "DatabaseId": "[parameters('cosmosDbDatabaseId')]",
             "Endpoint": "[parameters('cosmosDbEndpoint')]",
             "Key": "[parameters('cosmosDbKey')]",
             "NotificationCollectionId": "notifications",
@@ -205,8 +191,6 @@
             "AuthenticationPushServiceClientId": "[parameters('authenticationPushServiceClientId')]",
             "AuthenticationPushServiceClientSecret": "[parameters('authenticationPushServiceClientSecret')]",
             "AuthenticationTenant": "[parameters('authenticationTenant')]",
-            "AzureB2CApiUrl": "[parameters('azureB2CApiUrl')]",
-            "AzureB2CApiKey": "[parameters('azureB2CApiKey')]",
             "touchPoint0000000101AppIdUri": "[parameters('touchPoint0000000101AppIdUri')]",
             "touchPoint0000000101Url": "[parameters('touchPoint0000000101Url')]",
             "touchPoint0000000201AppIdUri": "[parameters('touchPoint0000000201AppIdUri')]",
