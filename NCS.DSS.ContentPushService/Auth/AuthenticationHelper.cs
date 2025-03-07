@@ -10,6 +10,8 @@ namespace NCS.DSS.ContentPushService.Auth
     {
         public static async Task<string> GetAccessToken(string appIdUri, ILogger<MessagePushService> log, IOptions<ContentPushServiceConfigurationSettings> configOptions)
         {
+            log.LogInformation($"Function {nameof(GetAccessToken)} was invoked");
+
             var config = configOptions.Value;
             
             var clientId = config.AuthenticationPushServiceClientId;
@@ -25,6 +27,8 @@ namespace NCS.DSS.ContentPushService.Auth
             .Build();
 
             var scopes = new[] { appIdUri + "/.default" };
+
+            log.LogInformation($"Attempting to generate access token");
 
             try
             {
