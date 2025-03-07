@@ -29,15 +29,6 @@
     "serviceBusConnectionString": {
       "type": "string"
     },
-    "sharedAppServicePlanName": {
-      "type": "string"
-    },
-    "sharedAppServicePlanResourceGroup": {
-      "type": "string"
-    },
-    "templateBaseUrl": {
-      "type": "string"
-    },
     "touchPoint0000000101AppIdUri": {
       "type": "string"
     },

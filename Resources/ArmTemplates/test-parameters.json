@@ -28,15 +28,6 @@
         "serviceBusConnectionString": {
             "value": "sb://dss-foo-shared-ns.servicebus.windows.net/"
         },
-        "sharedAppServicePlanName": {
-            "value": "dss-at-shared-asp"
-        },
-        "sharedAppServicePlanResourceGroup": {
-            "value": "dss-at-shared-rg"
-        },
-        "templateBaseUrl": {
-            "value": "https://raw.githubusercontent.com/SkillsFundingAgency/dss-contentpushservice/AD-209506-v2/Resources/ArmTemplates"
-        },
         "touchPoint0000000101AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
         },
