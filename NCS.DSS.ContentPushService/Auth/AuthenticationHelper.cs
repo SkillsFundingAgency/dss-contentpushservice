@@ -40,14 +40,16 @@ namespace NCS.DSS.ContentPushService.Auth
                     return authenticationResult.AccessToken;
                 }
 
-                log.LogWarning("Failed to retrieve access token");
-                return string.Empty;
+                //log.LogWarning("Failed to retrieve access token");
+                log.LogInformation($"Failed to retrieve access token - try");
             }
             catch (Exception ex)
             {
-                log.LogError(ex, "Error occurred when retrieving access token");
-                throw;
+                //log.LogError(ex, "Error occurred when retrieving access token");
+                log.LogInformation($"Failed to retrieve access token - catch");
             }
+
+            return string.Empty;
         }
     }
 }
