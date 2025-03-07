@@ -27,28 +27,27 @@ namespace NCS.DSS.ContentPushService.Auth
             .Build();
 
             var scopes = new[] { appIdUri + "/.default" };
+            AuthenticationResult authenticationResult;
 
             log.LogInformation($"Attempting to generate access token");
 
             try
             {
-                var authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
-
-                if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
-                {
-                    log.LogInformation("Successfully retrieved access token");
-                    return authenticationResult.AccessToken;
-                }
-
-                //log.LogWarning("Failed to retrieve access token");
-                log.LogInformation($"Failed to retrieve access token - try");
+                authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
             }
             catch (Exception ex)
             {
-                //log.LogError(ex, "Error occurred when retrieving access token");
-                log.LogInformation($"Failed to retrieve access token - catch");
+                log.LogWarning($"Failed to retrieve access token; returning empty string. Exception: {ex}");
+                return string.Empty;
             }
 
+            if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
+            {
+                log.LogInformation("Successfully retrieved access token");
+                return authenticationResult.AccessToken;
+            }
+
+            log.LogWarning($"Failed to retrieve access token; returning empty string");
             return string.Empty;
         }
     }
