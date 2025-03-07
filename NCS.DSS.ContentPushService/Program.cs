@@ -9,7 +9,6 @@ using NCS.DSS.ContentPushService.Listeners;
 using NCS.DSS.ContentPushService.Models;
 using NCS.DSS.ContentPushService.PushService;
 using NCS.DSS.ContentPushService.Services;
-using NCS.DSS.ContentPushService.Utils;
 
 namespace NCS.DSS.ContentPushService
 {
@@ -31,17 +30,8 @@ namespace NCS.DSS.ContentPushService
 
                 services.AddTransient<IListenersHelper, ListenersHelper>();
                 services.AddTransient<IMessagePushService, MessagePushService>();
-                services.AddTransient<IDigitialIdentityService, DigitialIdentityService>();
-                services.AddTransient<IDigitalIdentityClient, DigitalIdentityClient>();
                 services.AddTransient<IRequeueService, RequeueService>();
                 services.AddTransient<ICosmosDBProvider, CosmosDBProvider>();
-                services.AddHttpClient("AzureB2C", (serviceProvider, client) =>
-                {
-                    var config = serviceProvider.GetRequiredService<IOptions<ContentPushServiceConfigurationSettings>>().Value;
-
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", config.AzureB2CApiKey);
-                    client.BaseAddress = new Uri(config.AzureB2CApiUrl);
-                });
 
                 services.AddSingleton(s =>
                 {

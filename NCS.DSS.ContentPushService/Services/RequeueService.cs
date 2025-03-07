@@ -7,7 +7,6 @@ namespace NCS.DSS.ContentPushService.Services;
 
 public class RequeueService : IRequeueService
 {
-    private const string ServiceBusConnectionString = "ServiceBusConnectionString";
     IOptions<ContentPushServiceConfigurationSettings> _configurationSettings;
     private readonly ILogger<RequeueService> _logger;
 

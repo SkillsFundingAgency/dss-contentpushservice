@@ -10,6 +10,8 @@ namespace NCS.DSS.ContentPushService.Auth
     {
         public static async Task<string> GetAccessToken(string appIdUri, ILogger<MessagePushService> log, IOptions<ContentPushServiceConfigurationSettings> configOptions)
         {
+            log.LogInformation($"Function {nameof(GetAccessToken)} was invoked");
+
             var config = configOptions.Value;
             
             var clientId = config.AuthenticationPushServiceClientId;
@@ -25,25 +27,28 @@ namespace NCS.DSS.ContentPushService.Auth
             .Build();
 
             var scopes = new[] { appIdUri + "/.default" };
+            AuthenticationResult authenticationResult;
+
+            log.LogInformation($"Attempting to generate access token");
 
             try
             {
-                var authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
-
-                if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
-                {
-                    log.LogInformation("Successfully retrieved access token");
-                    return authenticationResult.AccessToken;
-                }
-
-                log.LogWarning("Failed to retrieve access token");
-                return string.Empty;
+                authenticationResult = await app.AcquireTokenForClient(scopes).ExecuteAsync();
             }
             catch (Exception ex)
             {
-                log.LogError(ex, "Error occurred when retrieving access token");
-                throw;
+                log.LogWarning($"Failed to retrieve access token; returning empty string. Exception: {ex}");
+                return string.Empty;
             }
+
+            if (authenticationResult != null && !string.IsNullOrWhiteSpace(authenticationResult.AccessToken))
+            {
+                log.LogInformation("Successfully retrieved access token");
+                return authenticationResult.AccessToken;
+            }
+
+            log.LogWarning($"Failed to retrieve access token; returning empty string");
+            return string.Empty;
         }
     }
 }

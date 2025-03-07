@@ -7,7 +7,6 @@ public class TouchPointListeners1
 {
     private const string ServiceBusConnectionString = "ServiceBusConnectionString";
 
-
     public const string TP_0000000101 = "0000000101";
     public const string TP_0000000102 = "0000000102";
     public const string TP_0000000103 = "0000000103";
@@ -18,7 +17,6 @@ public class TouchPointListeners1
     public const string TP_0000000108 = "0000000108";
     public const string TP_0000000109 = "0000000109";
     private readonly IListenersHelper _listenersHelper;
-
 
     public TouchPointListeners1(IListenersHelper listenersHelper)
     {

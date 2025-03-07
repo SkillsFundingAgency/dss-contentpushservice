@@ -14,18 +14,6 @@
         "authenticationTenant": {
             "value": "__AuthenticationTenant__"
         },
-        "azureB2CApiUrl": {
-            "value": "__AzureB2CApiUrl__"
-        },
-        "azureB2CApiKey": {
-            "value": "__AzureB2CApiKey__"
-        },
-        "cosmosDbCollectionId": {
-            "value": "__CosmosDbCollectionId__"
-        },
-        "cosmosDbDatabaseId": {
-            "value": "__CosmosDbDatabaseId__"
-        },
         "cosmosDbEndpoint": {
             "value": "__CosmosDbEndpoint__"
         },

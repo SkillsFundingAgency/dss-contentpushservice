@@ -29,7 +29,6 @@ public class MessagePushService : IMessagePushService
         _connectionString = configOptions.Value.ServiceBusConnectionString;
     }
 
-
     public async Task PushToTouchpoint(string touchpoint, ServiceBusReceivedMessage message,
         ServiceBusMessageActions messageActions)
     {
@@ -48,7 +47,7 @@ public class MessagePushService : IMessagePushService
         }
 
         var (appIdUri, clientUrl) = GetAppIdUriAndClientUrl(_configurationSettings, touchpoint);
-        var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger, _configurationSettings);;
+        var bearerToken = await AuthenticationHelper.GetAccessToken(appIdUri, _logger, _configurationSettings);
         var client = HttpClientFactory.Create();
         var body = Encoding.UTF8.GetString(message.Body);
 
