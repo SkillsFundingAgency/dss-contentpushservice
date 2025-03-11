@@ -11,7 +11,7 @@
         "authenticationTenant": {
             "value": "00000000-0000-0000-0000-000000000000"
         },
-        "cosmosDbEndpoint": {
+        "CosmosDbEndpoint": {
             "value": "https://dss-foo-shared-cdb.documents.azure.com:443"
         },
         "cosmosDbKey": {

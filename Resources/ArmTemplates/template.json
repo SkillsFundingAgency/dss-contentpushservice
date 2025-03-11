@@ -14,7 +14,7 @@
     "authenticationTenant": {
       "type": "string"
     },
-    "cosmosDbEndpoint": {
+    "CosmosDbEndpoint": {
       "type": "string"
     },
     "cosmosDbKey": {
@@ -173,7 +173,7 @@
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]",
             "FUNCTIONS_EXTENSION_VERSION": "~4",
             "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-            "Endpoint": "[parameters('cosmosDbEndpoint')]",
+            "CosmosDbEndpoint": "[parameters('CosmosDbEndpoint')]",
             "Key": "[parameters('cosmosDbKey')]",
             "NotificationCollectionId": "notifications",
             "NotificationDatabaseId": "notifications",

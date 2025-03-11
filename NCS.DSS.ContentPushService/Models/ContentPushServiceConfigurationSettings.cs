@@ -9,7 +9,7 @@
         
         // - AZURE COSMOS DB -
 
-        public required string Endpoint { get; set; }
+        public required string CosmosDbEndpoint { get; set; }
         public required string EnvironmentName { get; set; }
         public required string Key { get; set; }
         public required string NotificationCollectionId { get; set; }
