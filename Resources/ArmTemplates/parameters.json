@@ -14,7 +14,7 @@
         "authenticationTenant": {
             "value": "__AuthenticationTenant__"
         },
-        "cosmosDbEndpoint": {
+        "CosmosDbEndpoint": {
             "value": "__CosmosDbEndpoint__"
         },
         "cosmosDbKey": {
