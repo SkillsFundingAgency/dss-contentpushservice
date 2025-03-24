@@ -10,5 +10,6 @@
         public string BearerToken { get; set; }
         public bool Success { get; set; }
         public DateTime Timestamp { get; set; }
+        public string id { get; set; }
     }
 }

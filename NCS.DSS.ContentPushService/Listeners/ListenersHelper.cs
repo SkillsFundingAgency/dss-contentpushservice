@@ -8,26 +8,29 @@ namespace NCS.DSS.ContentPushService.Listeners;
 public class ListenersHelper : IListenersHelper
 {
     private readonly IMessagePushService _messagepushService;
+    private readonly ILogger<ListenersHelper> _logger;
 
-    public ListenersHelper(IMessagePushService messagePushService)
+    public ListenersHelper(IMessagePushService messagePushService, ILogger<ListenersHelper> logger)
     {
         _messagepushService = messagePushService;
+        _logger = logger;
     }
 
     public async Task SendMessageAsync(ServiceBusReceivedMessage serviceBusMessage, string touchPointId,
-        ServiceBusMessageActions messageActions, ILogger log)
+        ServiceBusMessageActions messageActions)
     {
         try
         {
+            _logger.LogInformation("Attempting to push message to TouchPoint ID: {TouchPointID}", touchPointId);
             await _messagepushService.PushToTouchpoint(
                 touchPointId,
                 serviceBusMessage,
-                messageActions,
-                log);
+                messageActions);
+            _logger.LogInformation("Finished pushing message to TouchPoint ID: {TouchPointID}", touchPointId);
         }
         catch (Exception ex)
         {
-            log.LogError($"Unexpected exception in {nameof(SendMessageAsync)}.", ex);
+            _logger.LogError(ex, "An error occurred when attempting to push a service bus message to TouchPoint ID: {TouchPointID}. Exception: {Message}", touchPointId, ex.Message);
         }
     }
 }
