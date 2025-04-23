@@ -12,6 +12,5 @@
         public string EmailAddress { get; private set; }
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
-        public bool? CreateDigitalIdentity { get; private set; }
     }
 }
