@@ -1,22 +1,26 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using NCS.DSS.ContentPushService.Models;
 
 namespace NCS.DSS.ContentPushService.Services;
 
 public class RequeueService : IRequeueService
 {
-    private const string ServiceBusConnectionString = "ServiceBusConnectionString";
+    IOptions<ContentPushServiceConfigurationSettings> _configurationSettings;
     private readonly ILogger<RequeueService> _logger;
 
-    public RequeueService(ILogger<RequeueService> logger)
+    public RequeueService(IOptions<ContentPushServiceConfigurationSettings> configOptions, ILogger<RequeueService> logger)
     {
+        _configurationSettings = configOptions;
         _logger = logger;
     }
 
     public async Task<bool> RequeueItem(string topicName, int maxRetryCount,
         ServiceBusReceivedMessage serviceBusReceivedMessage)
     {
-        var connectionString = Environment.GetEnvironmentVariable(ServiceBusConnectionString);
+        var config = _configurationSettings.Value;
+        var connectionString = config.ServiceBusConnectionString;
 
         await using var resendClient = new ServiceBusClient(connectionString);
         await using var sbSender = resendClient.CreateSender(topicName);
