@@ -1,3 +1,4 @@
+using Azure.Identity;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,10 +36,30 @@ namespace NCS.DSS.ContentPushService
 
                 services.AddSingleton(s =>
                 {
-                    var settings = s.GetRequiredService<IOptions<ContentPushServiceConfigurationSettings>>().Value;
-                    var options = new CosmosClientOptions() { ConnectionMode = ConnectionMode.Gateway };
+                    var logger = s.GetRequiredService<ILogger<Program>>();
 
-                    return new CosmosClient(settings.Endpoint, settings.Key, options);
+                    var connectionString = configuration["CosmosDBConnectionString"];
+                    var endpoint = configuration["CosmosDbEndpoint"];
+
+                    var options = new CosmosClientOptions
+                    {
+                        ConnectionMode = ConnectionMode.Gateway
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(endpoint))
+                    {
+                        logger.LogInformation("Using DefaultAzureCredential for Cosmos DB (managed identity)");
+                        return new CosmosClient(endpoint, new DefaultAzureCredential(), options);
+                    }
+                    else if (!string.IsNullOrWhiteSpace(connectionString))
+                    {
+                        logger.LogInformation("No managed identity found: using Cosmos DB connection string (local development)");
+                        return new CosmosClient(connectionString, options);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Neither CosmosDbEndpoint or a ConnectionString are configured");
+                    }
                 });
 
                 services.Configure<LoggerFilterOptions>(options =>
