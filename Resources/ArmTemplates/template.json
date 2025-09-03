@@ -8,16 +8,10 @@
     "authenticationPushServiceClientId": {
       "type": "string"
     },
-    "authenticationPushServiceClientSecret": {
-      "type": "string"
-    },
     "authenticationTenant": {
       "type": "string"
     },
     "CosmosDbEndpoint": {
-      "type": "string"
-    },
-    "cosmosDbKey": {
       "type": "string"
     },
     "environmentName": {
@@ -26,7 +20,7 @@
     "functionAppNames": {
       "type": "array"
     },
-    "serviceBusConnectionString": {
+    "keyVaultName": {
       "type": "string"
     },
     "touchPoint0000000101AppIdUri": {
@@ -174,13 +168,13 @@
             "FUNCTIONS_EXTENSION_VERSION": "~4",
             "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
             "CosmosDbEndpoint": "[parameters('CosmosDbEndpoint')]",
-            "Key": "[parameters('cosmosDbKey')]",
+            "Key": "[format('@Microsoft.KeyVault(VaultName={0};SecretName=CosmosDBAccessKey)', parameters('keyVaultName'))]",
             "NotificationCollectionId": "notifications",
             "NotificationDatabaseId": "notifications",
-            "ServiceBusConnectionString": "[parameters('serviceBusConnectionString')]",
+            "ServiceBusConnectionString": "[format('@Microsoft.KeyVault(VaultName={0};SecretName=ServiceBusConnectionString)', parameters('keyVaultName'))]",
             "AuthenticationAuthorityUri": "https://login.microsoftonline.com/",
             "AuthenticationPushServiceClientId": "[parameters('authenticationPushServiceClientId')]",
-            "AuthenticationPushServiceClientSecret": "[parameters('authenticationPushServiceClientSecret')]",
+            "AuthenticationPushServiceClientSecret": "[format('@Microsoft.KeyVault(VaultName={0};SecretName=AuthenticationPushServiceClientSecret)', parameters('keyVaultName'))]",
             "AuthenticationTenant": "[parameters('authenticationTenant')]",
             "touchPoint0000000101AppIdUri": "[parameters('touchPoint0000000101AppIdUri')]",
             "touchPoint0000000101Url": "[parameters('touchPoint0000000101Url')]",
