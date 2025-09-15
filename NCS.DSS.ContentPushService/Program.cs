@@ -71,11 +71,11 @@ namespace NCS.DSS.ContentPushService
                         options.Rules.Remove(toRemove);
                     }
 
+                    LoggerFilterRule toAdd = new("Azure.Messaging.ServiceBus", "*", LogLevel.Warning, null);
+                    options.Rules.Add(toAdd);
+
                 });                
             })
-            .ConfigureLogging(logging =>
-            logging.AddFilter("Azure.Messaging.ServiceBus", LogLevel.Warning)
-            )
             .Build();
 
             await host.RunAsync();
