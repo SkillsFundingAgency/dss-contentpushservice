@@ -70,8 +70,12 @@ namespace NCS.DSS.ContentPushService
                     {
                         options.Rules.Remove(toRemove);
                     }
+
                 });                
             })
+            .ConfigureLogging(logging =>
+            logging.AddFilter("Azure.Messaging.ServiceBus", LogLevel.Warning)
+            )
             .Build();
 
             await host.RunAsync();
