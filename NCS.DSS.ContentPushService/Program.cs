@@ -4,6 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 using Microsoft.Extensions.Options;
 using NCS.DSS.ContentPushService.Cosmos.Provider;
 using NCS.DSS.ContentPushService.Listeners;
@@ -27,7 +28,21 @@ namespace NCS.DSS.ContentPushService
 
                 services.AddApplicationInsightsTelemetryWorkerService();
                 services.ConfigureFunctionsApplicationInsights();
-                services.AddLogging();
+                services.AddLogging(logging =>
+                {
+                    logging.Services.Configure<LoggerFilterOptions>(options =>
+                    {
+                        var defaultRule = options.Rules.FirstOrDefault(rule => rule.ProviderName
+                            == "Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider");
+                        if (defaultRule is not null)
+                        {
+                            options.Rules.Remove(defaultRule);
+                        }
+
+                        logging.AddFilter<ApplicationInsightsLoggerProvider>("Azure.Messaging.ServiceBus", LogLevel.Warning);
+
+                    });
+                });
 
                 services.AddTransient<IListenersHelper, ListenersHelper>();
                 services.AddTransient<IMessagePushService, MessagePushService>();
@@ -60,21 +75,7 @@ namespace NCS.DSS.ContentPushService
                     {
                         throw new InvalidOperationException("Neither CosmosDbEndpoint or a ConnectionString are configured");
                     }
-                });
-
-                services.Configure<LoggerFilterOptions>(options =>
-                {
-                    LoggerFilterRule toRemove = options.Rules.FirstOrDefault(rule => rule.ProviderName
-                        == "Microsoft.Extensions.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider");
-                    if (toRemove is not null)
-                    {
-                        options.Rules.Remove(toRemove);
-                    }
-
-                    LoggerFilterRule toAdd = new("Azure.Messaging.ServiceBus", "*", LogLevel.Warning, null);
-                    options.Rules.Add(toAdd);
-
-                });                
+                });               
             })
             .Build();
 
