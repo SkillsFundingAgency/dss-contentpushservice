@@ -9,7 +9,8 @@
   },
   "logging": {
     "logLevel": {
-      "default": "Trace"
+      "default": "Information",
+      "Azure.Messaging.ServiceBus": "Warning"
     },
     "applicationInsights": {
       "samplingSettings": {

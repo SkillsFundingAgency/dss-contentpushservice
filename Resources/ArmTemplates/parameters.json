@@ -8,17 +8,11 @@
         "authenticationPushServiceClientId": {
             "value": "__AuthenticationPushServiceClientId__"
         },
-        "authenticationPushServiceClientSecret": {
-            "value": "__AuthenticationPushServiceClientSecret__"
-        },
         "authenticationTenant": {
             "value": "__AuthenticationTenant__"
         },
         "CosmosDbEndpoint": {
             "value": "__CosmosDbEndpoint__"
-        },
-        "cosmosDbKey": {
-            "value": "__CosmosDbKey__"
         },
         "environmentName": {
             "value": "__environmentName__"
@@ -26,8 +20,8 @@
         "functionAppNames": {
             "value": "__NotTokenised__"
         },
-        "serviceBusConnectionString": {
-            "value": "__serviceBusConnectionString__"
+        "keyVaultName": {
+            "value": "__SharedKeyVaultName__"
         },
         "touchPoint0000000101AppIdUri": {
             "value": "__TouchPoint0000000101AppIdUri__"

@@ -5,17 +5,11 @@
         "authenticationPushServiceClientId": {
             "value": "00000000-0000-0000-0000-000000000000"
         },
-        "authenticationPushServiceClientSecret": {
-            "value": "not-a-real-secret"
-        },
         "authenticationTenant": {
             "value": "00000000-0000-0000-0000-000000000000"
         },
         "CosmosDbEndpoint": {
             "value": "https://dss-foo-shared-cdb.documents.azure.com:443"
-        },
-        "cosmosDbKey": {
-            "value": "not-a-real-secret"
         },
         "environmentName": {
             "value": "foo"
@@ -25,8 +19,8 @@
                 "dss-at-cpush-fa"
             ]
         },
-        "serviceBusConnectionString": {
-            "value": "sb://dss-foo-shared-ns.servicebus.windows.net/"
+        "keyVaultName": {
+            "value": "dss-at-shared-kv"
         },
         "touchPoint0000000101AppIdUri": {
             "value": "https://notatenant.mail.onmicrosoft.com/00000000-0000-0000-0000-000000000000"
